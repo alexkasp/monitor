@@ -61,11 +61,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DaemonInterface.h" />
-    <ClInclude Include="Starter.h" />
+    <ClInclude Include="DaemonMonitor.h" />
+    <ClInclude Include="DaemonStarter.h" />
+    <ClInclude Include="DaemonTask.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="myconst.h" />
+    <ClInclude Include="SimpleMonitor.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DaemonInterface.cpp" />
+    <ClCompile Include="DaemonMonitor.cpp" />
+    <ClCompile Include="DaemonTask.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Starter.cpp" />
+    <ClCompile Include="DaemonStarter.cpp" />
+    <ClCompile Include="SimpleMonitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
