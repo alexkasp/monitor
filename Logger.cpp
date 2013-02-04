@@ -14,5 +14,9 @@ Logger::~Logger(void)
 
 void Logger::WriteLog(string format,string value) const
 {
-	cout<<format<<" "<<value<<endl;
+    if(!value.empty())
+	cout<<format<<" "<<endl;
+    else
+	cout<<format<<endl;
+
 }

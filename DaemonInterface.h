@@ -21,6 +21,7 @@ class Daemon
 		int MessageHandler();
 		int DestroyTasks();
 		int ReloadConfig();
+		void signal_error(int sig, siginfo_t *si, void *ptr);
 		int AddTask(DaemonTask* newtask,InsPlace place)
 		{
 			if(place==front)

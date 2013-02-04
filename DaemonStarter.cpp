@@ -3,21 +3,22 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string>
+#include <iostream>
 using namespace std;
 
-int DaemonStarter::RunDaemon() throw(string)
+int DaemonStarter::RunDaemon()
 {
 	pid = fork();
 
     if (pid == -1) // если не удалось запустить потомка
     {
         // выведем на экран ошибку и её описание
-        throw strerror(errno);
+       cout<<"error creatin pid"<<endl;
     }
-	else if (!pid) // если это потомок
+    else if (!pid) // если это потомок
     {
-       
-      //  GoDeep();
+	cout<<"child pid"<<endl;   
+        GoDeep();
         // Данная функция будет осуществлять слежение за процессом
 		status = monitor->StartMonitor();
         

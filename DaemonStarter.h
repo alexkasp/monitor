@@ -11,7 +11,7 @@ public:
 	DaemonStarter(DaemonMonitor* obj)
 		:monitor(obj)
 			{};
-	virtual ~DaemonStarter();
+	virtual ~DaemonStarter(){};
 	int RunDaemon();
 	
 };

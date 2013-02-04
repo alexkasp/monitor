@@ -1,5 +1,10 @@
 #include "SimpleMonitor.h"
+#include <sys/types.h>
+#include <stdio.h>
+       #include <sys/wait.h>
+const char PID_FILE[]= "/var/run/my_daemon.pid";
 
+extern void SetPidFile(const char* Filename);
 
 SimpleMonitor::SimpleMonitor(Daemon* daemon):DaemonMonitor(daemon),log(new Logger)
 {
@@ -32,19 +37,20 @@ int SimpleMonitor::StartMonitor()
     sigprocmask(SIG_BLOCK, &sigset, NULL);
 
 	SetPidFile(PID_FILE);
-
+	printf("prepare RUN\n");
 	return Run();
 }
 
 int SimpleMonitor::Run()
 {
-	for (;;)
+    for (;;)
     {
         // если необходимо создать потомка
         if (GetRestart())
         {
             // создаём потомка
             pid = fork();
+    	    printf("restarting daemon\n");
         }
         
         SetNeedRestart();
@@ -52,21 +58,22 @@ int SimpleMonitor::Run()
         if (pid == -1) // если произошла ошибка
         {
             // запишем в лог сообщение об этом
-            log->WriteLog("[MONITOR] Fork failed:", strerror(errno));
+            log->WriteLog("[MONITOR] Fork failed:", "error");
         }
         else if (!pid) // если мы потомок
         {
             // данный код выполняется в потомке
-            
+        	printf("daemon start begining...\n");
             // запустим функцию отвечающую за работу демона
 			status = RunDaemon();
             
             // завершим процесс
-            exit(status);
+            return status;
         }
         else // если мы родитель
         {
-			Monitoring();
+		if(!Monitoring())
+		    return 0;
         }
     }
 }
@@ -77,26 +84,30 @@ int SimpleMonitor::Monitoring()
             
             // ожидаем поступление сигнала
             sigwaitinfo(&sigset, &siginfo);
-            
+            printf("start monitoring\n");
             // если пришел сигнал от потомка
             if (siginfo.si_signo == SIGCHLD)
             {
-				if(!ChildMonitoring())
-					return 0;
+		return ChildMonitoring();
             }
             else if (siginfo.si_signo == SIGUSR1) // если пришел сигнал что необходимо перезагрузить конфиг
             {
                 UserMonitoring();
             }
+            else if(siginfo.si_signo == SIGINT)
+            {
+        	kill(pid, SIGTERM);
+        	return 0;	
+            }
             else // если пришел какой-либо другой ожидаемый сигнал
             {
                 // запишем в лог информацию о пришедшем сигнале
-                log->WriteLog("[MONITOR] Signal: ", strsignal(siginfo.si_signo));
+                log->WriteLog("[MONITOR] Signal: ", "error");
                 
                 // убьем потомка
                 kill(pid, SIGTERM);
                 status = 0;
-                return 0;
+                return 1;
             }
 }
 
@@ -109,7 +120,7 @@ int SimpleMonitor::ChildMonitoring()
                 status = WEXITSTATUS(status);
 
                  // если потомок завершил работу с кодом говорящем о том, что нет нужды дальше работать
-                if (status == CHILD_NEED_TERMINATE)
+                if (status == 0)
                 {
                     // запишем в лог сообщени об этом        
                    log->WriteLog("[MONITOR] Child stopped\n");
@@ -117,7 +128,7 @@ int SimpleMonitor::ChildMonitoring()
                     // прервем цикл
                     return 0;
                 }
-                else if (status == CHILD_NEED_WORK) // если требуется перезапустить потомка
+                else if (status == 1) // если требуется перезапустить потомка
                 {
                     // запишем в лог данное событие
                    log->WriteLog("[MONITOR] Child restart\n");
@@ -125,7 +136,7 @@ int SimpleMonitor::ChildMonitoring()
 		return 1;
 }
 
-int SimpleMonitoring::UserMonitoring()
+int SimpleMonitor::UserMonitoring()
 {
 	kill(pid, SIGUSR1); // перешлем его потомку
     CancelRestart(); // установим флаг что нам не надо запускать потомка заново

@@ -1,7 +1,7 @@
 #include "DaemonMonitor.h"
 
 
-DaemonMonitor::DaemonMonitor(void)
+DaemonMonitor::DaemonMonitor(Daemon* obj):daemon(obj)
 {
 }
 

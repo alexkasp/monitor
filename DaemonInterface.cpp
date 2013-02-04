@@ -1,4 +1,9 @@
 #include "DaemonInterface.h"
+#include <stdio.h>
+
+#define FD_LIMIT 10
+
+void SetPidFile(const char* Filename);
 
 
 Daemon::Daemon():log(new Logger)
@@ -7,9 +12,10 @@ Daemon::Daemon():log(new Logger)
 }
 int Daemon::Run()
 {
+    printf("now we in daemon\n");
 	sigact.sa_flags = SA_SIGINFO;
     // задаем функцию обработчик сигналов
-    sigact.sa_sigaction = signal_error;
+  //  sigact.sa_sigaction = reinterpret_cast<void (*)(int, siginfo*, void*)>(&signal_error);
 
     sigemptyset(&sigact.sa_mask);
 
@@ -37,11 +43,10 @@ int Daemon::Run()
     sigprocmask(SIG_BLOCK, &sigset, NULL);
 
     // Установим максимальное кол-во дискрипторов которое можно открыть
-    SetFdLimit(FD_LIMIT);
-    
+    //SetFdLimit(FD_LIMIT);
     // запишем в лог, что наш демон стартовал
     log->WriteLog("[DAEMON] Started\n");
-    
+//    printf("first log\n");
     // запускаем все рабочие потоки
     status = InitTasks();
 	 if (!status)
@@ -56,13 +61,14 @@ int Daemon::Run()
      log->WriteLog("[DAEMON] Stopped\n");
     
     // вернем код не требующим перезапуска
-    return CHILD_NEED_TERMINATE;
+    return 1;
 }
 
 int Daemon::MessageHandler()
 {
 	  for (;;)
         {
+    	    printf("start wait for signals in daemon\n");
             // ждем указанных сообщений
             sigwait(&sigset, &signo);
         
@@ -82,10 +88,11 @@ int Daemon::MessageHandler()
             }
             else // если какой-либо другой сигнал, то выйдим из цикла
             {
+        	printf("THIS NOT SIGUSR1\n");
                 break;
             }
         }
-        
+        printf("start stopping...\n");
         // остановим все рабочеи потоки и корректно закроем всё что надо
         return DestroyTasks();
 }
@@ -103,4 +110,53 @@ int Daemon::DestroyTasks()
 int Daemon::ReloadConfig()
 {
 	return 1;
+}
+
+void Daemon::signal_error(int sig, siginfo_t *si, void *ptr)
+{
+    void* ErrorAddr;
+    void* Trace[16];
+    int    x;
+    int    TraceSize;
+    char** Messages;
+
+    // запишем в лог что за сигнал пришел
+  //  WriteLog("[DAEMON] Signal: %s, Addr: 0x%0.16X\n", strsignal(sig), si->si_addr);
+
+    
+    #if __WORDSIZE == 64 // если дело имеем с 64 битной ОС
+        // получим адрес инструкции которая вызвала ошибку
+        ErrorAddr = (void*)((ucontext_t*)ptr)->uc_mcontext.gregs[REG_RIP];
+    #else 
+        // получим адрес инструкции которая вызвала ошибку
+        ErrorAddr = (void*)((ucontext_t*)ptr)->uc_mcontext.gregs[REG_EIP];
+    #endif
+
+    // произведем backtrace чтобы получить весь стек вызовов 
+   // TraceSize = backtrace(Trace, 16);
+   // Trace[1] = ErrorAddr;
+/*
+    // получим расшифровку трасировки
+    Messages = backtrace_symbols(Trace, TraceSize);
+    if (Messages)
+    {
+        log->WriteLog("== Backtrace ==\n");
+        
+        // запишем в лог
+        for (x = 1; x < TraceSize; x++)
+        {
+            log->WriteLog("%s\n", Messages[x]);
+        }
+        
+        log->WriteLog("== End Backtrace ==\n");
+        free(Messages);
+    }
+	*/
+    log->WriteLog("[DAEMON] Stopped\n");
+    
+    // остановим все рабочие потоки и корректно закроем всё что надо
+   DestroyTasks();
+    
+    // завершим процесс с кодом требующим перезапуска
+    return;
 }
