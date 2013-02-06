@@ -13,5 +13,9 @@ ScriptTask::~ScriptTask(void)
 
 int ScriptTask::Run()
 {
-	system(commandstr.c_str());
-}
+    printf("%s\n",commandstr.c_str());
+	if(system(commandstr.c_str())>0)
+	    printf("success\n");
+	 else
+	    printf("error\n");
+}	

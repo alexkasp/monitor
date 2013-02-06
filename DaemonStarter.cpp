@@ -17,8 +17,9 @@ int DaemonStarter::RunDaemon()
     }
     else if (!pid) // если это потомок
     {
-	cout<<"child pid"<<endl;   
+	log->WriteLog("child pid\n");   
         GoDeep();
+        log->WriteLog("GoDeep\n");
         // Данная функция будет осуществлять слежение за процессом
 		status = monitor->StartMonitor();
         

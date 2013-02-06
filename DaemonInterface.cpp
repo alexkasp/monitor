@@ -49,7 +49,7 @@ int Daemon::Run()
 //    printf("first log\n");
     // запускаем все рабочие потоки
     status = InitTasks();
-	 if (!status)
+     if (status)
      {
 		return MessageHandler();
 	 }
@@ -101,6 +101,7 @@ int Daemon::InitTasks()
 {
 	for(auto x=tasks.begin();x!=tasks.end();++x)
 	{
+		printf("run:");
 		if(!(*x)->Run())
 			return 0;
 	}

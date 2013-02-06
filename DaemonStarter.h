@@ -1,4 +1,5 @@
 #include "DaemonMonitor.h"
+#include "Logger.h"
 
 class DaemonStarter
 {
@@ -7,9 +8,10 @@ class DaemonStarter
 	int pid;
 	int status;
 	int GoDeep();
+	Logger* log;
 public:
 	DaemonStarter(DaemonMonitor* obj)
-		:monitor(obj)
+		:monitor(obj),log(new Logger())
 			{};
 	virtual ~DaemonStarter(){};
 	int RunDaemon();
