@@ -99,7 +99,12 @@ int Daemon::MessageHandler()
 
 int Daemon::InitTasks()
 {
-	return 0;
+	for(auto x=tasks.begin();x!=tasks.end();++x)
+	{
+		if(!(*x)->Run())
+			return 0;
+	}
+	return 1;
 }
 
 int Daemon::DestroyTasks()

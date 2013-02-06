@@ -10,6 +10,7 @@ using namespace std;
 int main(int argc,char** argv)
 {
 	Daemon obj;
+	obj.AddTask(new ScriptTask("/home/test.php"),Daemon::InsPlace.front);
 	SimpleMonitor monitor(&obj);
 	DaemonStarter start(&monitor);
         start.RunDaemon();

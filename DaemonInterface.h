@@ -1,6 +1,6 @@
 #include <deque>
 #include <signal.h>
-#include "DaemonTask.h"
+#include "ScriptTask.h"
 #include "Logger.h"
 using namespace std;
 
@@ -16,7 +16,12 @@ class Daemon
 		enum InsPlace {front,back};
 		virtual int Run();
 		Daemon();
-		virtual ~Daemon(){};
+		virtual ~Daemon()
+		{
+			
+			for(auto x=tasks.begin();x!=tasks.end();++x)
+				delete (*x);
+		};
 		int InitTasks();
 		int MessageHandler();
 		int DestroyTasks();

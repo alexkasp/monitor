@@ -66,6 +66,7 @@
     <ClInclude Include="DaemonTask.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="myconst.h" />
+    <ClInclude Include="ScriptTask.h" />
     <ClInclude Include="SimpleMonitor.h" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +76,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="DaemonStarter.cpp" />
+    <ClCompile Include="ScriptTask.cpp" />
     <ClCompile Include="SimpleMonitor.cpp" />
   </ItemGroup>
   <ItemGroup>
