@@ -8,7 +8,7 @@ ofstream file;
 
 Logger::Logger(void)
 {
-    file.open("/home/log");
+	file.open("/home/log",fstream::out);
 }
 
 
