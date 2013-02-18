@@ -21,8 +21,14 @@ class Daemon
 		{
 			
 			for(auto x=tasks.begin();x!=tasks.end();++x)
-				delete (*x);
+				delete (*x).first;
 		};
+		static void TaskStarter(PVOID params)
+		{
+				DaemonTask* task =  (DaemonTask*)params;
+				task->Run();
+		}
+
 		int InitTasks();
 		int MessageHandler();
 		int DestroyTasks();

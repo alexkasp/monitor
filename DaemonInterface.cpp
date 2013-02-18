@@ -102,7 +102,7 @@ int Daemon::InitTasks()
 	for(auto x=tasks.begin();x!=tasks.end();++x)
 	{
 		printf("run:");
-		pthread_create(&((*x).second), NULL, &((*x).first->Run), NULL);
+		pthread_create(&((*x).second), NULL, TaskStarter, ((*x).first));
 	//	if(!(*x).first->Run())
 	//		return 0;
 	}
