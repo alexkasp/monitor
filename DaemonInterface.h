@@ -2,6 +2,7 @@
 #include <signal.h>
 #include "ScriptTask.h"
 #include "Logger.h"
+#include<pthread.h>
 using namespace std;
 
 class Daemon
@@ -10,7 +11,7 @@ class Daemon
 		int             signo;
 		int             status;
 
-		deque<DaemonTask*> tasks;
+		deque<pair<DaemonTask*,pthread_t>> tasks;
 	public:
 		Logger* log;
 		enum InsPlace {front,back};
@@ -30,8 +31,8 @@ class Daemon
 		int AddTask(DaemonTask* newtask,InsPlace place)
 		{
 			if(place==front)
-				tasks.push_front(newtask);
+				tasks.push_front(make_pair(newtask,0));
 			else
-				tasks.push_back(newtask);
+				tasks.push_back(make_pair(newtask,0));
 		};
 };
