@@ -7,6 +7,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using DevExpress.Web.ASPxGridView;
 using DevExpress.Web.ASPxEditors;
+using System.Web.Security;
+
 
 namespace SandBox.WebUi.Pages.Research
 {
@@ -15,42 +17,69 @@ namespace SandBox.WebUi.Pages.Research
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-
+            if (!IsPostBack)
+            {
+                Layout lt = WebTables.GetLayout((int)Membership.GetUser().ProviderUserKey, "SearchTable");
+                if (lt != null)
+                    gridSearchView.LoadClientLayout(lt.UserLayout);
+                SearchTableFilterMenu.Items.FindByName("ShowFiterRow").Checked = gridSearchView.Settings.ShowFilterRow;
+            }
         }
 
         protected void gridSearchView_CustomCallback(object sender, DevExpress.Web.ASPxGridView.ASPxGridViewCustomCallbackEventArgs e)
         {
-            if (e.Parameters == "ApplyExtFilter")
+            switch (e.Parameters)
             {
-                if (!gridSearchView.ClientVisible) gridSearchView.ClientVisible = true;
-                gridSearchView.FilterExpression = filter.FilterExpression;
-                gridSearchView.DataBind();
+                case "ApplyFilter":
+                    if (!gridSearchView.ClientVisible)
+                    {
+                        gridSearchView.ClientVisible = true;
+                        SearchTableMenu.ClientVisible = true;
+                        SearchTableFilterMenu.ClientVisible = true;
+                        SearchTableExportMenu.ClientVisible = true;
+                    }
+                    if (SearchTextBox.Text == "") { gridSearchView.FilterExpression = ""; }
+                    else { gridSearchView.FilterExpression = string.Format("contains([who],'{0}') or contains([dest],'{0}')", SearchTextBox.Text); }
+                    gridSearchView.DataBind();
+                    break;
+                case "ApplyExtFilter":
+                    if (!gridSearchView.ClientVisible)
+                    {
+                        gridSearchView.ClientVisible = true;
+                        SearchTableMenu.ClientVisible = true;
+                        SearchTableFilterMenu.ClientVisible = true;
+                        SearchTableExportMenu.ClientVisible = true;
+                    }
+                    gridSearchView.FilterExpression = ExtFilter.FilterExpression;
+                    gridSearchView.DataBind();
+                    break;
+                case "SaveLayout":
+                    WebTables.SetLayout((int)Membership.GetUser().ProviderUserKey, "SearchTable", gridSearchView.SaveClientLayout());
+                    break;
+                case "ShowFilterRow":
+                    DevExpress.Web.ASPxMenu.MenuItem mitem = SearchTableFilterMenu.Items.FindByName("ShowFiterRow");
+                    mitem.Checked = !mitem.Checked;
+                    gridSearchView.Settings.ShowFilterRow = mitem.Checked;
+                    gridSearchView.Settings.ShowFilterRowMenu = mitem.Checked;
+                    break;
             }
-            if (e.Parameters == "ApplyFilter")
-            {
-                if (!gridSearchView.ClientVisible) gridSearchView.ClientVisible = true;
-                if (SearchTextBox.Text == "") { gridSearchView.FilterExpression = ""; }
-                else { gridSearchView.FilterExpression = string.Format("contains([who],'{0}') or contains([dest],'{0}')", SearchTextBox.Text); }
-                gridSearchView.DataBind();
-            }
-            if (!gridSearchViewPager.Visible) gridSearchViewPager.Visible = true;
-            gridSearchViewPager.ItemCount = gridSearchView.VisibleRowCount;
-            gridSearchViewPager.ItemsPerPage = gridSearchView.SettingsPager.PageSize;
-            gridSearchViewPager.PageIndex = gridSearchView.PageIndex;
+            //if (!gridSearchViewPager.Visible) gridSearchViewPager.Visible = true;
+            //gridSearchViewPager.ItemCount = gridSearchView.VisibleRowCount;
+            //gridSearchViewPager.ItemsPerPage = gridSearchView.SettingsPager.PageSize;
+            //gridSearchViewPager.PageIndex = gridSearchView.PageIndex;
         }
 
-        protected void gridSearchViewPager_PageIndexChanged(object sender, EventArgs e)
-        {
-            gridSearchView.PageIndex = gridSearchViewPager.PageIndex;
-            gridSearchView.DataBind();
-        }
+        //protected void gridSearchViewPager_PageIndexChanged(object sender, EventArgs e)
+        //{
+        //    gridSearchView.PageIndex = gridSearchViewPager.PageIndex;
+        //    gridSearchView.DataBind();
+        //}
 
-        protected void gridSearchViewPager_PageSizeChanged(object sender, EventArgs e)
-        {
-            gridSearchView.SettingsPager.PageSize = gridSearchViewPager.ItemsPerPage;
-            gridSearchView.DataBind();
-        }
+        //protected void gridSearchViewPager_PageSizeChanged(object sender, EventArgs e)
+        //{
+        //    gridSearchView.SettingsPager.PageSize = gridSearchViewPager.ItemsPerPage;
+        //    gridSearchView.DataBind();
+        //}
 
         protected void gridSearchView_CustomColumnDisplayText(object sender, ASPxGridViewColumnDisplayTextEventArgs e)
         {
@@ -64,24 +93,57 @@ namespace SandBox.WebUi.Pages.Research
 
         }
 
-        protected void ReportLink_Init(object sender, EventArgs e)
+        protected void ExportPDFBtn_Click(object sender, EventArgs e)
         {
-            var link = (ASPxHyperLink)sender;
-            var templateContainer = (GridViewGroupRowTemplateContainer)link.NamingContainer;
-            link.ID = string.Format("ReportLink{0}", templateContainer.VisibleIndex);
+            gridExport.PageHeader.Left = "Имя пользователя: " + Membership.GetUser().UserName + " ([Имя пользователя])";
+            gridExport.WritePdfToResponse();
         }
 
-        protected void gridSearchView_HtmlRowPrepared(object sender, ASPxGridViewTableRowEventArgs e)
+        protected void ExportXLSBtn_Click(object sender, EventArgs e)
         {
-            if (e.RowType == GridViewRowType.Group)
-            {
-                var link = (ASPxHyperLink)gridSearchView.FindGroupRowTemplateControl(e.VisibleIndex, string.Format("ReportLink{0}", e.VisibleIndex));
-                if (link != null) link.NavigateUrl = "/Pages/Research/ReportList.aspx?researchId=" + e.GetValue("rschId").ToString();
-            }
+            gridExport.PageHeader.Left = "Имя пользователя: " + Membership.GetUser().UserName + " ([Имя пользователя])";
+            gridExport.WriteXlsToResponse();
         }
-        protected virtual string GetLabelText(GridViewGroupRowTemplateContainer container)
+
+        protected void ExportXLSXBtn_Click(object sender, EventArgs e)
         {
-            return "Исследоваине № ("+container.GroupText+") ";
+            gridExport.PageHeader.Left = "Имя пользователя: " + Membership.GetUser().UserName + " ([Имя пользователя])";
+            gridExport.WriteXlsxToResponse();
         }
+
+        protected void ExportRTFBtn_Click(object sender, EventArgs e)
+        {
+            gridExport.PageHeader.Left = "Имя пользователя: " + Membership.GetUser().UserName + " ([Имя пользователя])";
+            gridExport.WriteRtfToResponse();
+        }
+
+        protected void ExportCSVBtn_Click(object sender, EventArgs e)
+        {
+            gridExport.PageHeader.Left = "Имя пользователя: " + Membership.GetUser().UserName + " ([Имя пользователя])";
+            gridExport.WriteCsvToResponse();
+        }
+
+        //protected void ReportLink_Init(object sender, EventArgs e)
+        //{
+        //    var link = (ASPxHyperLink)sender;
+        //    var templateContainer = (GridViewGroupRowTemplateContainer)link.NamingContainer;
+        //    link.ID = string.Format("ReportLink{0}", templateContainer.VisibleIndex);
+        //}
+
+
+        //protected virtual string GetLabelText(GridViewGroupRowTemplateContainer container)
+        //{
+        //    return "Исследоваине № (" + container.GroupText + ") ";
+        //}
+
+        //protected void gridSearchView_HtmlRowPrepared(object sender, ASPxGridViewTableRowEventArgs e)
+        //{
+        //    if (gridSearchView.ClientVisible && e.RowType == GridViewRowType.Group)
+        //    {
+
+        //        var link = (ASPxHyperLink)gridSearchView.FindGroupRowTemplateControl(e.VisibleIndex, string.Format("ReportLink{0}", e.VisibleIndex));
+        //        if (link != null) link.NavigateUrl = "/Pages/Research/ReportList.aspx?researchId=" + e.GetValue("rschId").ToString();
+        //    }
+        //}
     }
 }

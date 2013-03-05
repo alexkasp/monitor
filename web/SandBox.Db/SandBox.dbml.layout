@@ -70,7 +70,7 @@
         <elementListCompartment Id="42b6e681-de21-4f1a-9c85-74338a8d3ec1" absoluteBounds="7.7650000000000006, 7.9600000000000009, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(7.25 : 7.98640055338542); (7.75 : 7.98640055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(7.25 : 7.98640055338542); (7.75 : 7.98640055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SandBoxDataContext/Mlwr/Mlwr_MlwrClass" />
       <nodes>
         <classShapeMoniker Id="bc865db8-417b-4ad1-b3dd-72590d52b324" />
@@ -89,21 +89,21 @@
         <elementListCompartment Id="37189856-4475-429c-a926-6dde6b0c9e23" absoluteBounds="0.51500000000000012, 6.3350000000000009, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(1.5 : 6.325); (1.5 : 9.97199625651042); (3.125 : 9.97199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.5 : 6.325); (1.5 : 9.97199625651042); (3.125 : 9.97199625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SandBoxDataContext/Vm/Vm_VmState" />
       <nodes>
         <classShapeMoniker Id="41c51ded-eaa3-441a-b3fe-fad333939c29" />
         <classShapeMoniker Id="137a0eea-8eb9-4dd2-b7ea-4cc0eb96fcb3" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(0.968748 : 6.325); (0.968748 : 7.69314697265625); (1.41666666666667 : 7.69314697265625 : JumpStart); (1.58333333333333 : 7.69314697265625 : JumpEnd); (2.375 : 7.69314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(0.968748 : 6.325); (0.968748 : 7.69314697265625); (2.375 : 7.69314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SandBoxDataContext/Vm/Vm_VmSystem" />
       <nodes>
         <classShapeMoniker Id="41c51ded-eaa3-441a-b3fe-fad333939c29" />
         <classShapeMoniker Id="6fed7b42-3d0e-4600-9f64-f369e527d056" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.5 : 6.1625); (3.25 : 6.1625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.5 : 6.1625); (3.25 : 6.1625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SandBoxDataContext/Vm/Vm_VmType" />
       <nodes>
         <classShapeMoniker Id="41c51ded-eaa3-441a-b3fe-fad333939c29" />
@@ -393,6 +393,12 @@
       <DataClassMoniker Name="/SandBoxDataContext/vpotop5" />
       <nestedChildShapes>
         <elementListCompartment Id="c92af5e0-f822-4e36-9fb7-762f6a7dd55c" absoluteBounds="5.7650000000000006, 4.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9d06198b-873b-44ee-909e-168bd1d9ed36" isExpanded="false" absoluteBounds="8.125, 5, 2, 0.45">
+      <DataClassMoniker Name="/SandBoxDataContext/Layout" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b1c29d3c-0a55-4cb7-8cf1-a70f9b00f416" absoluteBounds="8.14, 5.46, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

@@ -160,9 +160,10 @@ D:\Поработать\Армада\ОКР\web\votchina\web\SandBox.WebUi\obj\D
 D:\Поработать\Армада\ОКР\web\votchina\web\SandBox.WebUi\obj\Debug\SandBoxWebUi.dll.licenses
 D:\Поработать\Армада\ОКР\web\votchina\web\SandBox.WebUi\obj\Debug\SandBoxWebUi.dll
 D:\Поработать\Армада\ОКР\web\votchina\web\SandBox.WebUi\obj\Debug\SandBoxWebUi.pdb
-D:\Поработать\Армада\ОКР\web\votchina\web\SandBox.WebUi\bin\AjaxControlToolkit.dll
 D:\Поработать\Армада\ОКР\web\votchina\web\SandBox.WebUi\bin\HtmlAgilityPack.dll
 D:\Поработать\Армада\ОКР\web\votchina\web\SandBox.WebUi\bin\SanitizerProviders.dll
+D:\Поработать\Армада\ОКР\web\votchina\web\SandBox.WebUi\bin\AjaxControlToolkit.dll
+D:\Поработать\Армада\ОКР\web\votchina\web\SandBox.WebUi\bin\AjaxControlToolkit.pdb
 D:\Поработать\Армада\ОКР\web\votchina\web\SandBox.WebUi\bin\ar\AjaxControlToolkit.resources.dll
 D:\Поработать\Армада\ОКР\web\votchina\web\SandBox.WebUi\bin\cs\AjaxControlToolkit.resources.dll
 D:\Поработать\Армада\ОКР\web\votchina\web\SandBox.WebUi\bin\de\AjaxControlToolkit.resources.dll

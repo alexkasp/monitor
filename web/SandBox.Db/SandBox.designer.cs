@@ -132,6 +132,9 @@ namespace SandBox.Db
     partial void InsertMlwrCl(MlwrCl instance);
     partial void UpdateMlwrCl(MlwrCl instance);
     partial void DeleteMlwrCl(MlwrCl instance);
+    partial void InsertLayout(Layout instance);
+    partial void UpdateLayout(Layout instance);
+    partial void DeleteLayout(Layout instance);
     #endregion
 		
 		public SandBoxDataContext() : 
@@ -601,6 +604,14 @@ namespace SandBox.Db
 			get
 			{
 				return this.GetTable<vpotop5>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Layout> Layouts
+		{
+			get
+			{
+				return this.GetTable<Layout>();
 			}
 		}
 	}
@@ -8781,6 +8792,140 @@ namespace SandBox.Db
 				{
 					this._Id = value;
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Layout")]
+	public partial class Layout : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private int _UserID;
+		
+		private string _TableName;
+		
+		private string _UserLayout;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnUserIDChanging(int value);
+    partial void OnUserIDChanged();
+    partial void OnTableNameChanging(string value);
+    partial void OnTableNameChanged();
+    partial void OnUserLayoutChanging(string value);
+    partial void OnUserLayoutChanged();
+    #endregion
+		
+		public Layout()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
+		public int UserID
+		{
+			get
+			{
+				return this._UserID;
+			}
+			set
+			{
+				if ((this._UserID != value))
+				{
+					this.OnUserIDChanging(value);
+					this.SendPropertyChanging();
+					this._UserID = value;
+					this.SendPropertyChanged("UserID");
+					this.OnUserIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TableName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string TableName
+		{
+			get
+			{
+				return this._TableName;
+			}
+			set
+			{
+				if ((this._TableName != value))
+				{
+					this.OnTableNameChanging(value);
+					this.SendPropertyChanging();
+					this._TableName = value;
+					this.SendPropertyChanged("TableName");
+					this.OnTableNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserLayout", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string UserLayout
+		{
+			get
+			{
+				return this._UserLayout;
+			}
+			set
+			{
+				if ((this._UserLayout != value))
+				{
+					this.OnUserLayoutChanging(value);
+					this.SendPropertyChanging();
+					this._UserLayout = value;
+					this.SendPropertyChanged("UserLayout");
+					this.OnUserLayoutChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

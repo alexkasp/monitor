@@ -11,7 +11,7 @@ namespace SandBox.WebUi
 
         public void DisableMenu()
         {
-            ((RootMaster)Master).MenuVisible = false;
+//            ((RootMaster)Master).MenuVisible = false;
         }
     }
 

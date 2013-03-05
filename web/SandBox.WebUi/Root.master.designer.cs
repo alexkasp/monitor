@@ -31,13 +31,13 @@ namespace SandBox.WebUi {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// ToolkitScriptManager1 control.
+        /// ScriptManager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.ToolkitScriptManager ToolkitScriptManager1;
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
         /// HeadLoginView control.
@@ -58,22 +58,22 @@ namespace SandBox.WebUi {
         protected global::System.Web.UI.WebControls.Menu Menu1;
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// VSUpdatePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.UpdatePanel VSUpdatePanel;
         
         /// <summary>
-        /// Timer1 control.
+        /// VSTimer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.Timer Timer1;
+        protected global::System.Web.UI.Timer VSTimer;
         
         /// <summary>
         /// Lcpu control.
@@ -130,15 +130,6 @@ namespace SandBox.WebUi {
         protected global::DevExpress.Web.ASPxEditors.ASPxLabel Lcpu3;
         
         /// <summary>
-        /// ASPxMenu1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxMenu.ASPxMenu ASPxMenu1;
-        
-        /// <summary>
         /// Content control.
         /// </summary>
         /// <remarks>
@@ -146,14 +137,5 @@ namespace SandBox.WebUi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder Content;
-        
-        /// <summary>
-        /// XmlDataSourceHeader control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.XmlDataSource XmlDataSourceHeader;
     }
 }
