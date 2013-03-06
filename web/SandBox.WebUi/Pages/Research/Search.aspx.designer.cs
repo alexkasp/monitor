@@ -94,6 +94,15 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::System.Web.UI.UpdatePanel SearchGridUpdatePanel;
         
         /// <summary>
+        /// OpenReportMenu control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxMenu.ASPxMenu OpenReportMenu;
+        
+        /// <summary>
         /// SearchTableMenu control.
         /// </summary>
         /// <remarks>

@@ -142,6 +142,45 @@
                         <PageSizeItemSettings AllItemText="Все" Caption="" Visible="True">
                         </PageSizeItemSettings>
                     </dx:ASPxPager>--%>
+            <div style="float: left">
+                <dx:ASPxMenu ID="OpenReportMenu" runat="server" ClientInstanceName="OpenReportMenu"
+                    ClientVisible="False" BackColor="Transparent" RenderMode="Lightweight">
+                    <ClientSideEvents ItemClick="function(s, e) {
+	                    switch (e.item.name) {
+                           case 'ExpandAll':
+                              gridSearchView.ExpandAll();
+                              break
+                           case 'CollapseAll':
+                              gridSearchView.CollapseAll();
+                              break
+                           case 'CustomColumns':
+                              if(gridSearchView.IsCustomizationWindowVisible())
+                               gridSearchView.HideCustomizationWindow();
+                              else
+                               gridSearchView.ShowCustomizationWindow();  
+                              break
+                           case 'SaveGridProps':
+                               gridSearchView.PerformCallback('SaveLayout'); 
+                              break
+                            }
+                         }" />
+                    <Paddings PaddingLeft="25px" />
+                    <Items>
+                        <dx:MenuItem Text="Открыть отчет по исследованию">
+                        </dx:MenuItem>
+                    </Items>
+                    <ItemStyle BackColor="Transparent">
+                    <hoverstyle backcolor="Transparent" font-underline="True">
+                        <Border BorderWidth="0px" />
+                    </hoverstyle>
+                    <Border BorderWidth="0px" />
+                    </ItemStyle>
+                    <BackgroundImage HorizontalPosition="left" 
+                        ImageUrl="~/Content/Images/Icons/report.png" Repeat="NoRepeat" 
+                        VerticalPosition="center" />
+                    <Border BorderWidth="0px" />
+                </dx:ASPxMenu>
+            </div>
             <div style="float: right">
                 <dx:ASPxMenu ID="SearchTableMenu" runat="server" ClientInstanceName="SearchTableMenu"
                     ClientVisible="False" BackColor="Transparent" RenderMode="Lightweight">
@@ -179,10 +218,11 @@
                             </Items>
                         </dx:MenuItem>
                     </Items>
-                    <ItemStyle>
+                    <ItemStyle BackColor="Transparent">
                     <hoverstyle backcolor="Transparent" font-underline="True">
                         <Border BorderWidth="0px" />
                     </hoverstyle>
+                    <Border BorderWidth="0px" />
                     </ItemStyle>
                     <BackgroundImage HorizontalPosition="left" 
                         ImageUrl="~/Content/Images/Icons/tools.png" Repeat="NoRepeat" 
@@ -229,10 +269,11 @@
                             </Items>
                         </dx:MenuItem>
                     </Items>
-                    <ItemStyle>
+                    <ItemStyle BackColor="Transparent">
                     <hoverstyle backcolor="Transparent" font-underline="True">
                         <Border BorderWidth="0px" />
                     </hoverstyle>
+                    <Border BorderWidth="0px" />
                     </ItemStyle>
                     <BackgroundImage HorizontalPosition="left" 
                         ImageUrl="~/Content/Images/Icons/export.png" Repeat="NoRepeat" 
@@ -264,10 +305,11 @@
                             </Items>
                         </dx:MenuItem>
                     </Items>
-                    <ItemStyle>
+                    <ItemStyle BackColor="Transparent">
                     <hoverstyle backcolor="Transparent" font-underline="True">
                         <Border BorderWidth="0px" />
                     </hoverstyle>
+                    <Border BorderWidth="0px" />
                     </ItemStyle>
                     <BackgroundImage HorizontalPosition="left" 
                         ImageUrl="~/Content/Images/Icons/filter.png" Repeat="NoRepeat" 

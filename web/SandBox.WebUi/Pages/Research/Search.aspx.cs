@@ -8,20 +8,27 @@ using System.Web.UI.WebControls;
 using DevExpress.Web.ASPxGridView;
 using DevExpress.Web.ASPxEditors;
 using System.Web.Security;
-
+using System.Text;
 
 namespace SandBox.WebUi.Pages.Research
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
-        
+
+        string separator = "!!!";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 Layout lt = WebTables.GetLayout((int)Membership.GetUser().ProviderUserKey, "SearchTable");
                 if (lt != null)
-                    gridSearchView.LoadClientLayout(lt.UserLayout);
+                {
+                    string customState = lt.UserLayout.Substring(0, lt.UserLayout.IndexOf(separator));
+                    gridSearchView.Settings.ShowFilterRow = customState[0].ToString() == "T";
+                    string gridState = lt.UserLayout.Substring(customState.Length + separator.Length);
+                    gridSearchView.LoadClientLayout(gridState);
+                }
                 SearchTableFilterMenu.Items.FindByName("ShowFiterRow").Checked = gridSearchView.Settings.ShowFilterRow;
             }
         }
@@ -54,7 +61,13 @@ namespace SandBox.WebUi.Pages.Research
                     gridSearchView.DataBind();
                     break;
                 case "SaveLayout":
-                    WebTables.SetLayout((int)Membership.GetUser().ProviderUserKey, "SearchTable", gridSearchView.SaveClientLayout());
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(gridSearchView.Settings.ShowFilterRow ? "T" : "F");
+                    sb.Append(separator);
+
+                    sb.Append(gridSearchView.SaveClientLayout());
+
+                    WebTables.SetLayout((int)Membership.GetUser().ProviderUserKey, "SearchTable", sb.ToString());
                     break;
                 case "ShowFilterRow":
                     DevExpress.Web.ASPxMenu.MenuItem mitem = SearchTableFilterMenu.Items.FindByName("ShowFiterRow");
