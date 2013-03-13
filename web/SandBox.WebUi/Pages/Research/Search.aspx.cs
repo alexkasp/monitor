@@ -44,6 +44,7 @@ namespace SandBox.WebUi.Pages.Research
                         SearchTableMenu.ClientVisible = true;
                         SearchTableFilterMenu.ClientVisible = true;
                         SearchTableExportMenu.ClientVisible = true;
+                        OpenReportMenu.ClientVisible = true;
                     }
                     if (SearchTextBox.Text == "") { gridSearchView.FilterExpression = ""; }
                     else { gridSearchView.FilterExpression = string.Format("contains([who],'{0}') or contains([dest],'{0}')", SearchTextBox.Text); }
@@ -56,6 +57,7 @@ namespace SandBox.WebUi.Pages.Research
                         SearchTableMenu.ClientVisible = true;
                         SearchTableFilterMenu.ClientVisible = true;
                         SearchTableExportMenu.ClientVisible = true;
+                        OpenReportMenu.ClientVisible = true;
                     }
                     gridSearchView.FilterExpression = ExtFilter.FilterExpression;
                     gridSearchView.DataBind();
@@ -134,6 +136,18 @@ namespace SandBox.WebUi.Pages.Research
         {
             gridExport.PageHeader.Left = "Имя пользователя: " + Membership.GetUser().UserName + " ([Имя пользователя])";
             gridExport.WriteCsvToResponse();
+        }
+
+        protected void gridSearchView_CustomJSProperties(object sender, ASPxGridViewClientJSPropertiesEventArgs e)
+        {
+            int startIndex = gridSearchView.PageIndex * gridSearchView.SettingsPager.PageSize;
+            int end = Math.Min(gridSearchView.VisibleRowCount, startIndex + gridSearchView.SettingsPager.PageSize);
+            object[] rschId = new object[end - startIndex];
+            for (int n = startIndex; n < end; n++)
+            {
+                rschId[n - startIndex] = gridSearchView.GetRowValues(n, "rschId");
+            }
+            e.Properties["cprschId"] = rschId;
         }
 
         //protected void ReportLink_Init(object sender, EventArgs e)

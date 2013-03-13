@@ -52,9 +52,9 @@
                     <td colspan="2" height="3%">
                         &nbsp;</td>
                     <td rowspan="8">
-        <dx:WebChartControl ID="WebChartControl1" runat="server" Height="600px" 
+        <dx:WebChartControl ID="WebChartControl1" runat="server" Height="300px" 
                 LoadingPanelText="Загрузка&amp;hellip;" SideBySideEqualBarWidth="True" 
-                Width="900px">
+                Width="400px">
             <diagramserializable>
                 <dx:XYDiagram>
                     <axisx gridspacingauto="False" visibleinpanesserializable="-1" visible="False">

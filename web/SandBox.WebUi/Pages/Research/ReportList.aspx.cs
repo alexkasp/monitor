@@ -1,15 +1,20 @@
 ﻿using System;
 using SandBox.Db;
+using System.Linq;
 using SandBox.WebUi.Base;
 using SandBox.Connection;
 using System.Text;
 using System.Drawing;
+using System.Collections.Generic;
+using DevExpress.Web.ASPxGridView;
+using DevExpress.XtraCharts;
 
 namespace SandBox.WebUi.Pages.Research
 {
     public partial class ReportList : BaseMainPage
     {
         public Db.Research Rs;
+        private Dictionary<string, int> DEventsCount = new Dictionary<string, int>();
 
         protected new void Page_Load(object sender, EventArgs e)
         {
@@ -34,14 +39,37 @@ namespace SandBox.WebUi.Pages.Research
                 Response.Redirect("~/Error");
             }
             LOS.Text = ResearchManager.GetRschOS(researchId);
-            LStartTime.Text = Rs.CreatedDate.ToString("dd MMM HH:mm:ss");
-            LStopTime.Text = ResearchManager.GetElapsedTimeInMinutes(Rs.StartedDate, Rs.StoppedDate, Rs.Duration);
-            LTimeToWork.Text =ResearchManager.GetLeftTimeInMinutes(Rs.StartedDate, Rs.Duration);
-            LHeader.Text = String.Format("Исследлвание (№{0}): {1}", Rs.Id, Rs.ResearchName);
+            LIRType.Text = ResearchManager.GetRschVmType(researchId);
+            LStartTime.Text = Rs.CreatedDate.ToString("dd MMM yyyyг. HH:mm:ss");
+            LStopTime.Text = Rs.Duration.ToString()+" мин.";
+            if (Rs.StartedDate.HasValue) //Сессия начата
+            {
+                Int32 elapsedMins = (Int32)((DateTime.Now - Rs.StartedDate.Value).TotalMinutes);
+                Int32 leftMins = Rs.Duration - elapsedMins;
+                
+                if (leftMins <= 0)
+                {
+                    LStatus.Text = "Завершено по таймеру";
+                }
+                else
+                {
+                    LStatus.Text = "Завершено принудительно (ост. "+ leftMins + " мин.)";
+                }
+            }
+            else
+            {
+                LStatus.Text = "Готово к запуску";
+            }
+            LHeader.Text = String.Format("Исследование (№{0}): {1}", Rs.Id, Rs.ResearchName);
             HLPorts.NavigateUrl += ("?research=" + researchId);
             ASPxHyperLink4.NavigateUrl += ("?research=" + researchId);
             Session["rsch"] = researchId;
+            DEventsCount.Clear();
+            UpdateEventChart(0, researchId);
 
+            gridAddParams.DataSource = TaskManager.GetTasksViewForRsch(researchId);//dataX;
+            gridAddParams.DataBind(); 
+            
             gridViewReports.DataSource = ResearchManager.GetEventsForRsch(Rs.Id);
             var newPageSize = (Int32)CBPagingSize.SelectedItem.Value;
             gridViewReports.SettingsPager.PageSize = newPageSize;
@@ -60,7 +88,7 @@ namespace SandBox.WebUi.Pages.Research
 
             if (!IsPostBack)
             {
-                ReportsBuilder.RschPropsListBuilder(TreeView1, Rs.Id);
+//                ReportsBuilder.RschPropsListBuilder(TreeView1, Rs.Id);
                 ASPxHyperLink5.NavigateUrl += ("?research=" + researchId);
                 if (Rs.TrafficFileReady == (Int32)TrafficFileReady.NOACTION)
                 {
@@ -68,8 +96,132 @@ namespace SandBox.WebUi.Pages.Research
                }
                 
             }
+                int[] FileEvs = new int[2];
+                int[] RegistryEvs = new int[2];
+                int[] NetEvs = new int[2];
+                int[] ProcessEvs = new int[2];
+
+                var db = new SandBoxDataContext();
+                var rdof = from d in db.EventsChartCounts
+                           where d.Id == researchId
+                           select d;
+                foreach (var rr in rdof)
+                {
+                    switch (rr.Module)
+                    {
+                        case "Файловая система":
+                            switch (rr.Sign)
+                            {
+                                case 1: FileEvs[0] += (int)rr.Count; break;
+                                default: FileEvs[1] += (int)rr.Count; break;
+                            } break;
+                        case "Реестр":
+                            switch (rr.Sign)
+                            {
+                                case 1: RegistryEvs[0] += (int)rr.Count; break;
+                                default: RegistryEvs[1] += (int)rr.Count; break;
+                            } break;
+                        case "Процессы":
+                            switch (rr.Sign)
+                            {
+                                case 1: ProcessEvs[0] += (int)rr.Count; break;
+                                default: ProcessEvs[1] += (int)rr.Count; break;
+                            } break;
+                        case "TDIMON":
+                        case "NDISMON":
+                            switch (rr.Sign)
+                            {
+                                case 1: NetEvs[0] += (int)rr.Count; break;
+                                default: NetEvs[1] += (int)rr.Count; break;
+                            } break;
+                    }
+                }
+                string scripttxt = "drawHalfPie('chartHolder1',Array(" + FileEvs[1].ToString() + ","
+                         + FileEvs[0].ToString() + ")); drawHalfPie('chartHolder2',Array(" + RegistryEvs[1].ToString() + ","
+                         + RegistryEvs[0].ToString() + ")); drawHalfPie('chartHolder3',Array(" + ProcessEvs[1].ToString() + ","
+                         + ProcessEvs[0].ToString() + ")); drawHalfPie('chartHolder4',Array(" + NetEvs[1].ToString() + ","
+                         + NetEvs[0].ToString() + "));";
+                Page.ClientScript.RegisterStartupScript(Type.GetType("System.String"), "addScript", scripttxt, true);
+                //gridAddParams.ClientSideEvents.Init = "function(s, e) { drawHalfPie('chartHolder1',Array(" + FileEvs[1].ToString() + ","
+                //         + FileEvs[0].ToString() + ")); drawHalfPie('chartHolder2',Array(" + RegistryEvs[1].ToString() + ","
+                //         + RegistryEvs[0].ToString() + ")); drawHalfPie('chartHolder3',Array(" + ProcessEvs[1].ToString() + ","
+                //         + ProcessEvs[0].ToString() + ")); drawHalfPie('chartHolder4',Array(" + NetEvs[1].ToString() + ","
+                //         + NetEvs[0].ToString() + "));}";
         }
 
+
+        private void UpdateEventChart(int yOfset = 0, int rsch = -1)
+        {
+            int r = rsch == -1 ? (int)Session["rsch"] : rsch;
+            int virtualTime = 0;
+            int startValue = 0;
+            wcEventsSign.Series.Clear();
+            wcEventsSign.Series.Add("Файловая система", DevExpress.XtraCharts.ViewType.SideBySideRangeBar);
+            wcEventsSign.Series.Add("Реестр", DevExpress.XtraCharts.ViewType.SideBySideRangeBar);
+            wcEventsSign.Series.Add("Процессы", DevExpress.XtraCharts.ViewType.SideBySideRangeBar);
+            wcEventsSign.Series.Add("Сеть", DevExpress.XtraCharts.ViewType.SideBySideRangeBar);
+            DEventsCount.Add("Файловая система", 0);
+            DEventsCount.Add("Реестр", 0);
+            DEventsCount.Add("Процессы", 0);
+            DEventsCount.Add("Сеть", 0);
+            DevExpress.XtraCharts.Series fseries = wcEventsSign.GetSeriesByName("Файловая система");
+            DevExpress.XtraCharts.Series rseries = wcEventsSign.GetSeriesByName("Реестр");
+            DevExpress.XtraCharts.Series pseries = wcEventsSign.GetSeriesByName("Процессы");
+            DevExpress.XtraCharts.Series sseries = wcEventsSign.GetSeriesByName("Сеть");
+            ((SideBySideRangeBarSeriesView)fseries.View).Color = Color.FromArgb(74, 134, 153);
+            ((SideBySideRangeBarSeriesView)fseries.View).FillStyle.FillMode = FillMode.Solid;
+            ((SideBySideRangeBarSeriesView)rseries.View).Color = Color.FromArgb(43, 83, 96);
+            ((SideBySideRangeBarSeriesView)rseries.View).FillStyle.FillMode = FillMode.Solid;
+            ((SideBySideRangeBarSeriesView)pseries.View).Color = Color.FromArgb(163, 193, 204);
+            ((SideBySideRangeBarSeriesView)pseries.View).FillStyle.FillMode = FillMode.Solid;
+            ((SideBySideRangeBarSeriesView)sseries.View).Color = Color.FromArgb(18, 50, 59);
+            ((SideBySideRangeBarSeriesView)sseries.View).FillStyle.FillMode = FillMode.Solid;
+            var evts = ResearchManager.GetEventsSignByRschId(r);
+            foreach (var evt in evts)
+            {
+                startValue = yOfset + GetOfsetForEvent(evt.significance);
+                switch (evt.module)
+                {
+                    case 1:
+                        fseries.Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
+                        DEventsCount["Файловая система"]++;
+                        break;
+                    case 2:
+                        rseries.Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
+                        DEventsCount["Реестр"]++;
+                        break;
+                    case 3:
+                        pseries.Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
+                        DEventsCount["Процессы"]++;
+                        break;
+                    case 4:
+                    case 5:
+                        sseries.Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
+                        DEventsCount["Сеть"]++;
+                        break;
+                }
+                virtualTime++;
+            }
+        }
+
+        private int GetOfsetForEvent(int evtSignif)
+        {
+            switch (evtSignif)
+            {
+                case 0:
+                    {
+                        return 2;
+                    }
+                case 1:
+                    {
+                        return 1;
+                    }
+                default:
+                    {
+                        return 0;
+                    }
+            }
+        }
 
         public static void AskPCAPFile(Int32 researchId)
         {

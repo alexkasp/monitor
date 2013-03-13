@@ -49,11 +49,40 @@ namespace SandBox.WebUi.Pages.Research
         {
             int r = rsch == -1 ? (int)Session["rsch"] : rsch;
             int virtualTime = 0;
-            var evts = ResearchManager.GetEventsByRschId(r);
+            int startValue = 0;
+            WebChartControl1.Series.Clear();
+            WebChartControl1.Series.Add("Файловая система", DevExpress.XtraCharts.ViewType.SideBySideRangeBar);
+            WebChartControl1.Series.Add("Реестр", DevExpress.XtraCharts.ViewType.SideBySideRangeBar);
+            WebChartControl1.Series.Add("Процессы", DevExpress.XtraCharts.ViewType.SideBySideRangeBar);
+            WebChartControl1.Series.Add("Сеть", DevExpress.XtraCharts.ViewType.SideBySideRangeBar);
+            DEventsCount.Add("Файловая система", 0);
+            DEventsCount.Add("Реестр", 0);
+            DEventsCount.Add("Процессы", 0);
+            DEventsCount.Add("Сеть", 0);
+            var evts = ResearchManager.GetEventsSignByRschId(r);
             foreach (var evt in evts)
             {
-                int evtSignif = ReportManager.GetEvtSignif(evt);
-                AddEventToChart(virtualTime, evt, evtSignif, yOfset);
+                startValue = yOfset + GetOfsetForEvent(evt.significance);
+                switch (evt.module)
+                {
+                    case 1:
+                        WebChartControl1.GetSeriesByName("Файловая система").Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
+                        DEventsCount["Файловая система"]++;
+                        break;
+                    case 2:
+                        WebChartControl1.GetSeriesByName("Реестр").Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
+                        DEventsCount["Реестр"]++;
+                        break;
+                    case 3:
+                        WebChartControl1.GetSeriesByName("Процессы").Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
+                        DEventsCount["Процессы"]++;
+                        break;
+                    case 4:
+                    case 5:
+                        WebChartControl1.GetSeriesByName("Сеть").Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
+                        DEventsCount["Сеть"]++;
+                        break;
+                }
                 virtualTime++;
             }
         }

@@ -144,29 +144,11 @@
                     </dx:ASPxPager>--%>
             <div style="float: left">
                 <dx:ASPxMenu ID="OpenReportMenu" runat="server" ClientInstanceName="OpenReportMenu"
-                    ClientVisible="False" BackColor="Transparent" RenderMode="Lightweight">
-                    <ClientSideEvents ItemClick="function(s, e) {
-	                    switch (e.item.name) {
-                           case 'ExpandAll':
-                              gridSearchView.ExpandAll();
-                              break
-                           case 'CollapseAll':
-                              gridSearchView.CollapseAll();
-                              break
-                           case 'CustomColumns':
-                              if(gridSearchView.IsCustomizationWindowVisible())
-                               gridSearchView.HideCustomizationWindow();
-                              else
-                               gridSearchView.ShowCustomizationWindow();  
-                              break
-                           case 'SaveGridProps':
-                               gridSearchView.PerformCallback('SaveLayout'); 
-                              break
-                            }
-                         }" />
+                    ClientVisible="False" BackColor="Transparent" >
                     <Paddings PaddingLeft="25px" />
                     <Items>
-                        <dx:MenuItem Text="Открыть отчет по исследованию">
+                        <dx:MenuItem Name="OpenReport" Text="Открыть отчет по исследованию" 
+                            NavigateUrl="~/Pages/Research/ReportList.aspx?research=">
                         </dx:MenuItem>
                     </Items>
                     <ItemStyle BackColor="Transparent">
@@ -322,7 +304,18 @@
                         KeyFieldName="Id" DataSourceID="LinqServerModeDataSource1" ClientInstanceName="gridSearchView"
                         OnCustomCallback="gridSearchView_CustomCallback" ClientVisible="False" EnableCallBacks="False"
                         OnCustomColumnDisplayText="gridSearchView_CustomColumnDisplayText" EnableTheming="True"
-                        Theme="Default">
+                        Theme="Default" oncustomjsproperties="gridSearchView_CustomJSProperties">
+                        <ClientSideEvents SelectionChanged="function(s, e) {
+                        if (e.isSelected) {
+                            var ResearchId = gridSearchView.cprschId[e.visibleIndex - gridSearchView.visibleStartIndex];
+                            if (ResearchId != null && ResearchId > 0) {
+                                OpenReportMenu.GetItem(0).SetEnabled(true);
+                                OpenReportMenu.GetItem(0).SetNavigateUrl('/Pages/Research/ReportList.aspx?researchId=' + ResearchId);
+                            }
+                            else { OpenReportMenu.GetItem(0).SetEnabled(false); }
+                        }
+                        else { OpenReportMenu.GetItem(0).SetEnabled(false); }
+}" />
                         <GroupSummary>
                             <dx:ASPxSummaryItem DisplayFormat="Количество событий: {0}" FieldName="Id" SummaryType="Count" />
                         </GroupSummary>

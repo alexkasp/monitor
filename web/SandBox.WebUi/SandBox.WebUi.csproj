@@ -137,9 +137,17 @@
     <Content Include="Base\BaseEmptyPage.aspx" />
     <Content Include="Content\Error.css" />
     <Content Include="Content\general.css" />
+    <Content Include="Content\Images\acchdrbg.png" />
+    <Content Include="Content\Images\acchdrcl.png" />
+    <Content Include="Content\Images\acchdrop.png" />
     <Content Include="Content\Images\AquaHeader.jpg" />
+    <Content Include="Content\Images\bg.png" />
+    <Content Include="Content\Images\bgtblheader.png" />
     <Content Include="Content\Images\Bkg.png" />
     <Content Include="Content\Images\BlackGlassHeader.jpg" />
+    <Content Include="Content\Images\bluebox.png" />
+    <Content Include="Content\Images\btnlogin.png" />
+    <Content Include="Content\Images\btn_back.jpg" />
     <Content Include="Content\Images\btn_compres.jpg" />
     <Content Include="Content\Images\btn_createres.jpg" />
     <Content Include="Content\Images\btn_exit.png" />
@@ -147,14 +155,32 @@
     <Content Include="Content\Images\btn_report.png" />
     <Content Include="Content\Images\btn_tablenav.jpg" />
     <Content Include="Content\Images\Charts.png" />
+    <Content Include="Content\Images\detailrowb.png" />
+    <Content Include="Content\Images\detailrowh.png" />
     <Content Include="Content\Images\footerbg.jpg" />
     <Content Include="Content\Images\GlassHeader.jpg" />
+    <Content Include="Content\Images\globus.png" />
     <Content Include="Content\Images\headerbg.jpg" />
     <Content Include="Content\Images\headertopbg.png" />
     <Content Include="Content\Images\Icons\add_lir.png" />
     <Content Include="Content\Images\Icons\add_vlir.png" />
+    <Content Include="Content\Images\Icons\btn_comp.png" />
+    <Content Include="Content\Images\Icons\btn_compd.png" />
+    <Content Include="Content\Images\Icons\btn_del.png" />
+    <Content Include="Content\Images\Icons\btn_deld.png" />
+    <Content Include="Content\Images\Icons\btn_stop.png" />
+    <Content Include="Content\Images\Icons\btn_stopd.png" />
     <Content Include="Content\Images\Icons\delete.png" />
     <Content Include="Content\Images\Icons\edit.png" />
+    <Content Include="Content\Images\Icons\export.png" />
+    <Content Include="Content\Images\Icons\filter.png" />
+    <Content Include="Content\Images\Icons\next.png" />
+    <Content Include="Content\Images\Icons\nextd.png" />
+    <Content Include="Content\Images\Icons\prev.png" />
+    <Content Include="Content\Images\Icons\prevd.png" />
+    <Content Include="Content\Images\Icons\process.gif" />
+    <Content Include="Content\Images\Icons\report.png" />
+    <Content Include="Content\Images\Icons\tools.png" />
     <Content Include="Content\Images\Icons\user.png" />
     <Content Include="Content\Images\lg_bkg.png" />
     <Content Include="Content\Images\login-box-backg.png" />
@@ -164,6 +190,8 @@
     <Content Include="Content\Images\nvtl.png" />
     <Content Include="Content\Images\nvtr.png" />
     <Content Include="Content\Images\PlasticBlueHeader.jpg" />
+    <Content Include="Content\Images\progress.gif" />
+    <Content Include="Content\Images\redbox.png" />
     <Content Include="Content\Images\RedWineHeader.jpg" />
     <Content Include="Content\Images\Icons\run.png" />
     <Content Include="Content\Images\Icons\stop.png" />
@@ -171,6 +199,7 @@
     <Content Include="Content\Images\shadowbh.png" />
     <Content Include="Content\Images\shadowtc.png" />
     <Content Include="Content\Images\shadowth.png" />
+    <Content Include="Content\Images\shgraph.png" />
     <Content Include="Content\Images\UserIcon.png" />
     <Content Include="Content\Images\vpanelbg.png" />
     <Content Include="Content\Images\vresearch.png" />
@@ -685,7 +714,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>9020</DevelopmentServerPort>
+          <DevelopmentServerPort>4113</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:1274/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

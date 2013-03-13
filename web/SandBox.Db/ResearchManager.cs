@@ -271,6 +271,15 @@ namespace SandBox.Db
                    select evts;
         }
 
+        public static IQueryable<EventsChartSign> GetEventsSignByRschId(int rschId)
+        {
+            var db = new SandBoxDataContext();
+            return from evts in db.EventsChartSigns
+                   where evts.rschId == rschId
+                   orderby evts.Id
+                   select evts;
+        }
+
         public static IQueryable GetEventsViewWithSignWithoutLogic(int rschId)
         {
             var db = new SandBoxDataContext();
@@ -358,11 +367,11 @@ namespace SandBox.Db
                 return from evts in db.EventsTableViews
                        where evts.rschId == rschId
                        orderby evts.Id
-                       select new { evts.Id, evts.ModuleId, evts.EventCode, evts.who, evts.dest, evts.Description, evts.rschId, pid = evts.pid1, evts.pid2, evts.adddata1, evts.adddata2, evts.timeofevent };
+                       select new { evts.Id, evts.ModuleId, evts.EventCode, evts.who, evts.dest, evts.Description, evts.rschId, pid = evts.pid1, evts.pid2, evts.adddata1, evts.adddata2, evts.timeofevent, evts.status };
             return from evts in db.EventsTableViews
                    where evts.rschId == rschId
                    orderby evts.Id descending
-                   select new { evts.Id, evts.ModuleId, evts.EventCode, evts.who, evts.dest, evts.Description, evts.rschId, pid = evts.pid1, evts.pid2, evts.adddata1, evts.adddata2, evts.timeofevent };
+                   select new { evts.Id, evts.ModuleId, evts.EventCode, evts.who, evts.dest, evts.Description, evts.rschId, pid = evts.pid1, evts.pid2, evts.adddata1, evts.adddata2, evts.timeofevent, evts.status };
 //                return from evts in db.events
 //                       where evts.rschId == rschId
 //                       select new { Id = evts.Id, ModuleId = GetEvtModuleDescription(evts.module), EventCode = GetEvtEvtDescription(evts.@event), Who = evts.who, Dest = evts.dest, Description = evts.descr, RschId = evts.rschId, pid = evts.pid1, pid2 = evts.pid2, adddata1 = evts.adddata1, adddata2 = evts.adddata2, timeOfEvent = evts.timeofevent };
@@ -562,6 +571,20 @@ namespace SandBox.Db
             if (vms == null) return os;
             os = vms.Description;
             return os;
+        }
+
+        public static string GetRschVmType(int id)
+        {
+            var db = new SandBoxDataContext();
+            string VmType = "Нет данных";
+            var rsch = GetResearch(id);
+            if (rsch == null) return VmType;
+            Vm vm = db.Vms.FirstOrDefault<Vm>(x => x.Id == rsch.VmId);
+            if (vm == null) return VmType;
+            VmType vmt = db.VmTypes.FirstOrDefault<VmType>(x => x.Type == vm.Type);
+            if (vmt == null) return VmType;
+            VmType = vmt.Description;
+            return VmType;
         }
 
         public static Dictionary<string, int> GetBadCountForOS()
