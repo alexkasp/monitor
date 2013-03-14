@@ -148,58 +148,22 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.XtraCharts.Web.WebChartControl wcEventsSign;
         
         /// <summary>
-        /// linkGetTraffic control.
+        /// UpdategridPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkGetTraffic;
+        protected global::System.Web.UI.UpdatePanel UpdategridPanel;
         
         /// <summary>
-        /// ASPxButton1 control.
+        /// ASPxPageControl1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton ASPxButton1;
-        
-        /// <summary>
-        /// linkGetProcessList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkGetProcessList;
-        
-        /// <summary>
-        /// HLPorts control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink HLPorts;
-        
-        /// <summary>
-        /// linkGetRegistryList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkGetRegistryList;
-        
-        /// <summary>
-        /// linkGetFileList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkGetFileList;
+        protected global::DevExpress.Web.ASPxTabControl.ASPxPageControl ASPxPageControl1;
         
         /// <summary>
         /// ASPxHyperLink3 control.
@@ -218,24 +182,6 @@ namespace SandBox.WebUi.Pages.Research {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink ASPxHyperLink4;
-        
-        /// <summary>
-        /// ASPxHyperLink5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink ASPxHyperLink5;
-        
-        /// <summary>
-        /// UpdategridPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdategridPanel;
         
         /// <summary>
         /// LPagingSize control.
@@ -281,5 +227,68 @@ namespace SandBox.WebUi.Pages.Research {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxEditors.ASPxButton ASPxButton2;
+        
+        /// <summary>
+        /// linkGetFileList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkGetFileList;
+        
+        /// <summary>
+        /// linkGetRegistryList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkGetRegistryList;
+        
+        /// <summary>
+        /// ASPxHyperLink5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink ASPxHyperLink5;
+        
+        /// <summary>
+        /// linkGetProcessList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkGetProcessList;
+        
+        /// <summary>
+        /// linkGetTraffic control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkGetTraffic;
+        
+        /// <summary>
+        /// ASPxButton1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton ASPxButton1;
+        
+        /// <summary>
+        /// HLPorts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink HLPorts;
     }
 }

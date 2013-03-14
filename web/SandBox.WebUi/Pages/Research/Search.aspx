@@ -105,7 +105,10 @@
                                 </asp:UpdatePanel>
                                 <div style="float: left; padding-top: 10px;">
                                     <dx:ASPxButton runat="server" ID="btnApply" Text="Поиск" AutoPostBack="false" UseSubmitBehavior="false">
-                                        <ClientSideEvents Click="function() { gridSearchView.PerformCallback('ApplyExtFilter'); }" />
+                                        <ClientSideEvents Click="function() {   setTimeout(function () {
+                gridSearchView.PerformCallback('ApplyExtFilter');
+            },1500);
+ }" />
                                     </dx:ASPxButton>
                                 </div>
                                 <div style="float: left; padding-left: 20px; padding-top: 10px;">
