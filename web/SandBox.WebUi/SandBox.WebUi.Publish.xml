@@ -4,7 +4,6 @@
   <publishProfile publishUrl="D:\work\site" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="local" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
     <file relUrl="Base/BaseEmptyPage.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="App_Data/MainMenu/FileManagerMenu.xml" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Pages/Research/ProcessList.aspx" publishTime="02/22/2013 22:04:35" />
     <file relUrl="Content/Images/headertopbg.png" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/shadowtc.png" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/Icons/process.gif" publishTime="02/13/2013 06:34:47" />
@@ -12,42 +11,41 @@
     <file relUrl="bin/cs/AjaxControlToolkit.resources.dll" publishTime="01/24/2013 08:49:22" />
     <file relUrl="Content/lib/pieChart.js" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/Icons/edit.png" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="bin/SandBox.Db.dll" publishTime="03/13/2013 09:28:20" />
+    <file relUrl="Content/Images/Icons/prev.png" publishTime="02/24/2013 21:34:34" />
+    <file relUrl="bin/SandBox.Db.dll" publishTime="03/18/2013 06:54:18" />
     <file relUrl="Pages/Settings/Index.aspx" publishTime="02/22/2013 22:04:35" />
-    <file relUrl="Pages/Research/Current.aspx" publishTime="02/25/2013 07:20:36" />
+    <file relUrl="Pages/Research/Current.aspx" publishTime="03/18/2013 08:49:50" />
     <file relUrl="Account/Register.aspx" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Web.config" publishTime="03/13/2013 09:32:34" />
+    <file relUrl="Web.config" publishTime="03/18/2013 10:36:52" />
     <file relUrl="Pages/Information/Resources.aspx" publishTime="02/25/2013 07:53:10" />
-    <file relUrl="App_Data/MainMenu/AdminMenu.xml" publishTime="03/03/2013 09:36:07" />
     <file relUrl="Content/Images/vtopvpo.png" publishTime="02/22/2013 22:04:34" />
     <file relUrl="bin/ar/AjaxControlToolkit.resources.dll" publishTime="01/24/2013 08:49:22" />
     <file relUrl="Pages/Research/NewResearch.aspx" publishTime="03/05/2013 09:16:51" />
     <file relUrl="Content/Images/Icons/add_lir.png" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Pages/Research/Comparer.aspx" publishTime="02/25/2013 00:55:52" />
+    <file relUrl="Pages/Research/Comparer.aspx" publishTime="03/18/2013 10:34:43" />
     <file relUrl="Content/Images/Icons/run.png" publishTime="02/24/2013 08:57:22" />
     <file relUrl="Content/Images/Icons/user.png" publishTime="02/22/2013 22:04:34" />
     <file relUrl="bin/NLog.xml" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/Icons/btn_stop.png" publishTime="02/24/2013 22:33:06" />
     <file relUrl="Content/Images/bgtblheader.png" publishTime="02/22/2013 22:04:34" />
+    <file relUrl="Pages/Research/ReportList.aspx" publishTime="03/18/2013 07:33:57" />
+    <file relUrl="Content/Images/Icons/export.png" publishTime="03/05/2013 08:17:19" />
     <file relUrl="Content/Images/btn_tablenav.jpg" publishTime="02/22/2013 22:04:34" />
     <file relUrl="bin/SanitizerProviders.dll" publishTime="02/26/2013 05:46:15" />
     <file relUrl="Content/Images/acchdrcl.png" publishTime="02/26/2013 06:53:59" />
     <file relUrl="Pages/Information/CreateNewVlir.aspx" publishTime="02/25/2013 07:53:10" />
     <file relUrl="Content/Images/Icons/btn_stopd.png" publishTime="02/24/2013 22:34:01" />
     <file relUrl="Account/Web.config" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Pages/Information/Index.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Pages/Information/CreateEtalonMachine.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="NLog.config" publishTime="02/22/2013 22:04:34" />
     <file relUrl="bin/AjaxControlToolkit.dll" publishTime="01/24/2013 08:49:22" />
     <file relUrl="Pages/Research/Reports.aspx" publishTime="02/22/2013 22:04:35" />
     <file relUrl="Content/Images/AquaHeader.jpg" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="bin/SandBox.Log.dll" publishTime="03/11/2013 22:09:52" />
+    <file relUrl="bin/SandBox.Log.dll" publishTime="03/16/2013 19:32:38" />
     <file relUrl="Content/Images/headerbg.jpg" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Pages/Research/EventsReport.aspx" publishTime="02/22/2013 22:04:35" />
     <file relUrl="Pages/Research/FileList.aspx" publishTime="02/22/2013 22:04:35" />
-    <file relUrl="Pages/Information/СonsolidatedReport.aspx" publishTime="02/27/2013 07:58:46" />
     <file relUrl="bin/SandboxTheme.dll" publishTime="02/21/2013 07:36:44" />
-    <file relUrl="bin/SandBox.Data.pdb" publishTime="03/11/2013 22:09:44" />
+    <file relUrl="bin/SandBox.Data.pdb" publishTime="03/16/2013 19:32:36" />
     <file relUrl="Content/Images/btn_createres.jpg" publishTime="02/22/2013 22:04:34" />
     <file relUrl="bin/pt/AjaxControlToolkit.resources.dll" publishTime="01/24/2013 08:49:24" />
     <file relUrl="Content/Images/detailrowb.png" publishTime="02/22/2013 22:04:34" />
@@ -63,14 +61,14 @@
     <file relUrl="Content/Images/acchdrbg.png" publishTime="02/26/2013 06:47:01" />
     <file relUrl="Pages/Malware/Malwares.aspx" publishTime="02/27/2013 09:13:30" />
     <file relUrl="bin/he/AjaxControlToolkit.resources.dll" publishTime="01/24/2013 08:49:22" />
-    <file relUrl="Content/general.css" publishTime="03/12/2013 08:18:18" />
+    <file relUrl="Content/general.css" publishTime="03/18/2013 09:37:18" />
     <file relUrl="Pages/Information/LoadMalware.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/lib/g.hbar-min.js" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Content/Images/Icons/btn_deld.png" publishTime="02/24/2013 22:36:29" />
     <file relUrl="Content/Images/researchtable.jpg" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Global.asax" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Pages/Information/MalwareInfo.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Pages/Error/CommunicationError.aspx" publishTime="02/22/2013 22:04:34" />
+    <file relUrl="bin/app.config" publishTime="02/22/2013 22:04:32" />
     <file relUrl="Account/Login.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="bin/hi/AjaxControlToolkit.resources.dll" publishTime="01/24/2013 08:49:24" />
     <file relUrl="Pages/Research/RegsTree.aspx" publishTime="02/22/2013 22:04:35" />
@@ -79,7 +77,8 @@
     <file relUrl="Content/Images/Bkg.png" publishTime="02/22/2013 22:04:34" />
     <file relUrl="bin/ko/AjaxControlToolkit.resources.dll" publishTime="01/24/2013 08:49:24" />
     <file relUrl="Content/Images/footerbg.jpg" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="bin/SandBoxWebUi.pdb" publishTime="03/14/2013 09:16:21" />
+    <file relUrl="Pages/Research/RegistryList.aspx" publishTime="02/22/2013 22:04:35" />
+    <file relUrl="bin/SandBoxWebUi.pdb" publishTime="03/18/2013 10:14:55" />
     <file relUrl="Content/Images/UserIcon.png" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/btn_exit.png" publishTime="02/22/2013 22:04:34" />
     <file relUrl="packages.config" publishTime="02/26/2013 05:46:50" />
@@ -99,7 +98,6 @@
     <file relUrl="Pages/Research/ChartOfEvents.aspx" publishTime="03/13/2013 07:34:37" />
     <file relUrl="App_Data/MainMenu/EmptyMenu.xml" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/btnlogin.png" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Content/Login.css" publishTime="02/22/2013 22:04:34" />
     <file relUrl="bin/AjaxControlToolkit.pdb" publishTime="01/24/2013 08:49:22" />
     <file relUrl="bin/fr/AjaxControlToolkit.resources.dll" publishTime="01/24/2013 08:49:22" />
     <file relUrl="Content/Images/lg_bkg.png" publishTime="02/22/2013 22:04:34" />
@@ -129,54 +127,57 @@
     <file relUrl="Base/BaseLightPage.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/login-box-backg.png" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Pages/Information/Test.aspx" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="bin/SandBox.Db.pdb" publishTime="03/13/2013 09:28:20" />
-    <file relUrl="bin/SandBox.Data.dll" publishTime="03/11/2013 22:09:44" />
+    <file relUrl="bin/SandBox.Db.pdb" publishTime="03/18/2013 06:54:17" />
+    <file relUrl="bin/SandBox.Data.dll" publishTime="03/16/2013 19:32:36" />
     <file relUrl="Content/Images/Icons/next.png" publishTime="02/24/2013 21:34:09" />
+    <file relUrl="Content/Images/bgtab.png" publishTime="03/18/2013 07:26:50" />
     <file relUrl="Content/Images/PlasticBlueHeader.jpg" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Account/ChangePassword.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/shadowth.png" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="bin/SandBoxWebUi.dll" publishTime="03/14/2013 09:16:21" />
+    <file relUrl="bin/SandBoxWebUi.dll" publishTime="03/18/2013 10:14:56" />
     <file relUrl="Pages/Research/Index.aspx" publishTime="02/22/2013 22:04:35" />
     <file relUrl="Account/ChangePasswordSuccess.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Pages/Research/ProcTree.aspx" publishTime="02/22/2013 22:04:35" />
     <file relUrl="Pages/Information/DirectoryOfEvents.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/GlassHeader.jpg" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="bin/SandBox.Connection.dll" publishTime="03/11/2013 22:09:51" />
+    <file relUrl="bin/SandBox.Connection.dll" publishTime="03/16/2013 19:32:40" />
     <file relUrl="Content/Site.css" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/lib/underscore-min.js" publishTime="02/22/2013 22:04:34" />
     <file relUrl="bin/ru/AjaxControlToolkit.resources.dll" publishTime="01/24/2013 08:49:24" />
     <file relUrl="Content/Images/Icons/report.png" publishTime="03/06/2013 05:51:28" />
     <file relUrl="Content/Images/BlackGlassHeader.jpg" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Pages/Research/Search.aspx" publishTime="03/14/2013 06:20:14" />
-    <file relUrl="Pages/Settings/Users.aspx" publishTime="02/22/2013 22:04:35" />
+    <file relUrl="Pages/Research/Search.aspx" publishTime="03/14/2013 09:30:41" />
     <file relUrl="Content/Images/acchdrop.png" publishTime="02/26/2013 06:52:54" />
+    <file relUrl="Pages/Settings/Users.aspx" publishTime="02/22/2013 22:04:35" />
+    <file relUrl="Pages/Research/ProcessList.aspx" publishTime="02/22/2013 22:04:35" />
     <file relUrl="Content/lib/jquery.min.js" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="bin/app.config" publishTime="02/22/2013 22:04:32" />
+    <file relUrl="App_Data/MainMenu/AdminMenu.xml" publishTime="03/03/2013 09:36:07" />
     <file relUrl="Content/Images/Icons/tools.png" publishTime="03/05/2013 07:54:13" />
-    <file relUrl="Content/Images/Icons/export.png" publishTime="03/05/2013 08:17:19" />
+    <file relUrl="Content/Images/Icons/btn_deld.png" publishTime="02/24/2013 22:36:29" />
     <file relUrl="bin/nl/AjaxControlToolkit.resources.dll" publishTime="01/24/2013 08:49:24" />
     <file relUrl="Root.master" publishTime="03/05/2013 09:21:19" />
     <file relUrl="Content/Images/Icons/btn_comp.png" publishTime="02/24/2013 22:30:40" />
-    <file relUrl="bin/SandBox.Log.pdb" publishTime="03/11/2013 22:09:52" />
+    <file relUrl="bin/SandBox.Log.pdb" publishTime="03/16/2013 19:32:38" />
     <file relUrl="Content/Images/Icons/stop.png" publishTime="02/24/2013 08:57:02" />
+    <file relUrl="Content/Images/redbox.png" publishTime="02/22/2013 22:04:34" />
     <file relUrl="bin/it/AjaxControlToolkit.resources.dll" publishTime="01/24/2013 08:49:24" />
     <file relUrl="App_Data/MainMenu/UserMenu.xml" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Light.master" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Content/Images/detailrowh.png" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Content/Images/Icons/prevd.png" publishTime="02/24/2013 21:35:14" />
+    <file relUrl="Pages/Information/СonsolidatedReport.aspx" publishTime="02/27/2013 07:58:46" />
     <file relUrl="Account/RegisterSuccess.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Base/BaseMainPage.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/Charts.png" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Content/Images/redbox.png" publishTime="02/22/2013 22:04:34" />
+    <file relUrl="Content/Images/detailrowh.png" publishTime="02/22/2013 22:04:34" />
+    <file relUrl="Content/Images/Icons/prevd.png" publishTime="02/24/2013 21:35:14" />
     <file relUrl="Content/Images/vresearch.png" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="bin/SandBox.Connection.pdb" publishTime="03/11/2013 22:09:51" />
+    <file relUrl="bin/SandBox.Connection.pdb" publishTime="03/16/2013 19:32:40" />
     <file relUrl="bin/NLog.dll" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Pages/Research/RegistryList.aspx" publishTime="02/22/2013 22:04:35" />
+    <file relUrl="Pages/Research/EventsReport.aspx" publishTime="02/22/2013 22:04:35" />
     <file relUrl="Content/Images/bluebox.png" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Pages/Malware/Classification.aspx" publishTime="02/22/2013 22:04:34" />
-    <file relUrl="Pages/Research/ReportList.aspx" publishTime="03/14/2013 09:11:36" />
+    <file relUrl="Pages/Information/Index.aspx" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/Icons/btn_compd.png" publishTime="02/24/2013 22:31:03" />
-    <file relUrl="Content/Images/Icons/prev.png" publishTime="02/24/2013 21:34:34" />
+    <file relUrl="Content/Login.css" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/vpanelbg.png" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/RedWineHeader.jpg" publishTime="02/22/2013 22:04:34" />
     <file relUrl="Content/Images/Icons/nextd.png" publishTime="02/24/2013 21:35:37" />

@@ -135,6 +135,9 @@ namespace SandBox.Db
     partial void InsertLayout(Layout instance);
     partial void UpdateLayout(Layout instance);
     partial void DeleteLayout(Layout instance);
+    partial void InsertEventsChartSign(EventsChartSign instance);
+    partial void UpdateEventsChartSign(EventsChartSign instance);
+    partial void DeleteEventsChartSign(EventsChartSign instance);
     #endregion
 		
 		public SandBoxDataContext() : 
@@ -607,6 +610,14 @@ namespace SandBox.Db
 			}
 		}
 		
+		public System.Data.Linq.Table<EventsTableView> EventsTableViews
+		{
+			get
+			{
+				return this.GetTable<EventsTableView>();
+			}
+		}
+		
 		public System.Data.Linq.Table<EventsChartSign> EventsChartSigns
 		{
 			get
@@ -615,12 +626,17 @@ namespace SandBox.Db
 			}
 		}
 		
-		public System.Data.Linq.Table<EventsTableView> EventsTableViews
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.FunctEventsSignForResearch", IsComposable=true)]
+		public IQueryable<FunctEventsSignForResearchResult> FunctEventsSignForResearch([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> rschid)
 		{
-			get
-			{
-				return this.GetTable<EventsTableView>();
-			}
+			return this.CreateMethodCallQuery<FunctEventsSignForResearchResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), rschid);
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.GetEventsSignForResearch")]
+		public ISingleResult<GetEventsSignForResearchResult> GetEventsSignForResearch([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> rschid)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), rschid);
+			return ((ISingleResult<GetEventsSignForResearchResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -8713,87 +8729,6 @@ namespace SandBox.Db
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EventsChartSign")]
-	public partial class EventsChartSign
-	{
-		
-		private long _Id;
-		
-		private int _rschId;
-		
-		private int _module;
-		
-		private int _significance;
-		
-		public EventsChartSign()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="BigInt NOT NULL")]
-		public long Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this._Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rschId", DbType="Int NOT NULL")]
-		public int rschId
-		{
-			get
-			{
-				return this._rschId;
-			}
-			set
-			{
-				if ((this._rschId != value))
-				{
-					this._rschId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_module", DbType="Int NOT NULL")]
-		public int module
-		{
-			get
-			{
-				return this._module;
-			}
-			set
-			{
-				if ((this._module != value))
-				{
-					this._module = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_significance", DbType="Int")]
-		public int significance
-		{
-			get
-			{
-				return this._significance;
-			}
-			set
-			{
-				if ((this._significance != value))
-				{
-					this._significance = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EventsTableView")]
 	public partial class EventsTableView
 	{
@@ -9032,6 +8967,336 @@ namespace SandBox.Db
 				if ((this._status != value))
 				{
 					this._status = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EventsChartSign")]
+	public partial class EventsChartSign : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _Id;
+		
+		private int _rschId;
+		
+		private int _module;
+		
+		private int _significance;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(long value);
+    partial void OnIdChanged();
+    partial void OnrschIdChanging(int value);
+    partial void OnrschIdChanged();
+    partial void OnmoduleChanging(int value);
+    partial void OnmoduleChanged();
+    partial void OnsignificanceChanging(int value);
+    partial void OnsignificanceChanged();
+    #endregion
+		
+		public EventsChartSign()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rschId", DbType="Int NOT NULL")]
+		public int rschId
+		{
+			get
+			{
+				return this._rschId;
+			}
+			set
+			{
+				if ((this._rschId != value))
+				{
+					this.OnrschIdChanging(value);
+					this.SendPropertyChanging();
+					this._rschId = value;
+					this.SendPropertyChanged("rschId");
+					this.OnrschIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_module", DbType="Int NOT NULL")]
+		public int module
+		{
+			get
+			{
+				return this._module;
+			}
+			set
+			{
+				if ((this._module != value))
+				{
+					this.OnmoduleChanging(value);
+					this.SendPropertyChanging();
+					this._module = value;
+					this.SendPropertyChanged("module");
+					this.OnmoduleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_significance", DbType="Int NOT NULL")]
+		public int significance
+		{
+			get
+			{
+				return this._significance;
+			}
+			set
+			{
+				if ((this._significance != value))
+				{
+					this.OnsignificanceChanging(value);
+					this.SendPropertyChanging();
+					this._significance = value;
+					this.SendPropertyChanged("significance");
+					this.OnsignificanceChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	public partial class FunctEventsSignForResearchResult
+	{
+		
+		private System.Nullable<int> _rownum;
+		
+		private long _Id;
+		
+		private int _module;
+		
+		private int _significance;
+		
+		private System.Nullable<int> _significance2;
+		
+		public FunctEventsSignForResearchResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rownum", DbType="Int")]
+		public System.Nullable<int> rownum
+		{
+			get
+			{
+				return this._rownum;
+			}
+			set
+			{
+				if ((this._rownum != value))
+				{
+					this._rownum = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="BigInt NOT NULL")]
+		public long Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_module", DbType="Int NOT NULL")]
+		public int module
+		{
+			get
+			{
+				return this._module;
+			}
+			set
+			{
+				if ((this._module != value))
+				{
+					this._module = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_significance", DbType="Int NOT NULL")]
+		public int significance
+		{
+			get
+			{
+				return this._significance;
+			}
+			set
+			{
+				if ((this._significance != value))
+				{
+					this._significance = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_significance2", DbType="Int")]
+		public System.Nullable<int> significance2
+		{
+			get
+			{
+				return this._significance2;
+			}
+			set
+			{
+				if ((this._significance2 != value))
+				{
+					this._significance2 = value;
+				}
+			}
+		}
+	}
+	
+	public partial class GetEventsSignForResearchResult
+	{
+		
+		private System.Nullable<int> _rownum;
+		
+		private long _Id;
+		
+		private int _module;
+		
+		private int _significance;
+		
+		private System.Nullable<int> _significance2;
+		
+		public GetEventsSignForResearchResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rownum", DbType="Int")]
+		public System.Nullable<int> rownum
+		{
+			get
+			{
+				return this._rownum;
+			}
+			set
+			{
+				if ((this._rownum != value))
+				{
+					this._rownum = value;
+				}
+			}
+		}
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Id", DbType = "BigInt NOT NULL", IsPrimaryKey = true)]
+		public long Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_module", DbType="Int NOT NULL")]
+		public int module
+		{
+			get
+			{
+				return this._module;
+			}
+			set
+			{
+				if ((this._module != value))
+				{
+					this._module = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_significance", DbType="Int NOT NULL")]
+		public int significance
+		{
+			get
+			{
+				return this._significance;
+			}
+			set
+			{
+				if ((this._significance != value))
+				{
+					this._significance = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_significance2", DbType="Int")]
+		public System.Nullable<int> significance2
+		{
+			get
+			{
+				return this._significance2;
+			}
+			set
+			{
+				if ((this._significance2 != value))
+				{
+					this._significance2 = value;
 				}
 			}
 		}

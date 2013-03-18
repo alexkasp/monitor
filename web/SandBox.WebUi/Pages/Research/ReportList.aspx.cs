@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using DevExpress.Web.ASPxGridView;
 using DevExpress.XtraCharts;
+using System.Collections;
 
 namespace SandBox.WebUi.Pages.Research
 {
@@ -15,7 +16,34 @@ namespace SandBox.WebUi.Pages.Research
     {
         public Db.Research Rs;
         private Dictionary<string, int> DEventsCount = new Dictionary<string, int>();
+        public Int32 researchId;
 
+        public class Record
+        {
+            int id, startv, endv;
+            public Record(int id, int startv, int endv)
+            {
+                this.id = id;
+                this.startv = startv;
+                this.endv = endv;
+            }
+            public int ID
+            {
+                get { return id; }
+                set { id = value; }
+            }
+            public int Startv
+            {
+                get { return startv; }
+                set { startv = value; }
+            }
+            public int Endv
+            {
+                get { return endv; }
+                set { endv = value; }
+            }
+        }
+        
         protected new void Page_Load(object sender, EventArgs e)
         {
 
@@ -23,7 +51,7 @@ namespace SandBox.WebUi.Pages.Research
             base.Page_Load(sender, e);
             PageTitle = "Отчет";
             PageMenu  = "~/App_Data/SideMenu/Research/ResearchMenu.xml";
-            Int32 researchId = -1;
+            researchId = -1;
             try
             {
                 researchId = (int)Session["rsId"];
@@ -38,6 +66,8 @@ namespace SandBox.WebUi.Pages.Research
             {
                 Response.Redirect("~/Error");
             }
+            Mlwr mlwrrec = ResearchManager.GetMlwrByRschId(researchId);
+            if (mlwrrec != null) Mlwr.Text = mlwrrec.Name + " (" + mlwrrec.Path + ")";
             LOS.Text = ResearchManager.GetRschOS(researchId);
             LIRType.Text = ResearchManager.GetRschVmType(researchId);
             LStartTime.Text = Rs.CreatedDate.ToString("dd MMM yyyyг. HH:mm:ss");
@@ -65,7 +95,6 @@ namespace SandBox.WebUi.Pages.Research
             ASPxHyperLink4.NavigateUrl += ("?research=" + researchId);
             Session["rsch"] = researchId;
             DEventsCount.Clear();
-            UpdateEventChart(0, researchId);
 
             gridAddParams.DataSource = TaskManager.GetTasksViewForRsch(researchId);//dataX;
             gridAddParams.DataBind(); 
@@ -89,7 +118,7 @@ namespace SandBox.WebUi.Pages.Research
             if (!IsPostBack)
             {
 //                ReportsBuilder.RschPropsListBuilder(TreeView1, Rs.Id);
-                ASPxHyperLink5.NavigateUrl += ("?research=" + researchId);
+                 ASPxHyperLink5.NavigateUrl += ("?research=" + researchId);
                 if (Rs.TrafficFileReady == (Int32)TrafficFileReady.NOACTION)
                 {
                     AskPCAPFile(researchId);
@@ -149,25 +178,55 @@ namespace SandBox.WebUi.Pages.Research
                 //         + NetEvs[0].ToString() + "));}";
         }
 
-
         private void UpdateEventChart(int yOfset = 0, int rsch = -1)
         {
             int r = rsch == -1 ? (int)Session["rsch"] : rsch;
             int virtualTime = 0;
             int startValue = 0;
             wcEventsSign.Series.Clear();
-            wcEventsSign.Series.Add("Файловая система", DevExpress.XtraCharts.ViewType.SideBySideRangeBar);
-            wcEventsSign.Series.Add("Реестр", DevExpress.XtraCharts.ViewType.SideBySideRangeBar);
-            wcEventsSign.Series.Add("Процессы", DevExpress.XtraCharts.ViewType.SideBySideRangeBar);
-            wcEventsSign.Series.Add("Сеть", DevExpress.XtraCharts.ViewType.SideBySideRangeBar);
-            DEventsCount.Add("Файловая система", 0);
-            DEventsCount.Add("Реестр", 0);
-            DEventsCount.Add("Процессы", 0);
-            DEventsCount.Add("Сеть", 0);
-            DevExpress.XtraCharts.Series fseries = wcEventsSign.GetSeriesByName("Файловая система");
-            DevExpress.XtraCharts.Series rseries = wcEventsSign.GetSeriesByName("Реестр");
-            DevExpress.XtraCharts.Series pseries = wcEventsSign.GetSeriesByName("Процессы");
-            DevExpress.XtraCharts.Series sseries = wcEventsSign.GetSeriesByName("Сеть");
+
+            var evts = ResearchManager.GetEventsSignByRschId(r);
+
+            ArrayList fDS = new ArrayList();
+            ArrayList rDS = new ArrayList();
+            ArrayList pDS = new ArrayList();
+            ArrayList sDS = new ArrayList();
+
+            foreach (var evt in evts)
+            {
+                virtualTime++;
+                switch (evt.module)
+                {
+                    case 1:
+                        fDS.Add(new Record(virtualTime,evt.significance, evt.significance+1));
+//                        DEventsCount["Файловая система"]++;
+                        break;
+                    case 2:
+                        rDS.Add(new Record(virtualTime,evt.significance, evt.significance+1));
+//                        DEventsCount["Реестр"]++;
+                        break;
+                    case 3:
+                        pDS.Add(new Record(virtualTime,evt.significance, evt.significance+1));
+//                        DEventsCount["Процессы"]++;
+                        break;
+                    case 4:
+                    case 5:
+                        sDS.Add(new Record(virtualTime,evt.significance, evt.significance+1));
+//                        DEventsCount["Сеть"]++;
+                        break;
+                }
+            }
+
+
+//            wcEventsSign.DataSource = evts;
+            Series fseries = new Series("Файловая система", ViewType.SideBySideRangeBar);
+            Series rseries = new Series("Реестр", ViewType.SideBySideRangeBar);
+            Series pseries = new Series("Процессы", ViewType.SideBySideRangeBar);
+            Series sseries = new Series("Сеть", ViewType.SideBySideRangeBar);
+            wcEventsSign.Series.Add(fseries);
+            wcEventsSign.Series.Add(rseries);
+            wcEventsSign.Series.Add(pseries);
+            wcEventsSign.Series.Add(sseries);
             ((SideBySideRangeBarSeriesView)fseries.View).Color = Color.FromArgb(74, 134, 153);
             ((SideBySideRangeBarSeriesView)fseries.View).FillStyle.FillMode = FillMode.Solid;
             ((SideBySideRangeBarSeriesView)rseries.View).Color = Color.FromArgb(43, 83, 96);
@@ -176,51 +235,73 @@ namespace SandBox.WebUi.Pages.Research
             ((SideBySideRangeBarSeriesView)pseries.View).FillStyle.FillMode = FillMode.Solid;
             ((SideBySideRangeBarSeriesView)sseries.View).Color = Color.FromArgb(18, 50, 59);
             ((SideBySideRangeBarSeriesView)sseries.View).FillStyle.FillMode = FillMode.Solid;
-            var evts = ResearchManager.GetEventsSignByRschId(r);
-            foreach (var evt in evts)
-            {
-                startValue = yOfset + GetOfsetForEvent(evt.significance);
-                switch (evt.module)
-                {
-                    case 1:
-                        fseries.Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
-                        DEventsCount["Файловая система"]++;
-                        break;
-                    case 2:
-                        rseries.Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
-                        DEventsCount["Реестр"]++;
-                        break;
-                    case 3:
-                        pseries.Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
-                        DEventsCount["Процессы"]++;
-                        break;
-                    case 4:
-                    case 5:
-                        sseries.Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
-                        DEventsCount["Сеть"]++;
-                        break;
-                }
-                virtualTime++;
-            }
-        }
-
-        private int GetOfsetForEvent(int evtSignif)
-        {
-            switch (evtSignif)
-            {
-                case 0:
-                    {
-                        return 2;
-                    }
-                case 1:
-                    {
-                        return 1;
-                    }
-                default:
-                    {
-                        return 0;
-                    }
-            }
+            if (fDS.Count>0) fseries.DataSource = fDS;
+            fseries.ArgumentScaleType = ScaleType.Numerical;
+            fseries.ValueScaleType = ScaleType.Numerical;
+            fseries.ValueDataMembers[0] = "startv";
+            fseries.ValueDataMembers[1] = "endv";
+//            fseries.ValueDataMembers.AddRange(new string[] { "significance", "significance2" });
+            fseries.ArgumentDataMember = "id";
+//            fseries.DataFilters.Add(new DataFilter("module", "System.Int32", DataFilterCondition.Equal, 1));
+            rseries.ArgumentScaleType = ScaleType.Numerical;
+            rseries.ValueScaleType = ScaleType.Numerical;
+            rseries.ValueDataMembers[0] = "startv";
+            rseries.ValueDataMembers[1] = "endv";
+//            rseries.ValueDataMembers.AddRange(new string[] { "significance", "significance2" });
+//            rseries.ValueDataMembers[0] = "significance";
+            rseries.ArgumentDataMember = "id";
+//            rseries.DataFilters.Add(new DataFilter("module", "System.Int32", DataFilterCondition.Equal, 2));
+            if (rDS.Count > 0) rseries.DataSource = rDS;
+            pseries.ArgumentScaleType = ScaleType.Numerical;
+            pseries.ValueScaleType = ScaleType.Numerical;
+            pseries.ValueDataMembers[0] = "startv";
+            pseries.ValueDataMembers[1] = "endv";
+//            pseries.ValueDataMembers.AddRange(new string[] { "significance", "significance2" });
+//            pseries.ValueDataMembers[0] = "significance";
+            pseries.ArgumentDataMember = "id";
+//            pseries.DataFilters.Add(new DataFilter("module", "System.Int32", DataFilterCondition.Equal, 3));
+            if (pDS.Count > 0) pseries.DataSource = pDS;
+            sseries.ArgumentScaleType = ScaleType.Numerical;
+            sseries.ValueScaleType = ScaleType.Numerical;
+            sseries.ValueDataMembers[0] = "startv";
+            sseries.ValueDataMembers[1] = "endv";
+//            sseries.ValueDataMembers.AddRange(new string[] { "significance", "significance2" });
+//            sseries.ValueDataMembers[0] = "significance";
+            sseries.ArgumentDataMember = "id";
+//            sseries.DataFiltersConjunctionMode = ConjunctionTypes.Or;
+//            sseries.DataFilters.AddRange(new DataFilter[] {new DataFilter("module", "System.Int32", DataFilterCondition.Equal, 4),new DataFilter("module", "System.Int32", DataFilterCondition.Equal, 5)});
+//            sseries.DataFilters.Add(new DataFilter("module", "System.Int32", DataFilterCondition.Equal, 5));
+            if (sDS.Count > 0) sseries.DataSource = sDS;
+            //DEventsCount.Add("Файловая система", 0);
+            //DEventsCount.Add("Реестр", 0);
+            //DEventsCount.Add("Процессы", 0);
+            //DEventsCount.Add("Сеть", 0);
+            //foreach (var evt in evts)
+            //{
+            //    startValue = yOfset + evt.significance;
+            //    switch (evt.module)
+            //    {
+            //        case 1:
+            //            fseries.Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
+            //            DEventsCount["Файловая система"]++;
+            //            break;
+            //        case 2:
+            //            rseries.Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
+            //            DEventsCount["Реестр"]++;
+            //            break;
+            //        case 3:
+            //            pseries.Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
+            //            DEventsCount["Процессы"]++;
+            //            break;
+            //        case 4:
+            //        case 5:
+            //            sseries.Points.Add(new DevExpress.XtraCharts.SeriesPoint(virtualTime, new double[] { startValue, startValue + 1 }));
+            //            DEventsCount["Сеть"]++;
+            //            break;
+            //    }
+            //    virtualTime++;
+            //}
+            wcEventsSign.DataBind();
         }
 
         public static void AskPCAPFile(Int32 researchId)
@@ -308,7 +389,6 @@ namespace SandBox.WebUi.Pages.Research
             gridViewReports.DataSource = ResearchManager.GetEventsForRsch(Rs.Id);
             var newPageSize = (Int32)CBPagingSize.SelectedItem.Value;
             gridViewReports.SettingsPager.PageSize = newPageSize;
-            gridViewReports.DataBind();
         }
 
         protected void ASPxButton2_Click(object sender, EventArgs e)
@@ -356,7 +436,12 @@ namespace SandBox.WebUi.Pages.Research
             }
         }
 
-        //private void ApdateTraficLinq()
+        protected void wcEventsSign_CustomCallback(object sender, DevExpress.XtraCharts.Web.CustomCallbackEventArgs e)
+        {
+            UpdateEventChart(0, researchId);
+        }
+
+         //private void ApdateTraficLinq()
         //{
         //    var research = ResearchManager.GetResearch(UserId, Rs.ResearchName);
         //    if (research == null) return;

@@ -20,6 +20,16 @@
             <table style="width: 100%;">
                 <tr>
                     <td style="width: 200px">
+                        <dx:ASPxLabel ID="ASPxLabel1" runat="server" Text="ВПО:">
+                        </dx:ASPxLabel>
+                    </td>
+                    <td>
+                        <dx:ASPxLabel ID="Mlwr" runat="server">
+                        </dx:ASPxLabel>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px">
                         <dx:ASPxLabel ID="ASPxLabel6" runat="server" Text="ТИП ЛИР:">
                         </dx:ASPxLabel>
                     </td>
@@ -340,8 +350,14 @@
                     </td>
                     <td rowspan="3"> 
             --%>
-            <dx:WebChartControl ID="wcEventsSign" runat="server" Height="200px" LoadingPanelText="Загрузка&amp;hellip;"
-                SideBySideEqualBarWidth="True" Width="600px" CrosshairEnabled="False" ToolTipEnabled="False">
+<div style="height: 200px; float: left;">
+<asp:UpdatePanel ID="ChartUpdatePanel" runat="server" UpdateMode="Conditional" >
+                <ContentTemplate>
+            <dx:WebChartControl ID="wcEventsSign" runat="server" Height="200px" LoadingPanelText="Загрузка данных&amp;hellip;"
+                SideBySideEqualBarWidth="True" Width="600px" CrosshairEnabled="False" 
+                ToolTipEnabled="False" ClientInstanceName="wcEventsSign" EnableCallBacks="False" 
+                        AlternateText="Диаграмма событий" 
+                        oncustomcallback="wcEventsSign_CustomCallback">
                 <padding bottom="0" left="0" right="0" top="0" />
                 <borderoptions visible="False" />
                 <padding left="0" top="0" right="0" bottom="0"></padding>
@@ -402,7 +418,7 @@
                 <dx:Series Name="Ряд 1" ShowInLegend="False" SynchronizePointOptions="False">
                     <viewserializable>
                         <dx:SideBySideRangeBarSeriesView Color="74, 134, 153">
-                            <border visible="False" />
+                            <border visible="False" /><border visible="False" />
 <Border Visible="False"></Border>
 
                             <fillstyle fillmode="Solid">
@@ -463,6 +479,25 @@
 </ToolTipPositionSerializable>
 </tooltipoptions>
             </dx:WebChartControl>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+            </div>
+            <div style="float:left;">
+                            <asp:UpdateProgress ID="SearchGridUpdateProgress" runat="server" AssociatedUpdatePanelID="ChartUpdatePanel">
+                    <ProgressTemplate>
+                        <span style="padding-left:100px">Обновление данных:&nbsp;&nbsp;<img alt="Обновление данных..." src="/content/images/progress.gif"> </span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </ProgressTemplate>
+                </asp:UpdateProgress>
+            <dx:ASPxCallbackPanel ID="ASPxCallbackPanel1" runat="server" Width="200px">
+                <ClientSideEvents Init="function(s, e) {
+	wcEventsSign.PerformCallback();
+}" />
+                <PanelCollection>
+<dx:PanelContent runat="server" SupportsDisabledAttribute="True"></dx:PanelContent>
+</PanelCollection>
+            </dx:ASPxCallbackPanel>
+            </div>
             <%--
                     </td>
                 </tr>
@@ -482,7 +517,8 @@
         <div style="clear:both" class="page_table">
             <asp:UpdatePanel ID="UpdategridPanel" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <dx:ASPxPageControl ID="ASPxPageControl1" runat="server" ActiveTabIndex="0" Width="100%">
+                    <dx:ASPxPageControl ID="ASPxPageControl1" runat="server" ActiveTabIndex="0" 
+                        Width="100%" TabSpacing="5px">
                         <TabPages>
                             <dx:TabPage Text="Таблица событий">
                                 <ContentCollection>
@@ -699,6 +735,14 @@
                                 </ContentCollection>
                             </dx:TabPage>
                         </TabPages>
+                        <activetabstyle forecolor="#474747">
+                            <BackgroundImage ImageUrl="none" />
+                        </activetabstyle>
+                        <tabstyle font-bold="True" font-names="Trebuchet MS,Arial" font-size="13pt" 
+                            font-strikeout="False" forecolor="White" height="27px" 
+                            horizontalalign="Center" verticalalign="Middle" width="200px">
+                            <BackgroundImage ImageUrl="~/Content/Images/bgtab.png" Repeat="RepeatX" />
+                        </tabstyle>
                     </dx:ASPxPageControl>
                 </ContentTemplate>
             </asp:UpdatePanel>

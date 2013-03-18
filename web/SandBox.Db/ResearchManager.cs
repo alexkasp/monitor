@@ -158,7 +158,7 @@ namespace SandBox.Db
             return null;
         }
 
-
+        
         public static IQueryable<events> GetEventsByRschId(int rschId)
         {
             var db = new SandBoxDataContext();
@@ -274,10 +274,26 @@ namespace SandBox.Db
         public static IQueryable<EventsChartSign> GetEventsSignByRschId(int rschId)
         {
             var db = new SandBoxDataContext();
-            return from evts in db.EventsChartSigns
-                   where evts.rschId == rschId
-                   orderby evts.Id
-                   select evts;
+            var evtsg = from evts in db.EventsChartSigns
+                         where evts.rschId == rschId
+                         orderby evts.Id
+                         select evts;
+                         //.AsEnumerable().Select((evnt, index) => new EventsChartSign()
+                         //{
+                         //    rownum = index + 1,
+                         //    Id = evnt.Id,
+                         //    module = evnt.module,
+                         //    rschId = evnt.rschId,
+                         //    significance = evnt.significance,
+                         //    significance2 = evnt.significance + 1
+                         //});
+            return evtsg;
+        }
+
+        public static IQueryable<GetEventsSignForResearchResult> GetEvtSignByRschId(int rschId)
+        {
+            var db = new SandBoxDataContext();
+            return db.GetEventsSignForResearch(rschId).AsQueryable();
         }
 
         public static IQueryable GetEventsViewWithSignWithoutLogic(int rschId)
@@ -1101,5 +1117,15 @@ namespace SandBox.Db
             }
             return result;
         }
+
+        public static Mlwr GetMlwrByRschId(int rschId)
+        {
+            var db = new SandBoxDataContext();
+                    return (from r in db.Researches
+                           join mlwr in db.Mlwrs on r.MlwrId equals mlwr.Id
+                           where r.Id == rschId
+                           select mlwr).FirstOrDefault();
+        }
+
     }//end ResearchManager class
 }//end namespace

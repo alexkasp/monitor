@@ -257,6 +257,7 @@ td.nvtxtr {
 #content-main {
 	margin: 0 auto;
 	padding: 0px 10px 10px 10px;
+	overflow: auto;
 }
 .detailrow {
 	background-image: url(/Content/images/detailrowb.png);

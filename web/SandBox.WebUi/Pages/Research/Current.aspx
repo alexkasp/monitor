@@ -5,6 +5,10 @@
     <link rel="stylesheet" type="text/css" href="../../Content/PageView.css" />
     <script type="text/javascript">
 
+        function OnCompareButtonPress(values) {
+            document.location.href = '/Pages/Research/Comparer.aspx?researchId=' + values[0] + '&researchId2=' + values[1];
+        }
+
         function OnStopButtonPress(values) {
             if (values.length == 0) return;
             for (var i = 0; i < values.length; i++) {
@@ -94,6 +98,9 @@
                             Text="Сравнить" ClientInstanceName="btnComp" ClientEnabled="False" 
                             CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" 
                             Width="150px">
+                            <ClientSideEvents Click="function(s, e) {
+	gridViewResearches.GetSelectedFieldValues('Id', OnCompareButtonPress);
+}" />
                             <Image Url="~/Content/Images/Icons/btn_comp.png" 
                                 UrlDisabled="~/Content/Images/Icons/btn_compd.png">
                             </Image>

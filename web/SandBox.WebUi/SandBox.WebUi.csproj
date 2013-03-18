@@ -142,6 +142,7 @@
     <Content Include="Content\Images\acchdrop.png" />
     <Content Include="Content\Images\AquaHeader.jpg" />
     <Content Include="Content\Images\bg.png" />
+    <Content Include="Content\Images\bgtab.png" />
     <Content Include="Content\Images\bgtblheader.png" />
     <Content Include="Content\Images\Bkg.png" />
     <Content Include="Content\Images\BlackGlassHeader.jpg" />

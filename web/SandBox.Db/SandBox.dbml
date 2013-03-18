@@ -506,14 +506,6 @@
       <Column Name="UserLayout" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.EventsChartSign" Member="EventsChartSigns">
-    <Type Name="EventsChartSign">
-      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="rschId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="module" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="significance" Type="System.Int32" DbType="Int" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.EventsTableView" Member="EventsTableViews">
     <Type Name="EventsTableView">
       <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
@@ -531,4 +523,32 @@
       <Column Name="status" Type="System.String" DbType="NChar(128)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.EventsChartSign" Member="EventsChartSigns">
+    <Type Name="EventsChartSign">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="rschId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="module" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="significance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Function Name="dbo.FunctEventsSignForResearch" Method="FunctEventsSignForResearch" IsComposable="true">
+    <Parameter Name="rschid" Type="System.Int32" DbType="Int" />
+    <ElementType Name="FunctEventsSignForResearchResult">
+      <Column Name="rownum" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="module" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="significance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="significance2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetEventsSignForResearch" Method="GetEventsSignForResearch">
+    <Parameter Name="rschid" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetEventsSignForResearchResult">
+      <Column Name="rownum" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="module" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="significance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="significance2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

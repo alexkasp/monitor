@@ -31,6 +31,24 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.Web.ASPxEditors.ASPxLabel LHeader;
         
         /// <summary>
+        /// ASPxLabel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxLabel ASPxLabel1;
+        
+        /// <summary>
+        /// Mlwr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxLabel Mlwr;
+        
+        /// <summary>
         /// ASPxLabel6 control.
         /// </summary>
         /// <remarks>
@@ -139,6 +157,15 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl DetailCharts;
         
         /// <summary>
+        /// ChartUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel ChartUpdatePanel;
+        
+        /// <summary>
         /// wcEventsSign control.
         /// </summary>
         /// <remarks>
@@ -146,6 +173,24 @@ namespace SandBox.WebUi.Pages.Research {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.XtraCharts.Web.WebChartControl wcEventsSign;
+        
+        /// <summary>
+        /// SearchGridUpdateProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress SearchGridUpdateProgress;
+        
+        /// <summary>
+        /// ASPxCallbackPanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxCallbackPanel.ASPxCallbackPanel ASPxCallbackPanel1;
         
         /// <summary>
         /// UpdategridPanel control.
