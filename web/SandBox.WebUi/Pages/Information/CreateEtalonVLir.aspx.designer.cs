@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SandBox.WebUi.Account {
+namespace SandBox.WebUi.Pages.Information {
     
     
-    public partial class AddUser {
+    public partial class CreateEtalonMachine {
         
         /// <summary>
         /// Image1 control.
@@ -22,40 +22,22 @@ namespace SandBox.WebUi.Account {
         protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
-        /// tbUserName control.
+        /// tbLir control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbUserName;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbLir;
         
         /// <summary>
-        /// tbPassword control.
+        /// cbSystem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbPassword;
-        
-        /// <summary>
-        /// tbPasswordConfirm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbPasswordConfirm;
-        
-        /// <summary>
-        /// cbRole control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbRole;
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbSystem;
         
         /// <summary>
         /// btnCreate control.

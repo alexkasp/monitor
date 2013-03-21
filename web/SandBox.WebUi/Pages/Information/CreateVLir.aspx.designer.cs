@@ -10,16 +10,16 @@
 namespace SandBox.WebUi.Pages.Information {
     
     
-    public partial class CreateEtalonMachine {
+    public partial class CreateMachine {
         
         /// <summary>
-        /// ASPxHyperLink1 control.
+        /// Image1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink ASPxHyperLink1;
+        protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
         /// tbLir control.
@@ -31,22 +31,22 @@ namespace SandBox.WebUi.Pages.Information {
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbLir;
         
         /// <summary>
-        /// cbSystem control.
+        /// LValidation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbSystem;
+        protected global::DevExpress.Web.ASPxEditors.ASPxLabel LValidation;
         
         /// <summary>
-        /// cbEnvType control.
+        /// cbEtalon control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbEnvType;
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbEtalon;
         
         /// <summary>
         /// btnCreate control.

@@ -13,13 +13,13 @@ namespace SandBox.WebUi.Pages.Information {
     public partial class CreateNewVlir {
         
         /// <summary>
-        /// ASPxHyperLink1 control.
+        /// Image1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink ASPxHyperLink1;
+        protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
         /// tbLir control.
@@ -29,6 +29,15 @@ namespace SandBox.WebUi.Pages.Information {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbLir;
+        
+        /// <summary>
+        /// LValidation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxLabel LValidation;
         
         /// <summary>
         /// cbSystem control.
@@ -47,6 +56,15 @@ namespace SandBox.WebUi.Pages.Information {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbLirMac;
+        
+        /// <summary>
+        /// LValidation2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxLabel LValidation2;
         
         /// <summary>
         /// BAdd control.

@@ -166,13 +166,13 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::System.Web.UI.UpdatePanel ChartUpdatePanel;
         
         /// <summary>
-        /// wcEventsSign control.
+        /// wcEventsSign1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.XtraCharts.Web.WebChartControl wcEventsSign;
+        protected global::DevExpress.XtraCharts.Web.WebChartControl wcEventsSign1;
         
         /// <summary>
         /// SearchGridUpdateProgress control.
@@ -337,13 +337,13 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.XtraCharts.Web.WebChartControl wcEventsSign2;
         
         /// <summary>
-        /// SearchGridUpdateProgress2 control.
+        /// ChartUpdateProgress2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdateProgress SearchGridUpdateProgress2;
+        protected global::System.Web.UI.UpdateProgress ChartUpdateProgress2;
         
         /// <summary>
         /// ASPxCallbackPanel1 control.

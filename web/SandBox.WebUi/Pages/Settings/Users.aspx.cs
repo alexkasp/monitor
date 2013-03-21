@@ -14,15 +14,15 @@ namespace SandBox.WebUi.Pages.Settings
         {
             base.Page_Load(sender, e);
             PageTitle = "управление пользователями";
-            PageMenu  = "~/App_Data/SideMenu/Settings/SettingsMenu.xml";
-          
-            if (!IsUserInRole("Administrator")) 
+            PageMenu = "~/App_Data/SideMenu/Settings/SettingsMenu.xml";
+
+            if (!IsUserInRole("Administrator"))
                 Response.Redirect("~/Account/Login.aspx");
 
             if (!IsPostBack)
             {
                 UpdateTableView();
-            }  
+            }
         }
 
         private void UpdateTableView()
@@ -68,9 +68,19 @@ namespace SandBox.WebUi.Pages.Settings
             UserManager.DeleteUser(userId);
         }
 
-        protected void gridViewUsers_RowDeleted(object sender, DevExpress.Web.Data.ASPxDataDeletedEventArgs e)
+        protected void gridViewUsers_CustomCallback(object sender, DevExpress.Web.ASPxGridView.ASPxGridViewCustomCallbackEventArgs e)
         {
-            
+            string[] Params = e.Parameters.Split(',');
+            Int32 id = Convert.ToInt32(Params[1]);
+            switch (Params[0])
+            {
+                case "cbDelete":
+                    DeleteUser(id);
+                    UpdateTableView();
+
+                    break;
+            }
+
         }
 
 

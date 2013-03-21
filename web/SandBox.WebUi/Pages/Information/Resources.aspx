@@ -3,30 +3,34 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 	    <div id="content-top">
-		    <div id="pagename">Ресурсы</div>
+		    <div id="pagename">Ресурсы
+            <a href="javascript: history.go(-1)">
+                <asp:Image ID="Image1" runat="server" ImageUrl="~/Content/Images/btn_back.jpg" CssClass="backbtn" />
+            </a>
+            </div>
 		    <div id="toolbuttons">
             <table>
                 <tr>
+                    <td>
+                        <dx:ASPxButton ID="btnAddVLIR" AutoPostBack="False" runat="server" Text="Создать ВЛИР">
+                            <ClientSideEvents Click="function(s, e) {
+		document.location.href = '/Pages/Information/CreateVLir.aspx';
+}" />
+                        </dx:ASPxButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </td>
                  <td>
                         <dx:ASPxButton ID="btnAddHardware" AutoPostBack="False" runat="server" 
                             Text="Добавить ЛИР"  Visible="False">
                             <ClientSideEvents Click="function(s, e) {
-	document.location.href = '/Pages/Information/CreateNewVlir.aspx';
+	document.location.href = '/Pages/Information/AddLir.aspx';
 }" />
                         </dx:ASPxButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
                         <dx:ASPxButton ID="btnAddLIR" AutoPostBack="False" runat="server" 
-                            Text="Добавить ВЛИР"  Visible="False">
+                            Text="Добавить эталонную ВЛИР"  Visible="False">
                             <ClientSideEvents Click="function(s, e) {
-	document.location.href = '/Pages/Information/CreateEtalonMachine.aspx';
-}" />
-                        </dx:ASPxButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </td>
-                    <td>
-                        <dx:ASPxButton ID="btnAddVLIR" AutoPostBack="False" runat="server" Text="Создать ВЛИР">
-                            <ClientSideEvents Click="function(s, e) {
-		document.location.href = '/Pages/Information/CreateMachine.aspx';
+	document.location.href = '/Pages/Information/CreateEtalonVLir.aspx';
 }" />
                         </dx:ASPxButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
@@ -157,7 +161,7 @@
                 </CellStyle>
             </dx:GridViewDataTextColumn>
             <dx:GridViewDataTextColumn Caption="Тип среды" FieldName="EnvType" 
-                VisibleIndex="7" Width="50px">
+                VisibleIndex="7" Width="50px" Visible="False">
                 <PropertiesTextEdit>
                 <ValidationSettings ErrorText="Неверное значение">
                 <RegularExpression ErrorText="Ошибка проверки регулярного выражения"></RegularExpression>
@@ -196,11 +200,10 @@
                 <CellStyle HorizontalAlign="Left">
                 </CellStyle>
             </dx:GridViewDataTextColumn>
-            <dx:GridViewCommandColumn VisibleIndex="11" ButtonType="Image" Width = "50px" 
-                Caption="Статус">
+            <dx:GridViewCommandColumn VisibleIndex="11" ButtonType="Image" Width = "50px">
                 <CustomButtons>
                     <dx:GridViewCommandColumnCustomButton ID="btnDelete">
-                        <Image ToolTip="Запустить" Url="../../Content/Images/Icons/delete.png" />
+                        <Image ToolTip="Удалить" Url="../../Content/Images/Icons/delete.png" />
                     </dx:GridViewCommandColumnCustomButton>
                 </CustomButtons>
                 <CellStyle HorizontalAlign="Center">
@@ -209,6 +212,7 @@
         </Columns>
                 <SettingsBehavior AllowFocusedRow="True" 
                     EnableRowHotTrack="True" />
+                <SettingsText EmptyDataRow="У Вас нет ресурсов, доступных для использования" />
          <SettingsLoadingPanel Mode="Disabled" />
     </dx:ASPxGridView>
                 </ContentTemplate>

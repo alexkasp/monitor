@@ -248,7 +248,8 @@ td.nvtxtr {
 }
 #toolbuttons {
 	float: left;
-	padding: 30px;
+	padding-top: 28px;
+	padding-left: 20px;
 }
 #tablenavbuttons {
 	float: right;
@@ -278,11 +279,8 @@ td.nvtxtr {
 	margin-bottom: 20px;
 	overflow: auto;
 }
-#toolbuttons {
-	float: left;
-}
-#btnNew, #btnComp, #btnDel 
-{
+
+#btnNew, #btnComp, #btnDel {
 	float: left;
 }
 .detailrowparams {
@@ -373,7 +371,7 @@ td.nvtxtr {
 	background-position: top;
 	vertical-align: middle;
 	border: none;
-	height: 25px;
+	height: 30px;
 	cursor: pointer;
 }
 

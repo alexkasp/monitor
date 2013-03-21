@@ -2,7 +2,6 @@
     CodeBehind="Current.aspx.cs" Inherits="SandBox.WebUi.Pages.Research.Current" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <link rel="stylesheet" type="text/css" href="../../Content/PageView.css" />
     <script type="text/javascript">
 
         function OnCompareButtonPress(values) {
@@ -308,21 +307,25 @@
                         </dx:GridViewDataTextColumn>
                         <dx:GridViewDataTextColumn Caption="Файл. система" FieldName="fsEventsCount" 
                             VisibleIndex="9" Width="120px">
+                            <Settings AllowHeaderFilter="False" />
                             <CellStyle HorizontalAlign="Left">
                             </CellStyle>
                         </dx:GridViewDataTextColumn>
                         <dx:GridViewDataTextColumn Caption="Реестр" VisibleIndex="10" 
                             FieldName="regEventsCount" Width="70px">
+                            <Settings AllowHeaderFilter="False" />
                             <CellStyle HorizontalAlign="Left">
                             </CellStyle>
                         </dx:GridViewDataTextColumn>
                         <dx:GridViewDataTextColumn Caption="Сеть" FieldName="netEventsCount" 
                             VisibleIndex="11" Width="50px">
+                            <Settings AllowHeaderFilter="False" />
                             <CellStyle HorizontalAlign="Left">
                             </CellStyle>
                         </dx:GridViewDataTextColumn>
                         <dx:GridViewDataTextColumn Caption="Процессы" FieldName="procEventsCount" 
                             VisibleIndex="12" Width="80px">
+                            <Settings AllowHeaderFilter="False" />
                             <CellStyle HorizontalAlign="Left">
                             </CellStyle>
                         </dx:GridViewDataTextColumn>
@@ -474,7 +477,7 @@
                                     </dx:ASPxGridView>
                                 </div>
 				                <div class="detailrowevents" >
-					                <img src="../../Content/images/bluebox.png" />&nbsp;&nbsp;ВАЖНЫЕ&nbsp;&nbsp;&nbsp;&nbsp;<img src="../../Content/images/redbox.png" />&nbsp;&nbsp;ОЧЕНЬ ВАЖНЫЕ
+					                <img alt="Важные" src="../../Content/images/bluebox.png" />&nbsp;&nbsp;ВАЖНЫЕ&nbsp;&nbsp;&nbsp;&nbsp;<img alt="Очень важные" src="../../Content/images/redbox.png" />&nbsp;&nbsp;ОЧЕНЬ ВАЖНЫЕ
                                     <span id="DetailCharts" runat="server">
 					                <table border="0" cellspacing="0" cellpadding="0">
 					                  <tr>

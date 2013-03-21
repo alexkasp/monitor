@@ -216,11 +216,11 @@
     <Content Include="Content\Login.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Pages\Index.aspx" />
-    <Content Include="Pages\Information\CreateNewVlir.aspx" />
+    <Content Include="Pages\Information\AddLir.aspx" />
     <Content Include="Pages\Information\DirectoryOfEvents.aspx" />
     <Content Include="Pages\Information\Test.aspx" />
     <Content Include="Pages\Information\LoadMalware.aspx" />
-    <Content Include="Pages\Information\CreateEtalonMachine.aspx" />
+    <Content Include="Pages\Information\CreateEtalonVLir.aspx" />
     <Content Include="Pages\Information\MalwareInfo.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
@@ -235,7 +235,7 @@
     <Content Include="Pages\Information\Index.aspx" />
     <Content Include="Pages\Error\CommunicationError.aspx" />
     <Content Include="Pages\Error\DbError.aspx" />
-    <Content Include="Pages\Information\CreateMachine.aspx" />
+    <Content Include="Pages\Information\CreateVLir.aspx" />
     <Content Include="Pages\Information\Resources.aspx" />
     <Content Include="Pages\Information\СonsolidatedReport.aspx" />
     <Content Include="Pages\Malware\Index.aspx" />
@@ -366,12 +366,12 @@
     <Compile Include="Pages\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Information\CreateNewVlir.aspx.cs">
-      <DependentUpon>CreateNewVlir.aspx</DependentUpon>
+    <Compile Include="Pages\Information\AddLir.aspx.cs">
+      <DependentUpon>AddLir.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Information\CreateNewVlir.aspx.designer.cs">
-      <DependentUpon>CreateNewVlir.aspx</DependentUpon>
+    <Compile Include="Pages\Information\AddLir.aspx.designer.cs">
+      <DependentUpon>AddLir.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Information\DirectoryOfEvents.aspx.cs">
       <DependentUpon>DirectoryOfEvents.aspx</DependentUpon>
@@ -394,12 +394,12 @@
     <Compile Include="Pages\Information\LoadMalware.aspx.designer.cs">
       <DependentUpon>LoadMalware.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Information\CreateEtalonMachine.aspx.cs">
-      <DependentUpon>CreateEtalonMachine.aspx</DependentUpon>
+    <Compile Include="Pages\Information\CreateEtalonVLir.aspx.cs">
+      <DependentUpon>CreateEtalonVLir.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Information\CreateEtalonMachine.aspx.designer.cs">
-      <DependentUpon>CreateEtalonMachine.aspx</DependentUpon>
+    <Compile Include="Pages\Information\CreateEtalonVLir.aspx.designer.cs">
+      <DependentUpon>CreateEtalonVLir.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Information\MalwareInfo.aspx.cs">
       <DependentUpon>MalwareInfo.aspx</DependentUpon>
@@ -454,12 +454,12 @@
     <Compile Include="Pages\Error\DbError.aspx.designer.cs">
       <DependentUpon>DbError.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Information\CreateMachine.aspx.cs">
-      <DependentUpon>CreateMachine.aspx</DependentUpon>
+    <Compile Include="Pages\Information\CreateVLir.aspx.cs">
+      <DependentUpon>CreateVLir.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Information\CreateMachine.aspx.designer.cs">
-      <DependentUpon>CreateMachine.aspx</DependentUpon>
+    <Compile Include="Pages\Information\CreateVLir.aspx.designer.cs">
+      <DependentUpon>CreateVLir.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Information\Resources.aspx.cs">
       <DependentUpon>Resources.aspx</DependentUpon>

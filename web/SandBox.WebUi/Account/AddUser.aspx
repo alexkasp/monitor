@@ -1,24 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeBehind="AddUser.aspx.cs" Inherits="SandBox.WebUi.Account.AddUser" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<link rel="stylesheet" type="text/css" href="../Content/PageView.css"  />
-
-<div id='page_header'>
-    Добавление нового пользователя
-</div>
-
-<table class='panel'>
-			<tbody>
-                <tr>
-                  <td class='panel-left'>
-                      <div class='panel-text'>
-                        <dx:ASPxHyperLink ID="ASPxHyperLink1" runat="server" Text="Назад к списку пользователей" NavigateUrl="~/Pages/Settings/Users.aspx">
-                        </dx:ASPxHyperLink>
-                      </div>
-                  </td>
-                </tr>
-			</tbody>
-</table>
-
+    <div id="content-top">
+        <div id="pagename">
+            Добавление нового пользователя <a href="/Pages/Settings/Users.aspx">
+                <asp:Image ID="Image1" runat="server" ImageUrl="~/Content/Images/btn_back.jpg" CssClass="backbtn" />
+            </a>
+        </div>
+    </div>
+    <div id="content-main">
 <table class='form'>
 			<tbody>
                 <tr>
@@ -53,7 +42,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><div class="simple_text">Группа:</div></td>
+                  <td><div class="simple_text">Роль:</div></td>
                   <td>
                        <dx:ASPxComboBox ID="cbRole" runat="server" ValueType="System.String" Width="200px">
                         <ValidationSettings ValidationGroup="AddResearchValidationGroup">
@@ -72,6 +61,7 @@
                 </tr>
 			</tbody>
 </table> 
+</div>
 
 
 

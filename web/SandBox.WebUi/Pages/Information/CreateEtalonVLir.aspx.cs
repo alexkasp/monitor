@@ -17,9 +17,11 @@ namespace SandBox.WebUi.Pages.Information
             {
                 cbSystem.DataSource = VmManager.GetVmSystemDescriptionList();
                 cbSystem.DataBind();
+                cbSystem.SelectedIndex = 0;
 
-                cbEnvType.DataSource = VmManager.GetFreeEnvTypes();
-                cbEnvType.DataBind();
+                //cbEnvType.DataSource = VmManager.GetFreeEnvTypes();
+                //cbEnvType.DataBind();
+                //cbEnvType.SelectedIndex = 0;
             }
         }
 
@@ -30,8 +32,8 @@ namespace SandBox.WebUi.Pages.Information
              String value = list[cbSystem.SelectedIndex];
              Int32 system = VmManager.GetSystem(value).System;
              String newName = (tbLir.Text).Replace(" ", "_");
-             Int32 envType = Convert.ToInt32(cbEnvType.Value);
-             VmManager.AddVm(newName, 1, system, UserId, envType);
+//             Int32 envType = Convert.ToInt32(cbEnvType.Value);
+             VmManager.AddVm(newName, 1, system, UserId, 12);
 
             Response.Redirect("~/Pages/Information/Resources.aspx");
         }

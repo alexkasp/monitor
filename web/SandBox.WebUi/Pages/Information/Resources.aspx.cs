@@ -45,38 +45,7 @@ namespace SandBox.WebUi.Pages.Information
             UpdateTableView();
         }
 
-        public String LirInfo()
-        {
-            IQueryable<Vm> vms = IsUserInRole("Administrator") ? VmManager.GetVms() : VmManager.GetVms(UserId);
-
-            Int32 freeVms = 0;
-            Int32 usedVms = 0;
-
-            foreach (var vm in vms)
-            {
-                if (vm.State == (Int32)VmManager.State.STARTED) usedVms++;
-                if (vm.State == (Int32)VmManager.State.STOPPED) freeVms++;
-            }
-
-            String txt = "Используется " + usedVms + " ЛИР, " + freeVms + " ЛИР свободно";
-
-            if ((usedVms == 0) && (freeVms == 0))
-            {
-                txt = "Информации по ЛИР недоступна";
-            }
-            else if (usedVms == 0)
-            {
-                txt = "Свободно " + freeVms + " ЛИР";
-            }
-            else if (freeVms == 0)
-            {
-                txt = "Используется " + usedVms + " ЛИР, свободных ЛИР нет";
-            }
-
-            return txt;
-        }
-
-        private void VmManager_OnTableUpdated(Table table)
+         private void VmManager_OnTableUpdated(Table table)
         {
             Debug.Print("OnTableUpdated!!!");
             //UpdateTableView();
@@ -109,49 +78,12 @@ namespace SandBox.WebUi.Pages.Information
             }
         }
 
-        protected void UpdateTimerTick(object sender, EventArgs e)
-        {
-            //UpdateTableView();
-        }
-
-        protected void UpdateInfoTimerTick(object sender, EventArgs e)
-        {
-            IQueryable<Vm> vms = IsUserInRole("Administrator") ? VmManager.GetVms() : VmManager.GetVms(UserId);
-
-            Int32 freeVms = 0;
-            Int32 usedVms = 0;
-
-            foreach (var vm in vms)
-            {
-                if (vm.State == (Int32)VmManager.State.STARTED) usedVms++;
-                if (vm.State == (Int32)VmManager.State.STOPPED) freeVms++;
-            }
-
-            String txt = "Используется " + usedVms + " ЛИР, " + freeVms + " ЛИР свободно";
-
-            if ((usedVms == 0) && (freeVms == 0))
-            {
-                txt = "Информации по ЛИР недоступна";
-            }
-            else if (usedVms == 0)
-            {
-                txt = "Свободно " + freeVms + " ЛИР";
-            }
-            else if (freeVms == 0)
-            {
-                txt = "Используется " + usedVms + " ЛИР, свободных ЛИР нет";
-            }
-
-            //labelVmInfo.Text = txt;
-        }
-
-
         private void GetVmStatus(Int32 id)
         {
             String machineName = VmManager.GetVmName(id);
             MLogger.LogTo(Level.TRACE, false, "Get status for " + machineName);
 
-            VmManager.UpdateVmState(machineName, (Int32)VmManager.State.UPDATING);
+            VmManager.UpdateVmState(id, (Int32)VmManager.State.UPDATING);
 
             Packet packet = new Packet { Type = PacketType.CMD_VM_STATUS, Direction = PacketDirection.REQUEST };
             packet.AddParameter(Encoding.UTF8.GetBytes(machineName));
@@ -302,6 +234,7 @@ namespace SandBox.WebUi.Pages.Information
                                 break;
                             }
                     }
+                    VmManager.UpdateVmState(id, (Int32)VmManager.State.UPDATING);
                     break;
                 case "btnDelete":
                     Debug.Print("delete: " + id);
@@ -309,16 +242,6 @@ namespace SandBox.WebUi.Pages.Information
                     break;
             }
 
-        }
-
-        protected void Timer1_Tick(object sender, EventArgs e)
-        {
-            
-        }
-
-        private string GetCpuInfoFromString(string p, int i)
-        {
-            return String.Format("CPU{0}:{1}%",i, p);
         }
 
         protected void Timer2_Tick(object sender, EventArgs e)
@@ -329,29 +252,31 @@ namespace SandBox.WebUi.Pages.Information
         protected void gridViewMachines_CustomCallback(object sender, DevExpress.Web.ASPxGridView.ASPxGridViewCustomCallbackEventArgs e)
         {
             string[] Params = e.Parameters.Split(',');
-            Int32 id = Convert.ToInt32(Params[1]);
+            Int32 id = Convert.ToInt32(Params[1]); 
             switch (Params[0])
             {
                 case "btnStatus":
                     Vm vm = VmManager.GetVm(id);
                     switch (vm.State)
                     {
+                        case (Int32)VmManager.State.STARTED:
+                        case (Int32)VmManager.State.STARTING:
+                        case (Int32)VmManager.State.STOPPING:
+                        case (Int32)VmManager.State.RESEARCHING:
+                        case (Int32)VmManager.State.UNAVAILABLE:
+                        case (Int32)VmManager.State.UPDATING:
+                            {
+                                Debug.Print("stop: " + id);
+                                StopVm(id);
+                                VmManager.UpdateVmState(id, (Int32)VmManager.State.STOPPED);
+                                break;
+                            }
+                        case (Int32)VmManager.State.STOPPED:
                         case (Int32)VmManager.State.ERROR:
                             {
                                 Debug.Print("run: " + id);
                                 StartVm(id);
-                                break;
-                            }
-                        case (Int32)VmManager.State.STARTED:
-                            {
-                                Debug.Print("stop: " + id);
-                                StopVm(id);
-                                break;
-                            }
-                        case (Int32)VmManager.State.STOPPED:
-                            {
-                                Debug.Print("run: " + id);
-                                StartVm(id);
+                                VmManager.UpdateVmState(id, (Int32)VmManager.State.STARTING);
                                 break;
                             }
                     }

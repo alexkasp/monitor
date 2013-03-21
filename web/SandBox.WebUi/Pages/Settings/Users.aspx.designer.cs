@@ -13,13 +13,31 @@ namespace SandBox.WebUi.Pages.Settings {
     public partial class Users {
         
         /// <summary>
-        /// ASPxHyperLink2 control.
+        /// Image1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink ASPxHyperLink2;
+        protected global::System.Web.UI.WebControls.Image Image1;
+        
+        /// <summary>
+        /// pcSettings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxTabControl.ASPxPageControl pcSettings;
+        
+        /// <summary>
+        /// btnNewUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnNewUser;
         
         /// <summary>
         /// gridViewUsers control.
