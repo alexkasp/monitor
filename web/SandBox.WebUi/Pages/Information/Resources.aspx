@@ -1,38 +1,57 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeBehind="Resources.aspx.cs" Inherits="SandBox.WebUi.Pages.Information.Resources" %>
+﻿<%@ Page Title="Ресурсы" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeBehind="Resources.aspx.cs" Inherits="SandBox.WebUi.Pages.Information.Resources" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-	    <div id="content-top">
-		    <div id="pagename">Ресурсы
-            <a href="javascript: history.go(-1)">
-                <asp:Image ID="Image1" runat="server" ImageUrl="~/Content/Images/btn_back.jpg" CssClass="backbtn" />
-            </a>
-            </div>
+    	    <div id="content-top">
+		    <div id="pagename">Ресурсы</div>
 		    <div id="toolbuttons">
             <table>
                 <tr>
-                    <td>
-                        <dx:ASPxButton ID="btnAddVLIR" AutoPostBack="False" runat="server" Text="Создать ВЛИР">
+                    <td width="170px">
+                        <dx:ASPxButton ID="btnAddVLIR" AutoPostBack="False" runat="server" Text="Создать ВЛИР" CssClass="button" 
+                            EnableDefaultAppearance="False" EnableTheming="False" Width="150px">
+                            <PressedStyle CssClass="buttonHover">
+                            </PressedStyle>
+                            <HoverStyle CssClass="buttonHover">
+                            </HoverStyle>
+                            <DisabledStyle CssClass="buttonDisable">
+                            </DisabledStyle>
                             <ClientSideEvents Click="function(s, e) {
 		document.location.href = '/Pages/Information/CreateVLir.aspx';
 }" />
-                        </dx:ASPxButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </dx:ASPxButton>
                     </td>
-                 <td>
+                 <td width="170px">
                         <dx:ASPxButton ID="btnAddHardware" AutoPostBack="False" runat="server" 
-                            Text="Добавить ЛИР"  Visible="False">
+                            Text="Добавить ЛИР"  Visible="False" CssClass="button" 
+                            EnableDefaultAppearance="False" EnableTheming="False" Width="150px">
+                            <Border BorderColor="Gainsboro" BorderStyle="Solid" BorderWidth="1px" />
+                            <PressedStyle CssClass="buttonHover">
+                            </PressedStyle>
+                            <HoverStyle CssClass="buttonHover">
+                            </HoverStyle>
+                            <DisabledStyle CssClass="buttonDisable">
+                            </DisabledStyle>
                             <ClientSideEvents Click="function(s, e) {
 	document.location.href = '/Pages/Information/AddLir.aspx';
 }" />
-                        </dx:ASPxButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </dx:ASPxButton>
                     </td>
                     <td>
                         <dx:ASPxButton ID="btnAddLIR" AutoPostBack="False" runat="server" 
-                            Text="Добавить эталонную ВЛИР"  Visible="False">
+                            Text="Добавить эталон ВЛИР"  Visible="False" CssClass="button" 
+                            EnableDefaultAppearance="False" EnableTheming="False" Width="225px">
+                            <Border BorderColor="Gainsboro" BorderStyle="Solid" BorderWidth="1px" />
+                            <PressedStyle CssClass="buttonHover">
+                            </PressedStyle>
+                            <HoverStyle CssClass="buttonHover">
+                            </HoverStyle>
+                            <DisabledStyle CssClass="buttonDisable">
+                            </DisabledStyle>
                             <ClientSideEvents Click="function(s, e) {
 	document.location.href = '/Pages/Information/CreateEtalonVLir.aspx';
 }" />
-                        </dx:ASPxButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </dx:ASPxButton>
                     </td>
                 </tr>
             </table>
@@ -56,7 +75,7 @@
                 </dx:ASPxLabel>
             </div>
 
-                <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                 
                     <asp:Timer ID="Timer2" runat="server" Interval="5000" ontick="Timer2_Tick">
@@ -88,7 +107,8 @@
                 </CellStyle>
             </dx:GridViewCommandColumn>
 
-            <dx:GridViewDataTextColumn Caption="№" FieldName="Id" VisibleIndex="0">
+            <dx:GridViewDataTextColumn Caption="№" FieldName="Id" VisibleIndex="0" 
+                Visible="False">
                 <PropertiesTextEdit>
                 <ValidationSettings ErrorText="Неверное значение">
                 <RegularExpression ErrorText="Ошибка проверки регулярного выражения"></RegularExpression>
@@ -131,7 +151,7 @@
                 </PropertiesTextEdit>
                 <DataItemTemplate>
                     <dx:ASPxHyperLink ID="HLSession" runat="server" 
-                        NavigateUrl="~/Pages/Research/CurrentReportList.aspx" />
+                        NavigateUrl="~/Pages/Research/ReportList.aspx" />
                 </DataItemTemplate>
                 <CellStyle HorizontalAlign="Left">
                 </CellStyle>
@@ -200,7 +220,8 @@
                 <CellStyle HorizontalAlign="Left">
                 </CellStyle>
             </dx:GridViewDataTextColumn>
-            <dx:GridViewCommandColumn VisibleIndex="11" ButtonType="Image" Width = "50px">
+            <dx:GridViewCommandColumn VisibleIndex="11" ButtonType="Image" Width = "50px" 
+                Caption="Удалить">
                 <CustomButtons>
                     <dx:GridViewCommandColumnCustomButton ID="btnDelete">
                         <Image ToolTip="Удалить" Url="../../Content/Images/Icons/delete.png" />
@@ -214,6 +235,10 @@
                     EnableRowHotTrack="True" />
                 <SettingsText EmptyDataRow="У Вас нет ресурсов, доступных для использования" />
          <SettingsLoadingPanel Mode="Disabled" />
+                <styles>
+                    <header font-bold="True">
+                    </header>
+                </styles>
     </dx:ASPxGridView>
                 </ContentTemplate>
                 </asp:UpdatePanel>

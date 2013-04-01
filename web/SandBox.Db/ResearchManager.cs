@@ -236,7 +236,7 @@ namespace SandBox.Db
             List<events> ass = new List<events>();
             foreach (var e in es)
             {
-                if (((ReportManager.GetEvtSignif(e, dof) == 0) || (ReportManager.GetEvtSignif(e,dof) == 1)))
+                if (((ReportManager.GetEvtSignif(e, dof) == 1) || (ReportManager.GetEvtSignif(e,dof) == 2)))
                 {
                     ass.Add(e);
                     
@@ -290,11 +290,11 @@ namespace SandBox.Db
             return evtsg;
         }
 
-        public static IQueryable<GetEventsSignForResearchResult> GetEvtSignByRschId(int rschId)
-        {
-            var db = new SandBoxDataContext();
-            return db.GetEventsSignForResearch(rschId).AsQueryable();
-        }
+        //public static IQueryable<GetEventsSignForResearchResult> GetEvtSignByRschId(int rschId)
+        //{
+        //    var db = new SandBoxDataContext();
+        //    return db.GetEventsSignForResearch(rschId).AsQueryable();
+        //}
 
         public static IQueryable GetEventsViewWithSignWithoutLogic(int rschId)
         {
@@ -306,7 +306,7 @@ namespace SandBox.Db
             List<events> ass = new List<events>();
             foreach (var e in es)
             {
-                if (((ReportManager.GetEvtSignif(e) == 0) || (ReportManager.GetEvtSignif(e) == 1)))
+                if (((ReportManager.GetEvtSignif(e) == 1) || (ReportManager.GetEvtSignif(e) == 2)))
                 {
                     ass.Add(e);
                 }
@@ -332,7 +332,7 @@ namespace SandBox.Db
             return from evts in db.EventsTableViews
                    where evts.who.Contains(searchtxt)
                    orderby evts.rschId
-                   select new { evts.Id, evts.ModuleId, evts.EventCode, evts.who, evts.dest, evts.Description, evts.rschId, pid = evts.pid1, evts.pid2, evts.adddata1, evts.adddata2, evts.timeofevent };
+                   select new { evts.Id, evts.ModuleId, evts.EventCode, evts.who, evts.dest, evts.rschId, pid = evts.pid1, evts.pid2, evts.adddata1, evts.adddata2, evts.timeofevent };
 
         }
 
@@ -383,11 +383,11 @@ namespace SandBox.Db
                 return from evts in db.EventsTableViews
                        where evts.rschId == rschId
                        orderby evts.Id
-                       select new { evts.Id, evts.ModuleId, evts.EventCode, evts.who, evts.dest, evts.Description, evts.rschId, pid = evts.pid1, evts.pid2, evts.adddata1, evts.adddata2, evts.timeofevent, evts.status };
+                       select new { evts.Id, evts.ModuleId, evts.EventCode, evts.who, evts.dest, evts.rschId, pid = evts.pid1, evts.pid2, evts.adddata1, evts.adddata2, evts.timeofevent, evts.status, evts.significance, evts.signdesc };
             return from evts in db.EventsTableViews
                    where evts.rschId == rschId
                    orderby evts.Id descending
-                   select new { evts.Id, evts.ModuleId, evts.EventCode, evts.who, evts.dest, evts.Description, evts.rschId, pid = evts.pid1, evts.pid2, evts.adddata1, evts.adddata2, evts.timeofevent, evts.status };
+                   select new { evts.Id, evts.ModuleId, evts.EventCode, evts.who, evts.dest, evts.rschId, pid = evts.pid1, evts.pid2, evts.adddata1, evts.adddata2, evts.timeofevent, evts.status, evts.significance, evts.signdesc };
 //                return from evts in db.events
 //                       where evts.rschId == rschId
 //                       select new { Id = evts.Id, ModuleId = GetEvtModuleDescription(evts.module), EventCode = GetEvtEvtDescription(evts.@event), Who = evts.who, Dest = evts.dest, Description = evts.descr, RschId = evts.rschId, pid = evts.pid1, pid2 = evts.pid2, adddata1 = evts.adddata1, adddata2 = evts.adddata2, timeOfEvent = evts.timeofevent };
@@ -769,6 +769,68 @@ namespace SandBox.Db
                               orderby r.Id
                              select r;
             return researches.First();
+
+        }
+        //**********************************************************
+        //* Получение всех элементов Research для ВПО
+        //**********************************************************
+        public static IQueryable GetResearchesVPOView(Int32 mlwrID)
+        {
+            var db = new SandBoxDataContext();
+
+            var results = from rs in db.ResearchesTableViews
+                          where rs.mlwrid == mlwrID
+                          select
+                              new
+                              {
+                                  rs.Id,
+                                  rs.User,
+                                  rs.VmType,
+                                  rs.VmSystem,
+                                  rs.State,
+                                  rs.CreatedDate,
+                                  rs.StartedDate,
+                                  rs.StoppedDate,
+                                  rs.ResearchName,
+                                  TimeElapsed = GetElapsedTimeInMinutes(rs.StartedDate, rs.StoppedDate, rs.Duration),
+                                  TimeLeft = GetLeftTimeInMinutes(rs.StartedDate, rs.Duration),
+                                  rs.fsEventsCount,
+                                  rs.regEventsCount,
+                                  rs.netEventsCount,
+                                  rs.procEventsCount
+                              };
+            return results;
+        }
+
+        //**********************************************************
+        //* Получение всех элементов Research для ВПО
+        //**********************************************************
+        public static IQueryable GetResearchesVPOView(Int32 mlwrID, Int32 userId)
+        {
+            var db = new SandBoxDataContext();
+
+            var results = from rs in db.ResearchesTableViews
+                          where rs.mlwrid == mlwrID
+                          where rs.UserId == userId
+                          select
+                              new
+                              {
+                                  rs.Id,
+                                  rs.VmType,
+                                  rs.VmSystem,
+                                  rs.State,
+                                  rs.CreatedDate,
+                                  rs.StartedDate,
+                                  rs.StoppedDate,
+                                  rs.ResearchName,
+                                  TimeElapsed = GetElapsedTimeInMinutes(rs.StartedDate, rs.StoppedDate, rs.Duration),
+                                  TimeLeft = GetLeftTimeInMinutes(rs.StartedDate, rs.Duration),
+                                  rs.fsEventsCount,
+                                  rs.regEventsCount,
+                                  rs.netEventsCount,
+                                  rs.procEventsCount
+                              };
+            return results;
         }
 
         //**********************************************************
@@ -828,34 +890,27 @@ namespace SandBox.Db
         {
             var db = new SandBoxDataContext();
 
-            var researches = from r in db.Researches
-                             join u in db.Users on r.UserId equals u.UserId
-                             join m in db.Mlwrs on r.MlwrId equals m.Id
-                             join v in db.Vms on r.VmId equals v.Id
-                             join s in db.ResearchesStates on r.State equals s.State
-                             orderby r.Id
-                             where r.UserId == userId
-                             select new { r.Id, User = u.Login, Malware = m.Path, VmType = v.Type, VmSystem = v.System, State = s.Description, r.CreatedDate, r.StartedDate, r.StoppedDate, r.ResearchName, r.Duration, r.TrafficFileReady, r.TrafficFileName };
-
-            var results = from rs in researches
-                          join vs in db.VmSystems on rs.VmSystem equals vs.System
-                          join vt in db.VmTypes on rs.VmType equals vt.Type
-                          orderby rs.Id
+            var results = from rs in db.ResearchesTableViews
+                          where rs.UserId == userId
                           select
                               new
                               {
                                   rs.Id,
                                   rs.User,
                                   rs.Malware,
-                                  VmType = vt.Description,
-                                  VmSystem = vs.Description,
+                                  rs.VmType,
+                                  rs.VmSystem,
                                   rs.State,
                                   rs.CreatedDate,
                                   rs.StartedDate,
                                   rs.StoppedDate,
                                   rs.ResearchName,
                                   TimeElapsed = GetElapsedTimeInMinutes(rs.StartedDate, rs.StoppedDate, rs.Duration),
-                                  TimeLeft = GetLeftTimeInMinutes(rs.StartedDate, rs.Duration)
+                                  TimeLeft = GetLeftTimeInMinutes(rs.StartedDate, rs.Duration),
+                                  rs.fsEventsCount,
+                                  rs.regEventsCount,
+                                  rs.netEventsCount,
+                                  rs.procEventsCount
                               };
             return results;
         }

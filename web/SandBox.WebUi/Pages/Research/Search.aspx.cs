@@ -9,6 +9,7 @@ using DevExpress.Web.ASPxGridView;
 using DevExpress.Web.ASPxEditors;
 using System.Web.Security;
 using System.Text;
+using System.Drawing;
 
 namespace SandBox.WebUi.Pages.Research
 {
@@ -47,7 +48,11 @@ namespace SandBox.WebUi.Pages.Research
                         OpenReportMenu.ClientVisible = true;
                     }
                     if (SearchTextBox.Text == "") { gridSearchView.FilterExpression = ""; }
-                    else { gridSearchView.FilterExpression = string.Format("contains([who],'{0}') or contains([dest],'{0}')", SearchTextBox.Text); }
+                    else { 
+                        int number;
+                        if (Int32.TryParse(SearchTextBox.Text, out number)) gridSearchView.FilterExpression = string.Format("contains([Id],'{0}') or contains([timeofevent],'{0}') or contains([pid1],'{0}') or contains([pid2],'{0}') or contains([who],'{0}') or contains([dest],'{0}') or contains([adddata1],'{0}') or contains([adddata2],'{0}')", SearchTextBox.Text); 
+                        else gridSearchView.FilterExpression = string.Format("contains([who],'{0}') or contains([dest],'{0}') or contains([adddata1],'{0}') or contains([adddata2],'{0}')", SearchTextBox.Text); 
+                    }
                     gridSearchView.DataBind();
                     break;
                 case "ApplyExtFilter":
@@ -98,7 +103,7 @@ namespace SandBox.WebUi.Pages.Research
 
         protected void gridSearchView_CustomColumnDisplayText(object sender, ASPxGridViewColumnDisplayTextEventArgs e)
         {
-            if (e.Column.FieldName != "who" && e.Column.FieldName != "dest") return;
+            if (e.Value == null || SearchTextBox.Text == string.Empty) return;
             string searchText = SearchTextBox.Text;
             string highlightedText = e.Value.ToString();
 
@@ -148,6 +153,25 @@ namespace SandBox.WebUi.Pages.Research
                 rschId[n - startIndex] = gridSearchView.GetRowValues(n, "rschId");
             }
             e.Properties["cprschId"] = rschId;
+        }
+
+        protected void gridSearchView_HtmlRowPrepared(object sender, ASPxGridViewTableRowEventArgs e)
+        {
+            if (e.RowType != DevExpress.Web.ASPxGridView.GridViewRowType.Data) return;
+            switch (Convert.ToInt32(e.GetValue("significance")))
+            {
+                case 1:
+                    {
+                        e.Row.BackColor = Color.SandyBrown;
+                        break;
+                    }
+                case 2:
+                    {
+                        e.Row.BackColor = Color.Salmon;
+                        break;
+                    }
+            }
+
         }
 
         //protected void ReportLink_Init(object sender, EventArgs e)

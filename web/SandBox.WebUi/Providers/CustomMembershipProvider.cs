@@ -75,7 +75,7 @@ namespace SandBox.WebUi.Providers
 
             if (u == null)
             {
-                UserManager.CreateUser(username, password, 2);
+                UserManager.CreateUser(username, username, password, 2);
                 status = MembershipCreateStatus.Success;
                 return GetUser(username, false);
             }

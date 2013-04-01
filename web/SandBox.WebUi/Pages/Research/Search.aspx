@@ -53,7 +53,7 @@
                                 })
                             </script>
                             <div id="extfilterbtn">
-                                <a href="#">Расширенный фильтр</a></div>
+                                <a href="#">Расширенный поиск</a></div>
                             <br />
                             <div id="extfilter" style="display: none; padding-bottom: 30px;">
                                 <asp:UpdatePanel ID="ExtFilterUpdatePanel" runat="server" UpdateMode="Conditional">
@@ -307,7 +307,8 @@
                         KeyFieldName="Id" DataSourceID="LinqServerModeDataSource1" ClientInstanceName="gridSearchView"
                         OnCustomCallback="gridSearchView_CustomCallback" ClientVisible="False" EnableCallBacks="False"
                         OnCustomColumnDisplayText="gridSearchView_CustomColumnDisplayText" EnableTheming="True"
-                        Theme="Default" oncustomjsproperties="gridSearchView_CustomJSProperties">
+                        Theme="Default" oncustomjsproperties="gridSearchView_CustomJSProperties" 
+                        onhtmlrowprepared="gridSearchView_HtmlRowPrepared">
                         <ClientSideEvents SelectionChanged="function(s, e) {
                         if (e.isSelected) {
                             var ResearchId = gridSearchView.cprschId[e.visibleIndex - gridSearchView.visibleStartIndex];
@@ -333,15 +334,34 @@
                                     <MaskSettings IncludeLiterals="DecimalSymbol" />
                                 </PropertiesTextEdit>
                             </dx:GridViewDataTextColumn>
-                            <dx:GridViewDataTextColumn Caption="Модуль" FieldName="ModuleId" 
-                                VisibleIndex="3">
+                                                    <dx:GridViewDataComboBoxColumn Caption="Модуль" FieldName="ModuleId"
+                                                        VisibleIndex="4" Width="50px">
+                                                        <PropertiesComboBox>
+                                                            <Items>
+                                                                <dx:ListEditItem Text="Процессы" Value="Процессы" />
+                                                                <dx:ListEditItem Text="Реестр" Value="Реестр" />
+                                                                <dx:ListEditItem Text="Сеть" Value="Сеть" />
+                                                                <dx:ListEditItem Text="Файловая система" Value="Файловая система" />
+                                                            </Items>
+                                                            <ValidationSettings ErrorText="Неверное значение">
+                                                                <RegularExpression ErrorText="Ошибка проверки регулярного выражения" />
+                                                            </ValidationSettings>
+                                                        </PropertiesComboBox>
+                                                        <Settings HeaderFilterMode="CheckedList" />
+                                                    </dx:GridViewDataComboBoxColumn>
+                                                    <dx:GridViewDataComboBoxColumn Caption="Событие" FieldName="EventCode"
+                                                        VisibleIndex="7" Width="50px">
+                                                        <PropertiesComboBox DataSourceID="dsEventsDesc" DropDownStyle="DropDown" IncrementalFilteringMode="StartsWith"
+                                                            TextField="EventsEventDescription" ValueField="EventID" ValueType="System.Int32">
+                                                            <ValidationSettings ErrorText="Неверное значение">
+                                                                <RegularExpression ErrorText="Ошибка проверки регулярного выражения" />
+                                                            </ValidationSettings>
+                                                        </PropertiesComboBox>
+                                                        <Settings HeaderFilterMode="CheckedList" />
+                                                    </dx:GridViewDataComboBoxColumn>
+                            <dx:GridViewDataTextColumn FieldName="who" VisibleIndex="7" Caption="Объект">
                             </dx:GridViewDataTextColumn>
-                            <dx:GridViewDataTextColumn Caption="Событие" FieldName="EventCode" 
-                                VisibleIndex="6">
-                            </dx:GridViewDataTextColumn>
-                            <dx:GridViewDataTextColumn FieldName="who" VisibleIndex="7" Caption="Цель">
-                            </dx:GridViewDataTextColumn>
-                            <dx:GridViewDataTextColumn FieldName="dest" VisibleIndex="8" Caption="Объект">
+                            <dx:GridViewDataTextColumn FieldName="dest" VisibleIndex="8" Caption="Цель">
                             </dx:GridViewDataTextColumn>
                             <dx:GridViewDataTextColumn FieldName="Description" VisibleIndex="11" 
                                 ShowInCustomizationForm="False" Visible="False">
@@ -375,6 +395,20 @@
                                 </PropertiesDateEdit>
                                 <Settings AllowAutoFilterTextInputTimer="True" GroupInterval="Date" />
                             </dx:GridViewDataDateColumn>
+                                                    <dx:GridViewDataTextColumn Caption="Важность" FieldName="significance" VisibleIndex="14"
+                                                        Name="signcol" ShowInCustomizationForm="False" Visible="False">
+                                                        <Settings ShowInFilterControl="False" />
+                                                    </dx:GridViewDataTextColumn>
+                                                    <dx:GridViewDataComboBoxColumn Caption="Важность" FieldName="signdesc"
+                                                        VisibleIndex="15">
+                                                        <PropertiesComboBox>
+                                                            <Items>
+                                                                <dx:ListEditItem Text="Не важное" Value="Не важное" />
+                                                                <dx:ListEditItem Text="Важное" Value="Важное" />
+                                                                <dx:ListEditItem Text="Критическое" Value="Критическое" />
+                                                            </Items>
+                                                        </PropertiesComboBox>
+                                                    </dx:GridViewDataComboBoxColumn>
                         </Columns>
                         <SettingsBehavior AllowFocusedRow="True" AutoExpandAllGroups="True" EnableCustomizationWindow="True"
                             EnableRowHotTrack="True" AllowSelectByRowClick="True" AllowSelectSingleRowOnly="True"
@@ -385,6 +419,7 @@
                             </PageSizeItemSettings>
                         </SettingsPager>
                         <Settings ShowFilterRow="True" ShowFilterRowMenu="True" ShowGroupPanel="True" ShowFilterBar="Auto" />
+                        <SettingsText CustomizationWindowCaption="Скрытые колонки" />
                         <SettingsLoadingPanel Text="Загрузка&amp;hellip;"></SettingsLoadingPanel>
                     </dx:ASPxGridView>
                     </div>
@@ -422,4 +457,7 @@
             </dx:ASPxButton>
         </div>
     </div>
+    <asp:LinqDataSource ID="dsEventsDesc" runat="server" ContextTypeName="SandBox.Db.SandBoxDataContext"
+        EntityTypeName="" TableName="EventsEventDescriptions">
+    </asp:LinqDataSource>
 </asp:Content>

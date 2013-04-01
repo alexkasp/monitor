@@ -13,15 +13,6 @@ namespace SandBox.WebUi.Pages.Settings {
     public partial class Users {
         
         /// <summary>
-        /// Image1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
-        
-        /// <summary>
         /// pcSettings control.
         /// </summary>
         /// <remarks>
@@ -40,6 +31,15 @@ namespace SandBox.WebUi.Pages.Settings {
         protected global::DevExpress.Web.ASPxEditors.ASPxButton btnNewUser;
         
         /// <summary>
+        /// UsersUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UsersUpdatePanel;
+        
+        /// <summary>
         /// gridViewUsers control.
         /// </summary>
         /// <remarks>
@@ -47,6 +47,15 @@ namespace SandBox.WebUi.Pages.Settings {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView.ASPxGridView gridViewUsers;
+        
+        /// <summary>
+        /// cbEdit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxGridView.GridViewCommandColumnCustomButton cbEdit;
         
         /// <summary>
         /// cbDelete control.

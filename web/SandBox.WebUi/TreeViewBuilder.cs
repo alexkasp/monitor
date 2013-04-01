@@ -17,6 +17,47 @@ namespace SandBox.WebUi
     }
     class TreeViewBuilder
     {
+        public static IQueryable<Regs> GetRegsTableView(Int32 researchId)
+        {
+            var db = new SandBoxDataContext();
+            return from r in db.Regs
+                       where r.RschID == researchId
+                       select r;
+        }
+
+        public static IQueryable<Procs> GetProcsTableView(Int32 researchId)
+        {
+            var db = new SandBoxDataContext();
+            return from r in db.Procs
+                   where r.RschId == researchId
+                   select r;
+        }
+
+        public static List<Regs> GetRegsTableViewByParentId(Int32 researchId, Int32 parentId)
+        {
+            var db = new SandBoxDataContext();
+            return (from r in db.Regs
+                   where r.RschID == researchId && r.Parent == parentId
+                   select r).ToList();
+        }
+
+        public static List<Files> GetFilesTableViewByParentId(Int32 researchId, Int32 parentId)
+        {
+            var db = new SandBoxDataContext();
+            return (from r in db.Files
+                    where r.RschId == researchId && r.parent == parentId
+                    orderby r.IsDir descending, r.Name
+                    select r).ToList();
+        }
+
+        public static List<Procs> GetProcTableViewByParentId(Int32 researchId, Int32 parentId)
+        {
+            var db = new SandBoxDataContext();
+            return (from r in db.Procs
+                    where r.RschId == researchId && r.Pid2 == parentId
+                    select r).ToList();
+        }
+
         //pid2 идентификатор родительского процесса
         public List<CommonTreeItem> GetCommonTreeItemsFromProcs(int rschId)
         {
@@ -171,7 +212,7 @@ namespace SandBox.WebUi
                 item.IsInTree = true;
                 return;
             }
-            if (a.ChildNodes.Count!=null)//a.ChildNodes != null) //дочерние элементы есть
+            if (a.ChildNodes.Count>0)//a.ChildNodes != null) //дочерние элементы есть
             {
                 foreach (TreeNode childNode in a.ChildNodes) //не зацикливаеться ли от родителя к 1 ребенку и обратно?
                 {

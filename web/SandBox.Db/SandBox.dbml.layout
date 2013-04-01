@@ -2,10 +2,10 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.625, 24.625" name="SandBox">
   <DataContextMoniker Name="/SandBoxDataContext" />
   <nestedChildShapes>
-    <classShape Id="7040c5b0-e1d4-45cb-a0c5-a7ee3d3493b0" isExpanded="false" absoluteBounds="0.5, 1.375, 2, 0.45">
+    <classShape Id="7040c5b0-e1d4-45cb-a0c5-a7ee3d3493b0" isExpanded="false" absoluteBounds="0.625, 1, 2, 0.45">
       <DataClassMoniker Name="/SandBoxDataContext/User" />
       <nestedChildShapes>
-        <elementListCompartment Id="e2602630-2cbd-43e8-b08c-b6908e3e1937" absoluteBounds="0.51500000000000012, 1.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="e2602630-2cbd-43e8-b08c-b6908e3e1937" absoluteBounds="0.64000000000000012, 1.46, 1.9700000000000002, 1.7878011067708333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="07336463-21cb-47ea-bae9-6a29454004ae" isExpanded="false" absoluteBounds="2.75, 1.125, 2, 0.45">
@@ -14,20 +14,20 @@
         <elementListCompartment Id="5ee1d3c9-601b-46f4-affc-6dce67264caa" absoluteBounds="2.7649999999999997, 1.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="2fc532ef-9ac2-4d59-a198-4a9fd653a75b" isExpanded="false" absoluteBounds="2.875, 2.75, 2, 0.45">
+    <classShape Id="2fc532ef-9ac2-4d59-a198-4a9fd653a75b" isExpanded="false" absoluteBounds="3.125, 2.75, 2, 0.45">
       <DataClassMoniker Name="/SandBoxDataContext/UsersInRole" />
       <nestedChildShapes>
-        <elementListCompartment Id="cbb34a93-9d6a-43da-9e86-957fe68b9ece" absoluteBounds="2.8899999999999997, 3.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="cbb34a93-9d6a-43da-9e86-957fe68b9ece" absoluteBounds="3.1399999999999997, 3.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.4062505 : 2.75); (3.4062505 : 2.1375); (2.98958333333333 : 2.1375 : JumpStart); (2.82291666666667 : 2.1375 : JumpEnd); (2.6875 : 2.1375); (2.6875 : 1.6); (2.5 : 1.6)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.125 : 2.975); (1.625 : 2.975); (1.625 : 1.45)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/SandBoxDataContext/UsersInRole/UsersInRole_User" />
       <nodes>
         <classShapeMoniker Id="2fc532ef-9ac2-4d59-a198-4a9fd653a75b" />
         <classShapeMoniker Id="7040c5b0-e1d4-45cb-a0c5-a7ee3d3493b0" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.90625 : 2.75); (2.90625 : 1.575)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.125 : 2.8312475); (2.84375 : 2.8312475); (2.84375 : 1.575)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/SandBoxDataContext/UsersInRole/UsersInRole_Role" />
       <nodes>
         <classShapeMoniker Id="2fc532ef-9ac2-4d59-a198-4a9fd653a75b" />
@@ -96,7 +96,7 @@
         <classShapeMoniker Id="137a0eea-8eb9-4dd2-b7ea-4cc0eb96fcb3" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(0.968748 : 6.325); (0.968748 : 7.69314697265625); (1.41666666666667 : 7.69314697265625 : JumpStart); (1.58333333333333 : 7.69314697265625 : JumpEnd); (2.375 : 7.69314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(0.968748 : 6.325); (0.968748 : 7.69314697265625); (2.375 : 7.69314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SandBoxDataContext/Vm/Vm_VmSystem" />
       <nodes>
         <classShapeMoniker Id="41c51ded-eaa3-441a-b3fe-fad333939c29" />
@@ -335,10 +335,10 @@
         <elementListCompartment Id="4e6a86ef-d369-4409-82d9-9644b5d3405d" absoluteBounds="7.3900000000000006, 0.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="fc7f0c23-d89c-4088-aee0-58ae2e940f5f" isExpanded="false" absoluteBounds="0.75, 2.75, 2, 0.45">
+    <classShape Id="fc7f0c23-d89c-4088-aee0-58ae2e940f5f" isExpanded="false" absoluteBounds="1.375, 4.25, 2, 0.45">
       <DataClassMoniker Name="/SandBoxDataContext/vmusage" />
       <nestedChildShapes>
-        <elementListCompartment Id="bd772fd9-6e31-44a9-87c5-6cb26788ef20" absoluteBounds="0.76500000000000012, 3.21, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="bd772fd9-6e31-44a9-87c5-6cb26788ef20" absoluteBounds="1.3900000000000001, 4.71, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="63675f98-6d74-49bd-829b-87a518367579" isExpanded="false" absoluteBounds="0.5, 3.375, 2, 0.45">
@@ -347,22 +347,16 @@
         <elementListCompartment Id="9317bcc6-e21b-48d8-9fd3-ee2d6b31c372" absoluteBounds="0.515, 3.835, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="424d9493-d463-4ad0-b782-aab302fa8124" isExpanded="false" absoluteBounds="0.5, 0.875, 2, 0.45">
+    <classShape Id="424d9493-d463-4ad0-b782-aab302fa8124" isExpanded="false" absoluteBounds="1.5, 4.625, 2, 0.45">
       <DataClassMoniker Name="/SandBoxDataContext/ClMlwr" />
       <nestedChildShapes>
-        <elementListCompartment Id="acd4f4e6-0671-401b-b561-19da854eefdd" absoluteBounds="0.515, 1.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="acd4f4e6-0671-401b-b561-19da854eefdd" absoluteBounds="1.5150000000000001, 5.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="f6762faf-68fe-4510-94b8-9eeb9239fd44" isExpanded="false" absoluteBounds="0.5, 2.25, 2, 0.45">
+    <classShape Id="f6762faf-68fe-4510-94b8-9eeb9239fd44" isExpanded="false" absoluteBounds="0.5, 4.375, 2, 0.45">
       <DataClassMoniker Name="/SandBoxDataContext/MlwrCl" />
       <nestedChildShapes>
-        <elementListCompartment Id="bec7442e-b6b6-4cbb-970b-a1915746e42d" absoluteBounds="0.51500000000000012, 2.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="33d9a0eb-6e50-4b04-8e80-cda374356286" isExpanded="false" absoluteBounds="8, 2.5, 2, 0.45">
-      <DataClassMoniker Name="/SandBoxDataContext/ResearchesTableView" />
-      <nestedChildShapes>
-        <elementListCompartment Id="c5630731-15bb-4af4-bc36-36638df6291b" absoluteBounds="8.015, 2.96, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="bec7442e-b6b6-4cbb-970b-a1915746e42d" absoluteBounds="0.51500000000000012, 4.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="80fb997e-5323-4614-9b9c-b60b22f7bfda" isExpanded="false" absoluteBounds="7.875, 1.875, 2, 0.45">
@@ -395,16 +389,28 @@
         <elementListCompartment Id="b1c29d3c-0a55-4cb7-8cf1-a70f9b00f416" absoluteBounds="8.14, 5.46, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="82f56b1d-efc0-4df1-881f-1b759217378e" isExpanded="false" absoluteBounds="4, 2.375, 2, 0.45">
-      <DataClassMoniker Name="/SandBoxDataContext/EventsTableView" />
-      <nestedChildShapes>
-        <elementListCompartment Id="1b2f12f0-7433-4d59-bcec-ef088800acd3" absoluteBounds="4.015, 2.835, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="bbf52257-7bf1-4026-8685-ab3ae3c2eff1" absoluteBounds="6, 5, 2, 1.5785953776041666">
+    <classShape Id="bbf52257-7bf1-4026-8685-ab3ae3c2eff1" isExpanded="false" absoluteBounds="6, 5, 2, 0.45">
       <DataClassMoniker Name="/SandBoxDataContext/EventsChartSign" />
       <nestedChildShapes>
         <elementListCompartment Id="f3beb87a-5be6-4f54-a6de-bb2de33ec995" absoluteBounds="6.015, 5.46, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="19781f19-3d1e-4e1a-93e0-42caf4448abb" isExpanded="false" absoluteBounds="3.375, 2.125, 2, 0.45">
+      <DataClassMoniker Name="/SandBoxDataContext/EventsTableView" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8fbad6d6-c5e4-4899-bf34-a3d7cce58b58" absoluteBounds="3.39, 2.585, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="00df0281-6f2d-44b0-a2a2-1cf6142062c7" isExpanded="false" absoluteBounds="3.5, 3.875, 2, 0.45">
+      <DataClassMoniker Name="/SandBoxDataContext/Setting" />
+      <nestedChildShapes>
+        <elementListCompartment Id="06eaad7c-9d5d-4259-8753-161edc5877e9" absoluteBounds="3.515, 4.335, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7337f5af-1a31-4738-95fe-cd0139812fb7" isExpanded="false" absoluteBounds="7, 2.375, 2, 0.45">
+      <DataClassMoniker Name="/SandBoxDataContext/ResearchesTableView" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8ea5a300-18b0-4dcc-80bc-9e75afc2dcea" absoluteBounds="7.015, 2.835, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

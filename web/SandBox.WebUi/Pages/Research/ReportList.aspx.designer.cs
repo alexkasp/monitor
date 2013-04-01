@@ -175,13 +175,13 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.XtraCharts.Web.WebChartControl wcEventsSign;
         
         /// <summary>
-        /// SearchGridUpdateProgress control.
+        /// ChartUpdateProgress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdateProgress SearchGridUpdateProgress;
+        protected global::System.Web.UI.UpdateProgress ChartUpdateProgress;
         
         /// <summary>
         /// ASPxCallbackPanel1 control.
@@ -193,15 +193,6 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.Web.ASPxCallbackPanel.ASPxCallbackPanel ASPxCallbackPanel1;
         
         /// <summary>
-        /// UpdategridPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdategridPanel;
-        
-        /// <summary>
         /// ASPxPageControl1 control.
         /// </summary>
         /// <remarks>
@@ -211,40 +202,49 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.Web.ASPxTabControl.ASPxPageControl ASPxPageControl1;
         
         /// <summary>
-        /// ASPxHyperLink3 control.
+        /// UpdategridPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink ASPxHyperLink3;
+        protected global::System.Web.UI.UpdatePanel UpdategridPanel;
         
         /// <summary>
-        /// ASPxHyperLink4 control.
+        /// TableFilterMenu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink ASPxHyperLink4;
+        protected global::DevExpress.Web.ASPxMenu.ASPxMenu TableFilterMenu;
         
         /// <summary>
-        /// LPagingSize control.
+        /// TableExportMenu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel LPagingSize;
+        protected global::DevExpress.Web.ASPxMenu.ASPxMenu TableExportMenu;
         
         /// <summary>
-        /// CBPagingSize control.
+        /// TableMenu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox CBPagingSize;
+        protected global::DevExpress.Web.ASPxMenu.ASPxMenu TableMenu;
+        
+        /// <summary>
+        /// ReportGridUpdateProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress ReportGridUpdateProgress;
         
         /// <summary>
         /// gridViewReports control.
@@ -272,6 +272,60 @@ namespace SandBox.WebUi.Pages.Research {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxEditors.ASPxButton ASPxButton2;
+        
+        /// <summary>
+        /// gridExport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxGridView.Export.ASPxGridViewExporter gridExport;
+        
+        /// <summary>
+        /// ExportPDFBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton ExportPDFBtn;
+        
+        /// <summary>
+        /// ExportXLSBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton ExportXLSBtn;
+        
+        /// <summary>
+        /// ExportXLSXBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton ExportXLSXBtn;
+        
+        /// <summary>
+        /// ExportRTFBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton ExportRTFBtn;
+        
+        /// <summary>
+        /// ExportCSVBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton ExportCSVBtn;
         
         /// <summary>
         /// linkGetFileList control.
@@ -335,5 +389,14 @@ namespace SandBox.WebUi.Pages.Research {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink HLPorts;
+        
+        /// <summary>
+        /// dsEventsDesc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinqDataSource dsEventsDesc;
     }
 }

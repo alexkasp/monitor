@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using SandBox.Connection;
 using SandBox.Data;
@@ -290,6 +291,14 @@ namespace SandBox.WebUi
 
         }
 
+        public static string GetFtpServer()
+        {
+            using (var db = new SandBoxDataContext())
+            {
+                return db.Settings.FirstOrDefault(x => x.param == "ftp_ip").value;
+            }
+        }
+
         private static void OnReceiveLoadTraffic(List<byte[]> parameters)
         {
             try
@@ -305,7 +314,8 @@ namespace SandBox.WebUi
                 Research research = ResearchManager.GetResearchByTrafficFileName(filename);
                 if (research == null) return;
 
-                String link = "ftp://10.32.200.143/" + filename;
+                String link = "ftp://" + GetFtpServer()+ "/" + filename;
+//                String link = "ftp://10.32.200.143/" + filename;
                 ResearchManager.UpdateTrafficInfo(research.Id, TrafficFileReady.COMPLETE, link);
             }
             catch (Exception)

@@ -8,6 +8,54 @@ body {
 	min-width: 1280px;
 	height: 100%;
 }
+.dxeBase
+{
+ font-family: "Trebuchet MS", Arial;
+}
+.dxeListBox 
+{
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom-width: 2px;
+    border-bottom-color: #b0b0b0;
+}
+
+.dxeListBox,  .dxeListBoxItem 
+{
+ font-family: "Trebuchet MS", Arial;
+}
+
+.dxeHFC, .dxeFTM 
+{
+ padding-left: 20px;   
+}
+
+.dxeHLC, .dxeLTM 
+{
+ padding-right: 20px;   
+}
+
+.dxeListBox .dxeHC, .dxeListBox .dxeHLC, .dxeListBox td.dxeHMIC, .dxeListBoxItem, .dxeListBox td.dxeLTM, .dxeListBox td.dxeTM, .dxeListBox td.dxeMIM 
+{
+    border-left: none !important;
+}
+.dxeListBox .dxeHD 
+{
+	background-image: url(/Content/images/lb_hdr.png);
+	background-repeat: repeat-x;
+	background-position: top;
+	height: 34px;
+	border-bottom: none;
+}
+.dxeListBox .dxeHD table
+{
+	padding-top: 5px;
+}
+.dxeListBoxItem 
+{
+ font:    
+}
 .wrapper_full {
 	width: 100%;
 	background-image: url(/Content/images/globus.png);
@@ -243,21 +291,24 @@ td.nvtxtr {
 #pagename {
 	font: 36px Calibri;
 	float: left;
-	padding: 20px;
+	padding-bottom: 15px;
+	padding-left: 20px;
+	padding-top: 5px;
 	text-transform: uppercase;
 }
 #toolbuttons {
 	float: left;
-	padding-top: 28px;
+	padding-top: 10px;
 	padding-left: 20px;
 }
 #tablenavbuttons {
 	float: right;
-	padding: 22px;
+	padding-right: 10px;
+	padding-top: 15px;
 }
 #content-main {
 	margin: 0 auto;
-	padding: 0px 10px 10px 10px;
+	padding: 10px;
 	overflow: auto;
 }
 .detailrow {
@@ -332,7 +383,7 @@ td.nvtxtr {
 }
 
 #loginbox {
-	height: 336px;
+	height: 350px;
 	width: 524px;
 	overflow: auto;
 	position: absolute;
@@ -370,7 +421,7 @@ td.nvtxtr {
 	background-repeat: repeat-x;
 	background-position: top;
 	vertical-align: middle;
-	border: none;
+	border: none !important;
 	height: 30px;
 	cursor: pointer;
 }
@@ -388,7 +439,6 @@ td.nvtxtr {
 .buttonDisable {
 	font-family: "Trebuchet MS", Arial;
 	font-size: 14px;
-	border: 1px solid #dcdcdc;
 	color: #646464;
 	background-color: #F3F3F3;
 	background-image: none;
@@ -472,6 +522,9 @@ td.nvtxtr {
 
 .accordionContent {  
 	background-color: #FFFFFF;  
+	background-image: url(/Content/images/acc_bg.png);
+	background-repeat: repeat-x;
+	background-position: bottom;
 	border: none;  
 	padding-bottom:10px;
 }
@@ -506,14 +559,12 @@ td.nvtxtr {
 
 .titlegr {
 	background-color: #f3f3f3;
-	width:100%;
 	color:#020202;
 	font-size: 22px;
 	padding-top: 10px;
 	padding-right: 0px;
 	padding-bottom: 10px;
-	padding-left: 0px;
-	text-indent: 30px;
+	padding-left: 25px;
 	margin-bottom: 10px;
 }
 

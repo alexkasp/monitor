@@ -7,8 +7,9 @@
       <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="PasswordSalt" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="LastLoginDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastLoginDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="true" />
       <Column Name="LastLoginIp" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(100)" CanBeNull="false" />
       <Association Name="UsersInRole_User" Member="UsersInRole" ThisKey="UserId" OtherKey="UserId" Type="UsersInRole" IsForeignKey="true" />
     </Type>
   </Table>
@@ -447,25 +448,6 @@
       <Column Name="MlwrId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.ResearchesTableView" Member="ResearchesTableViews">
-    <Type Name="ResearchesTableView">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ResearchName" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="State" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Malware" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="VmType" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="VmSystem" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="StartedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="StoppedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Duration" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[User]" Member="User" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="fsEventsCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="regEventsCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="netEventsCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="procEventsCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.TasksViewForRsch" Member="TasksViewForRsches">
     <Type Name="TasksViewForRsch">
       <Column Name="ResearchId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -506,23 +488,6 @@
       <Column Name="UserLayout" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.EventsTableView" Member="EventsTableViews">
-    <Type Name="EventsTableView">
-      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="ModuleId" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="EventCode" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="who" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
-      <Column Name="dest" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
-      <Column Name="rschId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="pid1" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="pid2" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="adddata1" Type="System.String" DbType="NChar(250)" CanBeNull="true" />
-      <Column Name="adddata2" Type="System.String" DbType="NChar(250)" CanBeNull="true" />
-      <Column Name="timeofevent" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="status" Type="System.String" DbType="NChar(128)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.EventsChartSign" Member="EventsChartSigns">
     <Type Name="EventsChartSign">
       <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -531,24 +496,50 @@
       <Column Name="significance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Function Name="dbo.FunctEventsSignForResearch" Method="FunctEventsSignForResearch" IsComposable="true">
-    <Parameter Name="rschid" Type="System.Int32" DbType="Int" />
-    <ElementType Name="FunctEventsSignForResearchResult">
-      <Column Name="rownum" Type="System.Int32" DbType="Int" CanBeNull="true" />
+  <Table Name="dbo.EventsTableView" Member="EventsTableViews">
+    <Type Name="EventsTableView">
       <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="module" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ModuleId" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="EventCode" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="who" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="dest" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="rschId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="pid1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="pid2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="adddata1" Type="System.String" DbType="NChar(250)" CanBeNull="true" />
+      <Column Name="adddata2" Type="System.String" DbType="NChar(250)" CanBeNull="true" />
+      <Column Name="timeofevent" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="status" Type="System.String" DbType="NChar(128)" CanBeNull="true" />
       <Column Name="significance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="significance2" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.GetEventsSignForResearch" Method="GetEventsSignForResearch">
-    <Parameter Name="rschid" Type="System.Int32" DbType="Int" />
-    <ElementType Name="GetEventsSignForResearchResult">
-      <Column Name="rownum" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="module" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="significance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="significance2" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </ElementType>
-  </Function>
+      <Column Name="signdesc" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Settings" Member="Settings">
+    <Type Name="Setting">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="param" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="value" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ResearchesTableView" Member="ResearchesTableViews">
+    <Type Name="ResearchesTableView">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ResearchName" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="State" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="mlwrid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Malware" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="VmType" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="VmSystem" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="StartedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="StoppedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Duration" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[User]" Member="User" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="fsEventsCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="regEventsCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="netEventsCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="procEventsCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

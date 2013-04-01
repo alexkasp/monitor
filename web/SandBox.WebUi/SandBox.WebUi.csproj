@@ -111,6 +111,7 @@
   <ItemGroup>
     <Content Include="Account\ChangePassword.aspx" />
     <Content Include="Account\ChangePasswordSuccess.aspx" />
+    <Content Include="Account\EditUser.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\AddUser.aspx" />
     <Content Include="Account\Register.aspx" />
@@ -173,6 +174,7 @@
     <Content Include="Content\Images\Icons\btn_stopd.png" />
     <Content Include="Content\Images\Icons\delete.png" />
     <Content Include="Content\Images\Icons\edit.png" />
+    <Content Include="Content\Images\Icons\edit2.png" />
     <Content Include="Content\Images\Icons\export.png" />
     <Content Include="Content\Images\Icons\filter.png" />
     <Content Include="Content\Images\Icons\next.png" />
@@ -180,6 +182,7 @@
     <Content Include="Content\Images\Icons\prev.png" />
     <Content Include="Content\Images\Icons\prevd.png" />
     <Content Include="Content\Images\Icons\process.gif" />
+    <Content Include="Content\Images\Icons\reg_dir.png" />
     <Content Include="Content\Images\Icons\report.png" />
     <Content Include="Content\Images\Icons\tools.png" />
     <Content Include="Content\Images\Icons\user.png" />
@@ -245,6 +248,7 @@
     <Content Include="Pages\Malware\MlwrNetReport.aspx" />
     <Content Include="Pages\Research\ChartOfEvents.aspx" />
     <Content Include="Pages\Research\Comparer.aspx" />
+    <Content Include="Pages\Research\FilesTree.aspx" />
     <Content Include="Pages\Research\CurrentReportList.aspx" />
     <Content Include="Pages\Research\EventsReport.aspx" />
     <Content Include="Pages\Research\PortsList.aspx" />
@@ -300,6 +304,13 @@
     </Compile>
     <Compile Include="Account\ChangePasswordSuccess.aspx.designer.cs">
       <DependentUpon>ChangePasswordSuccess.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\EditUser.aspx.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\EditUser.aspx.designer.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="Account\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -523,6 +534,13 @@
     </Compile>
     <Compile Include="Pages\Research\Comparer.aspx.designer.cs">
       <DependentUpon>Comparer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Research\FilesTree.aspx.cs">
+      <DependentUpon>FilesTree.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Research\FilesTree.aspx.designer.cs">
+      <DependentUpon>FilesTree.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Research\Current.aspx.designer.cs">
       <DependentUpon>Current.aspx</DependentUpon>

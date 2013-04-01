@@ -38,7 +38,7 @@ namespace SandBox.WebUi
 			void Application_Start(object sender, EventArgs e) 
             {
                 SandboxTheme.ThemesProviderEx.Register();
-                Application.Add("ApplicationTitle", "web-console");
+                Application.Add("ApplicationTitle", "Мониторинг ВПО");
                 MLogger.LogTo(Level.TRACE, false, "---------------------------------------------------------------");
                 MLogger.LogTo(Level.TRACE, false, "Application " + Application.Get("ApplicationTitle") + "started");
                 DevExpress.Web.ASPxClasses.ASPxWebControl.CallbackError += Application_Error;

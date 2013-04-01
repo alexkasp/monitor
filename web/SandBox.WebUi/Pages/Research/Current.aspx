@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="True"
+﻿<%@ Page Title="Исследования" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="True"
     CodeBehind="Current.aspx.cs" Inherits="SandBox.WebUi.Pages.Research.Current" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
@@ -88,9 +88,10 @@
                             </PressedStyle>
                             <HoverStyle CssClass="buttonHover">
                             </HoverStyle>
+                            <Border BorderColor="Gainsboro" BorderStyle="Solid" BorderWidth="1px" />
                             <DisabledStyle CssClass="buttonDisable">
                             </DisabledStyle>
-                        </dx:ASPxButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </dx:ASPxButton>
                     </td>
                     <td width="170">
                         <dx:ASPxButton ID="btnComp" AutoPostBack="False" runat="server" 
@@ -108,9 +109,10 @@
                             <HoverStyle CssClass="buttonHover">
                             </HoverStyle>
                             <FocusRectBorder BorderStyle="None" />
+                            <Border BorderColor="Gainsboro" BorderStyle="Solid" BorderWidth="1px" />
                             <DisabledStyle CssClass="buttonDisable">
                             </DisabledStyle>
-                        </dx:ASPxButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </dx:ASPxButton>
                     </td>
                     <td width="170">
                         <dx:ASPxButton ID="btnStop" AutoPostBack="False" runat="server" 
@@ -129,9 +131,10 @@
                             <HoverStyle CssClass="buttonHover">
                             </HoverStyle>
                             <FocusRectBorder BorderStyle="None" />
+                            <Border BorderColor="Gainsboro" BorderStyle="Solid" BorderWidth="1px" />
                             <DisabledStyle CssClass="buttonDisable">
                             </DisabledStyle>
-                        </dx:ASPxButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </dx:ASPxButton>
                     </td>
                     <td width="170">
                         <dx:ASPxButton ID="btnDel" AutoPostBack="False" runat="server" 
@@ -152,9 +155,10 @@
                             <HoverStyle CssClass="buttonHover">
                             </HoverStyle>
                             <FocusRectBorder BorderStyle="None" />
+                            <Border BorderColor="Gainsboro" BorderStyle="Solid" BorderWidth="1px" />
                             <DisabledStyle CssClass="buttonDisable">
                             </DisabledStyle>
-                        </dx:ASPxButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </dx:ASPxButton>
                     </td>
                 </tr>
             </table>
@@ -190,32 +194,35 @@
                     OnHtmlRowPrepared="GridViewResearchesHtmlRowPrepared" 
                     ClientInstanceName="gridViewResearches" 
                     Theme="SandboxTheme" oncustomcallback="gridViewResearches_CustomCallback" 
-                    ondatabinding="gridViewResearches_DataSelect" EnableCallBacks="False" >
+                    ondatabinding="gridViewResearches_DataSelect" EnableCallBacks="False" 
+                    oncustomjsproperties="gridViewResearches_CustomJSProperties" >
                     <ClientSideEvents RowClick="function(s, e) {
-	s.ExpandDetailRow(e.visibleIndex);
-}" SelectionChanged="function(s, e) {
-    if (s.GetSelectedRowCount()&lt;=0)
-	{
-		btnComp.SetEnabled(false);
-		btnStop.SetEnabled(false);
-		btnDel.SetEnabled(false);
-	}
-	else if (s.GetSelectedRowCount()==2)
-	{
-		btnComp.SetEnabled(true);
-		btnStop.SetEnabled(true);
-		btnDel.SetEnabled(true);
-	}
-	else
-	{
-		btnComp.SetEnabled(false);
-		btnStop.SetEnabled(true);
-		btnDel.SetEnabled(true);
-	}
-}" />
+                                            var expanded = !!s.cpVisibleDetails[e.visibleIndex];
+                                if (!expanded) { s.ExpandDetailRow(e.visibleIndex); }
+                                else { s.CollapseDetailRow(e.visibleIndex); }
+                            }" SelectionChanged="function(s, e) {
+                                if (s.GetSelectedRowCount()&lt;=0)
+	                            {
+		                            btnComp.SetEnabled(false);
+		                            btnStop.SetEnabled(false);
+		                            btnDel.SetEnabled(false);
+	                            }
+	                            else if (s.GetSelectedRowCount()==2)
+	                            {
+		                            btnComp.SetEnabled(true);
+		                            btnStop.SetEnabled(true);
+		                            btnDel.SetEnabled(true);
+	                            }
+	                            else
+	                            {
+		                            btnComp.SetEnabled(false);
+		                            btnStop.SetEnabled(true);
+		                            btnDel.SetEnabled(true);
+	                            }
+                            }" />
                     <Columns>
                         <dx:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" 
-                            Width="20px">
+                            Width="20px" Caption=" ">
                         </dx:GridViewCommandColumn>
                         <dx:GridViewDataTextColumn Caption="№" FieldName="Id" VisibleIndex="1"
                             Name="Id" UnboundType="Integer" Width="50px" SortIndex="0" 
@@ -395,13 +402,14 @@
                         <PageSizeItemSettings Items="10, 20, 50, 100" ShowAllItem="True">
                         </PageSizeItemSettings>
                     </SettingsPager>
-                    <Settings GridLines="Horizontal" ShowHeaderFilterButton="True" 
-                        EnableFilterControlPopupMenuScrolling="True" 
-                        ShowHeaderFilterBlankItems="False" />
+                    <Settings GridLines="Horizontal" 
+                        EnableFilterControlPopupMenuScrolling="True" />
                     <SettingsLoadingPanel Text="Загрузка&amp;hellip;" Mode="Disabled" />
                     <SettingsDetail ShowDetailRow="True" AllowOnlyOneMasterRowExpanded="True" 
                         ShowDetailButtons="False" />
                     <Styles>
+                        <header font-bold="True">
+                        </header>
                         <Cell HorizontalAlign="Left">
                         </Cell>
                     </Styles>
@@ -457,14 +465,17 @@
                                                 </CellStyle>
                                             </dx:GridViewDataTextColumn>
                                         </Columns>
-                                        <SettingsPager Visible="False">
+                                        <SettingsPager Visible="False" mode="ShowAllRecords">
                                         </SettingsPager>
                                         <Settings GridLines="Horizontal" ShowColumnHeaders="False" 
                                             ShowHeaderFilterBlankItems="False" />
+                                        <SettingsText EmptyDataRow="Дополнительные параметры исследования не установлены" />
                                         <SettingsLoadingPanel Text="Загрузка&amp;hellip;" />                                
                                         <Styles>
                                             <Table BackColor="White">
                                             </Table>
+                                            <emptydatarow horizontalalign="Left">
+                                            </emptydatarow>
                                             <Cell BackColor="White">
                                                 <BorderLeft BorderWidth="0px" />
                                                 <BorderTop BorderWidth="0px" />
@@ -477,7 +488,7 @@
                                     </dx:ASPxGridView>
                                 </div>
 				                <div class="detailrowevents" >
-					                <img alt="Важные" src="../../Content/images/bluebox.png" />&nbsp;&nbsp;ВАЖНЫЕ&nbsp;&nbsp;&nbsp;&nbsp;<img alt="Очень важные" src="../../Content/images/redbox.png" />&nbsp;&nbsp;ОЧЕНЬ ВАЖНЫЕ
+					                <img alt="Важные" src="../../Content/images/bluebox.png" />&nbsp;&nbsp;ВАЖНЫЕ&nbsp;&nbsp;&nbsp;&nbsp;<img alt="Очень важные" src="../../Content/images/redbox.png" />&nbsp;&nbsp;КРИТИЧЕСКИЕ
                                     <span id="DetailCharts" runat="server">
 					                <table border="0" cellspacing="0" cellpadding="0">
 					                  <tr>
@@ -503,8 +514,8 @@
 					                  <tr align="center">
 						                <td height="30">ФАЙЛОВАЯ СИСТЕМА</td>
 						                <td height="30">РЕЕСТР</td>
-						                <td height="30">СЕТЬ</td>
 						                <td height="30">ПРОЦЕССЫ</td>
+						                <td height="30">СЕТЬ</td>
 					                  </tr>
 				                  </table>
                                   </span>

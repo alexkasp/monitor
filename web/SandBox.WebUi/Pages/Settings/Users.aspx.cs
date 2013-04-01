@@ -19,10 +19,7 @@ namespace SandBox.WebUi.Pages.Settings
             if (!IsUserInRole("Administrator"))
                 Response.Redirect("~/Account/Login.aspx");
 
-            if (!IsPostBack)
-            {
-                UpdateTableView();
-            }
+            UpdateTableView();
         }
 
         private void UpdateTableView()

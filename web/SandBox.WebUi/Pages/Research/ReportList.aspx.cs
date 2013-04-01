@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using DevExpress.Web.ASPxGridView;
 using DevExpress.XtraCharts;
 using System.Collections;
+using System.Web.Security;
 
 namespace SandBox.WebUi.Pages.Research
 {
@@ -17,6 +18,7 @@ namespace SandBox.WebUi.Pages.Research
         public Db.Research Rs;
         private Dictionary<string, int> DEventsCount = new Dictionary<string, int>();
         public Int32 researchId;
+        string separator = "!!!";
 
         public class Record
         {
@@ -92,7 +94,9 @@ namespace SandBox.WebUi.Pages.Research
             }
             LHeader.Text = String.Format("Исследование (№{0}): {1}", Rs.Id, Rs.ResearchName);
             HLPorts.NavigateUrl += ("?research=" + researchId);
-            ASPxHyperLink4.NavigateUrl += ("?research=" + researchId);
+            linkGetRegistryList.NavigateUrl += ("?researchId=" + researchId);
+            linkGetFileList.NavigateUrl += ("?researchId=" + researchId);
+            linkGetProcessList.NavigateUrl += ("?researchId=" + researchId);
             Session["rsch"] = researchId;
             DEventsCount.Clear();
 
@@ -100,8 +104,8 @@ namespace SandBox.WebUi.Pages.Research
             gridAddParams.DataBind(); 
             
             gridViewReports.DataSource = ResearchManager.GetEventsForRsch(Rs.Id);
-            var newPageSize = (Int32)CBPagingSize.SelectedItem.Value;
-            gridViewReports.SettingsPager.PageSize = newPageSize;
+//            var newPageSize = (Int32)CBPagingSize.SelectedItem.Value;
+//            gridViewReports.SettingsPager.PageSize = newPageSize;
             gridViewReports.DataBind();
 
             if (Rs.TrafficFileReady == (Int32)TrafficFileReady.COMPLETE)
@@ -117,6 +121,16 @@ namespace SandBox.WebUi.Pages.Research
 
             if (!IsPostBack)
             {
+                Layout lt = WebTables.GetLayout((int)Membership.GetUser().ProviderUserKey, "ReportTable");
+                if (lt != null)
+                {
+                    string customState = lt.UserLayout.Substring(0, lt.UserLayout.IndexOf(separator));
+                    gridViewReports.Settings.ShowFilterRow = customState[0].ToString() == "T";
+                    string gridState = lt.UserLayout.Substring(customState.Length + separator.Length);
+                    gridViewReports.LoadClientLayout(gridState);
+                }
+                TableFilterMenu.Items.FindByName("ShowFiterRow").Checked = gridViewReports.Settings.ShowFilterRow;
+
 //                ReportsBuilder.RschPropsListBuilder(TreeView1, Rs.Id);
                  ASPxHyperLink5.NavigateUrl += ("?research=" + researchId);
                 if (Rs.TrafficFileReady == (Int32)TrafficFileReady.NOACTION)
@@ -142,26 +156,27 @@ namespace SandBox.WebUi.Pages.Research
                             switch (rr.Sign)
                             {
                                 case 1: FileEvs[0] += (int)rr.Count; break;
-                                default: FileEvs[1] += (int)rr.Count; break;
+                                case 2: FileEvs[1] += (int)rr.Count; break;
                             } break;
                         case "Реестр":
                             switch (rr.Sign)
                             {
                                 case 1: RegistryEvs[0] += (int)rr.Count; break;
-                                default: RegistryEvs[1] += (int)rr.Count; break;
+                                case 2: RegistryEvs[1] += (int)rr.Count; break;
                             } break;
                         case "Процессы":
                             switch (rr.Sign)
                             {
                                 case 1: ProcessEvs[0] += (int)rr.Count; break;
-                                default: ProcessEvs[1] += (int)rr.Count; break;
+                                case 2: ProcessEvs[1] += (int)rr.Count; break;
                             } break;
-                        case "TDIMON":
-                        case "NDISMON":
+                        case "Сеть":
+//                        case "TDIMON":
+//                        case "NDISMON":
                             switch (rr.Sign)
                             {
                                 case 1: NetEvs[0] += (int)rr.Count; break;
-                                default: NetEvs[1] += (int)rr.Count; break;
+                                case 2: NetEvs[1] += (int)rr.Count; break;
                             } break;
                     }
                 }
@@ -182,7 +197,6 @@ namespace SandBox.WebUi.Pages.Research
         {
             int r = rsch == -1 ? (int)Session["rsch"] : rsch;
             int virtualTime = 0;
-            int startValue = 0;
             wcEventsSign.Series.Clear();
 
             var evts = ResearchManager.GetEventsSignByRschId(r);
@@ -227,12 +241,16 @@ namespace SandBox.WebUi.Pages.Research
             wcEventsSign.Series.Add(rseries);
             wcEventsSign.Series.Add(pseries);
             wcEventsSign.Series.Add(sseries);
+//            ((SideBySideRangeBarSeriesView)fseries.View).Color = Color.FromArgb(255, 255, 0);
             ((SideBySideRangeBarSeriesView)fseries.View).Color = Color.FromArgb(74, 134, 153);
             ((SideBySideRangeBarSeriesView)fseries.View).FillStyle.FillMode = FillMode.Solid;
+//            ((SideBySideRangeBarSeriesView)rseries.View).Color = Color.FromArgb(0, 0, 255);
             ((SideBySideRangeBarSeriesView)rseries.View).Color = Color.FromArgb(43, 83, 96);
             ((SideBySideRangeBarSeriesView)rseries.View).FillStyle.FillMode = FillMode.Solid;
+//            ((SideBySideRangeBarSeriesView)pseries.View).Color = Color.FromArgb(0, 255, 0);
             ((SideBySideRangeBarSeriesView)pseries.View).Color = Color.FromArgb(163, 193, 204);
             ((SideBySideRangeBarSeriesView)pseries.View).FillStyle.FillMode = FillMode.Solid;
+//            ((SideBySideRangeBarSeriesView)sseries.View).Color = Color.FromArgb(0, 255, 255);
             ((SideBySideRangeBarSeriesView)sseries.View).Color = Color.FromArgb(18, 50, 59);
             ((SideBySideRangeBarSeriesView)sseries.View).FillStyle.FillMode = FillMode.Solid;
             if (fDS.Count>0) fseries.DataSource = fDS;
@@ -325,13 +343,13 @@ namespace SandBox.WebUi.Pages.Research
         }
 
 
-        protected void CBPagingSize_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var newPageSize = (Int32)CBPagingSize.SelectedItem.Value;
-            gridViewReports.SettingsPager.PageSize = newPageSize;
-            gridViewReports.DataBind();
+        //protected void CBPagingSize_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    var newPageSize = (Int32)CBPagingSize.SelectedItem.Value;
+        //    gridViewReports.SettingsPager.PageSize = newPageSize;
+        //    gridViewReports.DataBind();
 
-        }
+        //}
 
         protected void BtnGetClick(object sender, EventArgs e)
         {
@@ -387,8 +405,8 @@ namespace SandBox.WebUi.Pages.Research
             ASPxButton1.Text = "Запрос на получение трафика отправлен";
 
             gridViewReports.DataSource = ResearchManager.GetEventsForRsch(Rs.Id);
-            var newPageSize = (Int32)CBPagingSize.SelectedItem.Value;
-            gridViewReports.SettingsPager.PageSize = newPageSize;
+            //var newPageSize = (Int32)CBPagingSize.SelectedItem.Value;
+            //gridViewReports.SettingsPager.PageSize = newPageSize;
         }
 
         protected void ASPxButton2_Click(object sender, EventArgs e)
@@ -407,39 +425,78 @@ namespace SandBox.WebUi.Pages.Research
         protected void gridViewReports_HtmlRowPrepared(object sender, DevExpress.Web.ASPxGridView.ASPxGridViewTableRowEventArgs e)
         {
             if (e.RowType != DevExpress.Web.ASPxGridView.GridViewRowType.Data) return;
-            if (e.KeyValue != null)
-            {
-                long key = (long)e.KeyValue;
-                var evt = ResearchManager.GetEventById(key);
-                if (evt != null)
-                {
-                    int evtSignif = ReportManager.GetEvtSignif(evt);
-                    switch (evtSignif)
+            switch (Convert.ToInt32(e.GetValue("significance")))
                     {
-                        case 0:
-                            {
-                                e.Row.BackColor = Color.Salmon;
-                                break;
-                            }
                         case 1:
                             {
                                 e.Row.BackColor = Color.SandyBrown;
                                 break;
                             }
-                        default:
+                        case 2:
                             {
+                                e.Row.BackColor = Color.Salmon;
                                 break;
                             }
                     }
-                    //e.Row.BackColor = Color.Yellow;
-                }
-            }
         }
 
         protected void wcEventsSign_CustomCallback(object sender, DevExpress.XtraCharts.Web.CustomCallbackEventArgs e)
         {
             UpdateEventChart(0, researchId);
         }
+
+        protected void gridViewReports_CustomCallback(object sender, ASPxGridViewCustomCallbackEventArgs e)
+        {
+            switch (e.Parameters)
+            {
+                case "SaveLayout":
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(gridViewReports.Settings.ShowFilterRow ? "T" : "F");
+                    sb.Append(separator);
+
+                    sb.Append(gridViewReports.SaveClientLayout());
+
+                    WebTables.SetLayout((int)Membership.GetUser().ProviderUserKey, "ReportTable", sb.ToString());
+                    break;
+                case "ShowFilterRow":
+                    DevExpress.Web.ASPxMenu.MenuItem mitem = TableFilterMenu.Items.FindByName("ShowFiterRow");
+                    mitem.Checked = !mitem.Checked;
+                    gridViewReports.Settings.ShowFilterRow = mitem.Checked;
+                    gridViewReports.Settings.ShowFilterRowMenu = mitem.Checked;
+                    break;
+            }
+        }
+
+        protected void ExportPDFBtn_Click(object sender, EventArgs e)
+        {
+            gridExport.PageHeader.Left = "Имя пользователя: " + Membership.GetUser().UserName + " ([Имя пользователя])";
+            gridExport.WritePdfToResponse();
+        }
+
+        protected void ExportXLSBtn_Click(object sender, EventArgs e)
+        {
+            gridExport.PageHeader.Left = "Имя пользователя: " + Membership.GetUser().UserName + " ([Имя пользователя])";
+            gridExport.WriteXlsToResponse();
+        }
+
+        protected void ExportXLSXBtn_Click(object sender, EventArgs e)
+        {
+            gridExport.PageHeader.Left = "Имя пользователя: " + Membership.GetUser().UserName + " ([Имя пользователя])";
+            gridExport.WriteXlsxToResponse();
+        }
+
+        protected void ExportRTFBtn_Click(object sender, EventArgs e)
+        {
+            gridExport.PageHeader.Left = "Имя пользователя: " + Membership.GetUser().UserName + " ([Имя пользователя])";
+            gridExport.WriteRtfToResponse();
+        }
+
+        protected void ExportCSVBtn_Click(object sender, EventArgs e)
+        {
+            gridExport.PageHeader.Left = "Имя пользователя: " + Membership.GetUser().UserName + " ([Имя пользователя])";
+            gridExport.WriteCsvToResponse();
+        }
+
 
          //private void ApdateTraficLinq()
         //{

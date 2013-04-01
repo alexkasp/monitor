@@ -26,9 +26,24 @@ namespace SandBox.Db
             var db = new SandBoxDataContext();
             var tasks = from t in db.TasksViewForRsches
                         where t.ResearchId == researchId
+                        orderby t.ModuleX
                         select new { t.ModuleX, t.TypeX, t.ValueX };
             return tasks;
 
+        }
+
+        public static string GetFileRootForRsch(Int32 researchId)
+        {
+            Task FileRoot = GetTasks(researchId).FirstOrDefault(x => x.Type == 16);
+            if (FileRoot != null) return FileRoot.Value;
+            else return String.Empty;
+        }
+
+        public static string GetRegRootForRsch(Int32 researchId)
+        {
+            Task FileRoot = GetTasks(researchId).FirstOrDefault(x => x.Type == 17);
+            if (FileRoot != null) return FileRoot.Value;
+            else return String.Empty;
         }
 
         public static Task GetRegTasksForRsch(Int32 researchId)

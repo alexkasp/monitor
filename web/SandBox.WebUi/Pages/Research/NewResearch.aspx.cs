@@ -8,6 +8,8 @@ using DevExpress.Web.ASPxGridView;
 using System.Security.Cryptography;
 using SandBox.Connection;
 using System.Text;
+using DevExpress.Web.ASPxEditors;
+using System.Data;
 
 namespace SandBox.WebUi.Pages.Research
 {
@@ -17,74 +19,148 @@ namespace SandBox.WebUi.Pages.Research
         protected new void Page_Load(object sender, EventArgs e)
         {
             base.Page_Load(sender, e);
-            PageTitle = "Создание нового исследования";
+            PageTitle = "Создание исследования";
             PageMenu = "~/App_Data/SideMenu/Research/ResearchMenu.xml";
             //   List<string> vmList = IsUserInRole("Administrator") ? VmManager.GetVmReadyNameList() : VmManager.GetVmReadyNameList(UserId);
-            List<string> vmList = IsUserInRole("Administrator") ? VmManager.GetVmReadyForResearch() : VmManager.GetVmReadyForResearch(UserId);
-            //ASPxComboBox2.Items.Clear();
-            if (ASPxComboBox3.SelectedIndex == -1)
-            {
-                ASPxTextBox3.Enabled = false;
-            }
-            else
-            {
-                ASPxTextBox3.Enabled = true;
-            }
 
-            if (vmList.Count < 1)
-            {
-                cbMachine.Enabled = false;
-                linkCreateNewVm.Visible = true;
-                linkRegisterNewVm.Visible = true;
-            }
-            else
-            {
-                linkCreateNewVm.Visible = false;
-                linkRegisterNewVm.Visible = false;
-                cbMachine.Enabled = true;
-                cbMachine.DataSource = vmList;
-                cbMachine.DataBind();
-            }
+            //ASPxComboBox2.Items.Clear();
+            //if (vlirList.Count() < 1)
+            //{
+            //    cbVLIR.Enabled = false;
+            //}
+            //else
+            //{
+            //    cbVLIR.Enabled = true;
+            //    cbVLIR.DataSource = vlirList;
+            //    cbVLIR.DataBind();
+            //}
             if (!IsPostBack)
             {
                 //ASPxComboBox3.DataSource = from item in new List<string> { "HKEY_CLASSES_ROOT", "HKEY_CURRENT_USER", "HKEY_LOCAL_MACHINE", "HKEY_USERS", "HKEY_CURRENT_CONFIG" }
                 //                           select new { hkey = item };
                 //ASPxComboBox3.DataBind();
-
+                IQueryable vlirList = IsUserInRole("Administrator") ? VmManager.GetVLIRReadyForResearch() : VmManager.GetVLIRReadyForResearch(UserId);
+                cbEtln.DataSource = VmManager.GetEtlnReadyForResearch();
+                cbEtln.DataBind();
+                cbEtln.SelectedIndex = 0;
+                cbVLIR.DataSource = vlirList;
+                cbVLIR.DataBind();
+                if (cbVLIR.Items.Count > 0) cbVLIR.SelectedIndex = 0;
+                else rbVLIR.Enabled = false;
+                cbLIR.DataSource = VmManager.GetLIRReadyForResearch();
+                cbLIR.DataBind();
+                if (cbLIR.Items.Count > 0) cbLIR.SelectedIndex = 0;
+                else rbLIR.Enabled = false;
                 CBNetActiv.Items.AddRange(TaskManager.GetTasksDescrByClassification(1).ToList());
+                CBNetActiv.SelectedIndex = 0;
                 CBFileActiv.Items.AddRange(TaskManager.GetTasksDescrByClassification(2).ToList());
+                CBFileActiv.SelectedIndex = 0;
                 CBRegActiv.Items.AddRange(TaskManager.GetTasksDescrByClassification(3).ToList());
+                CBRegActiv.SelectedIndex = 0;
                 CBProcActiv.Items.AddRange(TaskManager.GetTasksDescrByClassification(4).ToList());
-                //ASPxComboBox2.Items.AddRange(TaskManager.GetTasksDescrByClassification(1).ToList());
+                CBProcActiv.SelectedIndex = 0;
 
-                ASPxComboBox1.DataSource = ReportManager.GetModules();
-                ASPxComboBox1.DataBind();
+                cbModule.DataSource = ReportManager.GetModules();
+                cbModule.DataBind();
+                cbModule.SelectedIndex = 0;
+                cbEvent.DataSource = ReportManager.GetEventsDescrByModule(cbModule.Value.ToString());
+                cbEvent.DataBind();
+                cbEvent.SelectedIndex = 0;
+
                 List<string> mlwrList = MlwrManager.GetMlwrPathList();
 
-                cbMachine.DataSource = vmList;
-                cbMachine.DataBind();
-                if (vmList.Count > 0) cbMachine.SelectedIndex = 0;
 
                 cbMalware.DataSource = mlwrList;
                 cbMalware.DataBind();
-                if (vmList.Count > 0) cbMalware.SelectedIndex = 0;
+                cbMalware.SelectedIndex = 0;
 
-                spinTime.AllowNull = false;
-                spinTime.AllowUserInput = false;
-                spinTime.Value = 1;
                 Session["tasks"] = new List<TaskStruct>();
+                rschName.Text = "Исследование_"+DateTime.Now.ToShortDateString();
+                lbFSParams.DataSource = dsFSParams;
+                lbFSParams.DataBind();
+                lbRegParams.DataSource = dsRegParams;
+                lbRegParams.DataBind();
+                lbProcParams.DataSource = dsProcParams;
+                lbProcParams.DataBind();
+                lbNetParams.DataSource = dsNetParams;
+                lbNetParams.DataBind();
+
             }
-            else
+
+        }
+
+        protected DataTable dsFSParams
+        {
+            get
             {
-                //var test = this.GetTableLookFromSession(1);
+                if (Session["dsFSParams"] == null)
+                {
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("ID");
+                    dt.Columns.Add("Task");
+                    dt.Columns.Add("Param");
+                    Session["dsFSParams"] = dt;
+                }
+                return Session["dsFSParams"] as DataTable;
+            }
+        }
+
+        protected DataTable dsRegParams
+        {
+            get
+            {
+                if (Session["dsRegParams"] == null)
+                {
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("ID");
+                    dt.Columns.Add("Task");
+                    dt.Columns.Add("Param");
+                    Session["dsRegParams"] = dt;
+                }
+                return Session["dsRegParams"] as DataTable;
+            }
+        }
+
+        protected DataTable dsProcParams
+        {
+            get
+            {
+                if (Session["dsProcParams"] == null)
+                {
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("ID");
+                    dt.Columns.Add("Task");
+                    dt.Columns.Add("Param");
+                    Session["dsProcParams"] = dt;
+                }
+                return Session["dsProcParams"] as DataTable;
+            }
+        }
+
+        protected DataTable dsNetParams
+        {
+            get
+            {
+                if (Session["dsNetParams"] == null)
+                {
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("ID");
+                    dt.Columns.Add("Task");
+                    dt.Columns.Add("Param");
+                    Session["dsNetParams"] = dt;
+                }
+                return Session["dsNetParams"] as DataTable;
             }
         }
 
         protected void BtnCreateClick(object sender, EventArgs e)
         {
-           
 
-            Vm vm = VmManager.GetVm(cbMachine.Value.ToString());
+            Int32 vmid = -1;
+            if (rbEtln.Checked) vmid = Convert.ToInt32(cbEtln.Value);
+            else if (rbLIR.Checked) vmid = Convert.ToInt32(cbLIR.Value);
+            else if (rbVLIR.Checked) vmid = Convert.ToInt32(cbVLIR.Value);
+            Vm vm = VmManager.GetVm(vmid);
             Mlwr mlwr = MlwrManager.GetMlwr(cbMalware.Value.ToString());
             Int32 timeLeft = Convert.ToInt32(spinTime.Value);
 
@@ -97,34 +173,34 @@ namespace SandBox.WebUi.Pages.Research
                 VmManager.AddVm(NewName, 2, vm.System, UserId, 0);
                 Vm newvm = VmManager.GetVm(NewName);
                 researchVmData = ResearchManager.AddResearchVmData(NewName, 2, newvm.System, 0, newvm.EnvMac, newvm.EnvIp, newvm.Description);
-                researchId = ResearchManager.AddResearch(UserId, mlwr.Id, newvm.Id, researchVmData, timeLeft, tbLir.Text);
+                researchId = ResearchManager.AddResearch(UserId, mlwr.Id, newvm.Id, researchVmData, timeLeft, rschName.Text);
             }
             else
             {
                 researchVmData = ResearchManager.AddResearchVmData(vm.Name, vm.Type, vm.System, vm.EnvType, vm.EnvMac, vm.EnvIp, vm.Description);
-                researchId = ResearchManager.AddResearch(UserId, mlwr.Id, vm.Id, researchVmData, timeLeft, tbLir.Text);
+                researchId = ResearchManager.AddResearch(UserId, mlwr.Id, vm.Id, researchVmData, timeLeft, rschName.Text);
             }
           
 
             AddTasks(researchId, vm.EnvId);
 
             #region добавление события на остановку исследования
-            if (CbStopEvent.Checked)
+            if (cbEventEnd.Checked)
             {
                 //int sign = ASPxComboBox1.Text == "Критически важное" ? 0 : 1;
-                int module = ResearchManager.GetModuleIdByDescr(ASPxComboBox1.Text);
-                int evt = ResearchManager.GetEventIdByDescr(ASPxComboBox4.Text);
-                string dest = ASPxTextBox4.Text;
-                string who = ASPxTextBox5.Text;
-                if (module != -1 && evt != -1 && dest != String.Empty && who != String.Empty)
-                {
+                int module = ResearchManager.GetModuleIdByDescr(cbModule.Text);
+                Int32 evt = Convert.ToInt32(cbEvent.Value);
+                string dest = tbDest.Text;
+                string who = tbWho.Text;
+                //if (module != -1 && evt != -1 && dest != String.Empty && who != String.Empty)
+                //{
                     ReportManager.InsertStopEvent(researchId, module, evt, dest, who);
 
-                }
+                //}
             }
             #endregion
 
-            MLogger.LogTo(Level.TRACE, false, "Create research '" + tbLir.Text + "' by user '" + UserManager.GetUser(UserId).UserName + "'");
+            MLogger.LogTo(Level.TRACE, false, "Create research '" + rschName.Text + "' by user '" + UserManager.GetUser(UserId).UserName + "'");
             if (CreateOrStartVm(vm.Name,NewName))
                 Current.StartResearch(String.Format("{0}", researchId));
             Response.Redirect("~/Pages/Research/Current.aspx");
@@ -180,40 +256,36 @@ namespace SandBox.WebUi.Pages.Research
             //String lockFilePar = tbLockDelete.Text;
             //String hideRegistryPar = tbHideRegistry.Text;
             //String hideProcessPar = tbHideProcess.Text;
-            String setSignaturePar = tbSetSignature.Text;
-            String setExtensionPar = tbSetExtension.Text;
             //String setBandwidthPar = tbSetBandwidth.Text;
 
             //if (hideFilePar != String.Empty) TaskManager.AddTask(researchId, 1, hideFilePar);
             //if (lockFilePar != String.Empty) TaskManager.AddTask(researchId, 2, lockFilePar);
             //if (hideRegistryPar != String.Empty) TaskManager.AddTask(researchId, 3, hideRegistryPar);
             //if (hideProcessPar != String.Empty) TaskManager.AddTask(researchId, 4, hideProcessPar);
-            if (setSignaturePar != String.Empty) TaskManager.AddTask(researchId, 5, setSignaturePar);
-            if (setExtensionPar != String.Empty) TaskManager.AddTask(researchId, 6, setExtensionPar);
+            if (cbSignature.Checked) TaskManager.AddTask(researchId, 5, tbSignature.Text);
+            if (cbExtension.Checked) TaskManager.AddTask(researchId, 6, tbExtension.Text);
             //if (setBandwidthPar != String.Empty) TaskManager.AddTask(researchId, 7, setBandwidthPar);
-            if (ASPxTextBox2.Text != String.Empty) TaskManager.AddTask(researchId, 16, ASPxTextBox2.Text);
-            if (ASPxComboBox3.SelectedIndex != -1)
-            {
-                int key = ASPxComboBox3.SelectedIndex;
-                string subkey = "";
-                if (ASPxTextBox3.Text != "") subkey = ASPxTextBox3.Text;
-                TaskManager.AddTask(researchId, 17, String.Format("{0}{1}",key,subkey));
-            }
-            if (ASPxCheckBox1.Checked) TaskManager.AddTask(researchId, 15, "ON");
-
-            var session = Session["tasks"] as List<TaskStruct>;
-            foreach (var task in session)
-            {
-                if (task.Description != String.Empty && task.Value!=String.Empty/*ASPxTextBox1.Text != task.Value*/)
-                    TaskManager.AddTask(researchId, TaskManager.GetTaskTypeByDescription(task.Description), task.Value);
-            }
+            if (cbFileRoot.Checked) TaskManager.AddTask(researchId, 16, tbFileRoot.Text);
+            if (cbRegRoot.Checked) TaskManager.AddTask(researchId, 17, String.Format("{0}{1}", cmbRegRoot.SelectedIndex, tbRegRoot.Text));
+            if (cbProcMon.Checked) TaskManager.AddTask(researchId, 15, "ON");
+            foreach (ListEditItem item in lbFSParams.Items) TaskManager.AddTask(researchId, TaskManager.GetTaskTypeByDescription(item.GetValue("Task").ToString()), item.GetValue("Param").ToString());
+            foreach (ListEditItem item in lbRegParams.Items) TaskManager.AddTask(researchId, TaskManager.GetTaskTypeByDescription(item.GetValue("Task").ToString()), item.GetValue("Param").ToString());
+            foreach (ListEditItem item in lbProcParams.Items) TaskManager.AddTask(researchId, TaskManager.GetTaskTypeByDescription(item.GetValue("Task").ToString()), item.GetValue("Param").ToString());
+            foreach (ListEditItem item in lbNetParams.Items) TaskManager.AddTask(researchId, TaskManager.GetTaskTypeByDescription(item.GetValue("Task").ToString()), item.GetValue("Param").ToString());
+            
+            //var session = Session["tasks"] as List<TaskStruct>;
+            //foreach (var task in session)
+            //{
+            //    if (task.Description != String.Empty && task.Value!=String.Empty/*ASPxTextBox1.Text != task.Value*/)
+            //        TaskManager.AddTask(researchId, TaskManager.GetTaskTypeByDescription(task.Description), task.Value);
+            //}
             //if (ASPxComboBox2.SelectedItem!=null)
             //if (ASPxComboBox2.SelectedItem.Text != String.Empty && ASPxTextBox1.Text != String.Empty)
             //    TaskManager.AddTask(researchId, TaskManager.GetTaskTypeByDescription(ASPxComboBox2.SelectedItem.Text), ASPxTextBox1.Text);
             try
             {
-                MLogger.LogTo(Level.TRACE, false, "Add Command: " + tbSetCommand.Text+ tbSetCommandParams.Text);
-                TaskManager.AddCommand(researchId, tbSetCommand.Text, tbSetCommandParams.Text, Int32.Parse(startEmulationTime.Text));
+                MLogger.LogTo(Level.TRACE, false, "Add Command: " + tbEmulCommand.Text + tbEmulParams.Text);
+                TaskManager.AddCommand(researchId, tbEmulCommand.Text, tbEmulParams.Text, Int32.Parse(spEmulTime.Text));
             }
             catch (Exception e)
             {
@@ -264,10 +336,10 @@ namespace SandBox.WebUi.Pages.Research
                 //    }
                 default:
                     {
-                        FillGridView(ASPxGridView1, 1);
-                        FillGridView(ASPxGridView2, 2);
-                        FillGridView(ASPxGridView3, 3);
-                        FillGridView(ASPxGridView4, 4);
+//                        FillGridView(ASPxGridView1, 1);
+//                        FillGridView(ASPxGridView2, 2);
+//                        FillGridView(ASPxGridView3, 3);
+//                        FillGridView(ASPxGridView4, 4);
                         break;
                     }
             }
@@ -305,10 +377,10 @@ namespace SandBox.WebUi.Pages.Research
 
         private void FillAllGridViews()
         {
-            FillGridView(ASPxGridView1, 1);
-            FillGridView(ASPxGridView2, 2);
-            FillGridView(ASPxGridView3, 3);
-            FillGridView(ASPxGridView4, 4);
+//            FillGridView(ASPxGridView1, 1);
+//            FillGridView(ASPxGridView2, 2);
+//            FillGridView(ASPxGridView3, 3);
+//            FillGridView(ASPxGridView4, 4);
         }
 
         protected void ASPxGridView1_RowDeleting(object sender, DevExpress.Web.Data.ASPxDataDeletingEventArgs e)
@@ -354,22 +426,22 @@ namespace SandBox.WebUi.Pages.Research
             {
                 case 1:
                     {
-                        res = GetTSFromGV(ASPxGridView1);
+                        res = GetTSFromGV(lbNetParams);
                         break;
                     }
                 case 2:
                     {
-                        res = GetTSFromGV(ASPxGridView2);
+                        res = GetTSFromGV(lbFSParams);
                         break;
                     }
                 case 3:
                     {
-                        res = GetTSFromGV(ASPxGridView3);
+                        res = GetTSFromGV(lbRegParams);
                         break;
                     }
                 case 4:
                     {
-                        res = GetTSFromGV(ASPxGridView4);
+                        res = GetTSFromGV(lbProcParams);
                         break;
                     }
                 default:
@@ -386,6 +458,15 @@ namespace SandBox.WebUi.Pages.Research
             res.Description = (string)gridView.GetRowValues(gridView.FocusedRowIndex, "f1");
             res.Value = (string)gridView.GetRowValues(gridView.FocusedRowIndex, "f2");
             Page.DataBind();
+            return res;
+        }
+
+        private TaskStruct GetTSFromGV(ASPxListBox lb)
+        {
+            TaskStruct res = new TaskStruct();
+            //res.Description = (string)gridView.GetRowValues(gridView.FocusedRowIndex, "f1");
+            //res.Value = (string)gridView.GetRowValues(gridView.FocusedRowIndex, "f2");
+            //Page.DataBind();
             return res;
         }
 
@@ -437,57 +518,13 @@ namespace SandBox.WebUi.Pages.Research
             Page.DataBind();
         }
 
-        protected void ASPxComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        protected void cbEvent_Callback(object sender, DevExpress.Web.ASPxClasses.CallbackEventArgsBase e)
         {
-            //ASPxComboBox2.Items.Clear();
-            //if (ASPxComboBox1.SelectedIndex != -1)
-            //{
-            //    ASPxComboBox2.Text = "";
-            //    int selInd = ASPxComboBox1.SelectedIndex + 1;
-            //    ASPxComboBox2.Items.AddRange(TaskManager.GetTasksDescrByClassification(selInd).ToList());
-            //    if (ASPxComboBox2.Items.Count > 0)
-            //    {
-            //        ASPxComboBox2.Items[0].Selected = true;
-            //    }
-            //}
-            ASPxComboBox4.DataSource = ReportManager.GetEventsDescrByModule(ASPxComboBox1.Text);
-            ASPxComboBox4.DataBind();
-            if (ASPxComboBox4.Items.Count != 0) ASPxComboBox4.SelectedIndex = 0;
+            if (string.IsNullOrEmpty(e.Parameter)) return;
+            cbEvent.DataSource = ReportManager.GetEventsDescrByModule(e.Parameter);
+            cbEvent.DataBind();
+            cbEvent.SelectedIndex = 0;
         }
-
-        protected void ASPxTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void CbStopEvent_CheckedChanged(object sender, EventArgs e)
-        {
-            if (CbStopEvent.Checked)
-            {
-                ASPxComboBox1.Enabled = true;
-                ASPxComboBox4.Enabled = true;
-                ASPxTextBox5.Enabled = true;
-                ASPxTextBox4.Enabled = true;
-            }
-            else
-            {
-                ASPxComboBox1.Enabled = false;
-                ASPxComboBox4.Enabled = false;
-                ASPxTextBox5.Enabled = false;
-                ASPxTextBox4.Enabled = false;
-            }
-        }
-
-
-
-
-       
-
-        
-
-         //Session["mlwrID"] = this.gridViewMalware.GetRowValues(this.gridViewMalware.FocusedRowIndex, "Id");
-         //   Response.Redirect("~/Pages/Malware/MalwareCard.aspx");
-
 
     }//end class
 }//end namespace

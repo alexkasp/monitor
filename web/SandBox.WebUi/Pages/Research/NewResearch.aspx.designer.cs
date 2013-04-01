@@ -13,58 +13,22 @@ namespace SandBox.WebUi.Pages.Research {
     public partial class NewResearch {
         
         /// <summary>
-        /// ASPxHyperLink1 control.
+        /// Image1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink ASPxHyperLink1;
+        protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
-        /// tbLir control.
+        /// rschName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbLir;
-        
-        /// <summary>
-        /// LNameValidation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel LNameValidation;
-        
-        /// <summary>
-        /// cbMachine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbMachine;
-        
-        /// <summary>
-        /// linkRegisterNewVm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkRegisterNewVm;
-        
-        /// <summary>
-        /// linkCreateNewVm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkCreateNewVm;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox rschName;
         
         /// <summary>
         /// cbMalware control.
@@ -76,6 +40,69 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbMalware;
         
         /// <summary>
+        /// rbEtln control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxRadioButton rbEtln;
+        
+        /// <summary>
+        /// cbEtln control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbEtln;
+        
+        /// <summary>
+        /// rbVLIR control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxRadioButton rbVLIR;
+        
+        /// <summary>
+        /// cbVLIR control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbVLIR;
+        
+        /// <summary>
+        /// rbLIR control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxRadioButton rbLIR;
+        
+        /// <summary>
+        /// cbLIR control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbLIR;
+        
+        /// <summary>
+        /// cbTimeEnd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBox cbTimeEnd;
+        
+        /// <summary>
         /// spinTime control.
         /// </summary>
         /// <remarks>
@@ -85,58 +112,67 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.Web.ASPxEditors.ASPxSpinEdit spinTime;
         
         /// <summary>
-        /// ASPxLabel9 control.
+        /// cbEventEnd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel ASPxLabel9;
+        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBox cbEventEnd;
         
         /// <summary>
-        /// CbStopEvent control.
+        /// cbModule control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBox CbStopEvent;
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbModule;
         
         /// <summary>
-        /// ASPxComboBox1 control.
+        /// cbEvent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox ASPxComboBox1;
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbEvent;
         
         /// <summary>
-        /// ASPxComboBox4 control.
+        /// tbWho control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox ASPxComboBox4;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbWho;
         
         /// <summary>
-        /// ASPxTextBox5 control.
+        /// tbDest control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox ASPxTextBox5;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbDest;
         
         /// <summary>
-        /// ASPxTextBox4 control.
+        /// btnReset control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox ASPxTextBox4;
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnReset;
+        
+        /// <summary>
+        /// btnCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnCancel;
         
         /// <summary>
         /// btnCreate control.
@@ -157,13 +193,13 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::AjaxControlToolkit.Accordion Accordion1;
         
         /// <summary>
-        /// ASPxGridView2 control.
+        /// lbFSParams control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxGridView.ASPxGridView ASPxGridView2;
+        protected global::DevExpress.Web.ASPxEditors.ASPxListBox lbFSParams;
         
         /// <summary>
         /// CBFileActiv control.
@@ -184,85 +220,94 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox TBNFileTaskValue;
         
         /// <summary>
-        /// BAddFileTask control.
+        /// cbFileRoot control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton BAddFileTask;
+        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBox cbFileRoot;
         
         /// <summary>
-        /// BDelFileTask control.
+        /// tbFileRoot control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton BDelFileTask;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbFileRoot;
         
         /// <summary>
-        /// ASPxLabel6 control.
+        /// cbSignature control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel ASPxLabel6;
+        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBox cbSignature;
         
         /// <summary>
-        /// ASPxTextBox2 control.
+        /// tbSignature control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox ASPxTextBox2;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbSignature;
         
         /// <summary>
-        /// tbSetSignature control.
+        /// cbExtension control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbSetSignature;
+        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBox cbExtension;
         
         /// <summary>
-        /// tbSetExtension control.
+        /// tbExtension control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbSetExtension;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbExtension;
         
         /// <summary>
-        /// tbSetCommand control.
+        /// cbEnul control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbSetCommand;
+        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBox cbEnul;
         
         /// <summary>
-        /// tbSetCommandParams control.
+        /// tbEmulCommand control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbSetCommandParams;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbEmulCommand;
         
         /// <summary>
-        /// startEmulationTime control.
+        /// tbEmulParams control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxSpinEdit startEmulationTime;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbEmulParams;
+        
+        /// <summary>
+        /// spEmulTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxSpinEdit spEmulTime;
         
         /// <summary>
         /// AccordionPane1 control.
@@ -274,13 +319,13 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::AjaxControlToolkit.AccordionPane AccordionPane1;
         
         /// <summary>
-        /// ASPxGridView3 control.
+        /// lbRegParams control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxGridView.ASPxGridView ASPxGridView3;
+        protected global::DevExpress.Web.ASPxEditors.ASPxListBox lbRegParams;
         
         /// <summary>
         /// CBRegActiv control.
@@ -301,58 +346,31 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox TBNRegTaskValue;
         
         /// <summary>
-        /// BAddRegTask control.
+        /// cbRegRoot control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton BAddRegTask;
+        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBox cbRegRoot;
         
         /// <summary>
-        /// BDelRegTask control.
+        /// cmbRegRoot control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton BDelRegTask;
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cmbRegRoot;
         
         /// <summary>
-        /// ASPxLabel7 control.
+        /// tbRegRoot control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel ASPxLabel7;
-        
-        /// <summary>
-        /// ASPxComboBox3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox ASPxComboBox3;
-        
-        /// <summary>
-        /// ASPxLabel8 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel ASPxLabel8;
-        
-        /// <summary>
-        /// ASPxTextBox3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox ASPxTextBox3;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbRegRoot;
         
         /// <summary>
         /// AccordionPane2 control.
@@ -364,13 +382,13 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::AjaxControlToolkit.AccordionPane AccordionPane2;
         
         /// <summary>
-        /// ASPxGridView4 control.
+        /// lbProcParams control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxGridView.ASPxGridView ASPxGridView4;
+        protected global::DevExpress.Web.ASPxEditors.ASPxListBox lbProcParams;
         
         /// <summary>
         /// CBProcActiv control.
@@ -391,31 +409,13 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox TBProcTaskValue;
         
         /// <summary>
-        /// BAddProcTask control.
+        /// cbProcMon control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton BAddProcTask;
-        
-        /// <summary>
-        /// BDelProcTask control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton BDelProcTask;
-        
-        /// <summary>
-        /// ASPxCheckBox1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBox ASPxCheckBox1;
+        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBox cbProcMon;
         
         /// <summary>
         /// AccordionPane4 control.
@@ -427,13 +427,13 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::AjaxControlToolkit.AccordionPane AccordionPane4;
         
         /// <summary>
-        /// ASPxGridView1 control.
+        /// lbNetParams control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxGridView.ASPxGridView ASPxGridView1;
+        protected global::DevExpress.Web.ASPxEditors.ASPxListBox lbNetParams;
         
         /// <summary>
         /// CBNetActiv control.
@@ -452,23 +452,5 @@ namespace SandBox.WebUi.Pages.Research {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox TBNetTaskValue;
-        
-        /// <summary>
-        /// BAddNetTask control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton BAddNetTask;
-        
-        /// <summary>
-        /// BDelNetTask control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton BDelNetTask;
     }
 }

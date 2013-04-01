@@ -57,6 +57,12 @@ namespace SandBox.WebUi
                     item.Selected = true;
                 }
             }
+            LoginName loginName = HeadLoginView.FindControl("HeadLoginName") as LoginName;
+
+            if (loginName != null)
+            {
+                loginName.FormatString = UserManager.GetUserFullName(Page.User.Identity.Name);
+            }
             _vpoDanger = ReportManager.GetTopFiveMlwr();
             int i = 0;
             foreach (var v in _vpoDanger)

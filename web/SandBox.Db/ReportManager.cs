@@ -78,8 +78,16 @@ namespace SandBox.Db
         {
             using (var db = new SandBoxDataContext())
             {
-                var row = db.vmusages.FirstOrDefault<vmusage>(x => true);
-                return String.Format("{0}%", Math.Round(row.usage));
+                int allitems = (from v in db.Vms
+                                where v.Type == 3
+                                where v.EnvType != 0 && v.State != (int)VmManager.State.DELETED
+                                select v).Count();
+                if (allitems == 0) return "0%";
+                int runitems = (from v in db.Vms
+                                where v.Type == 3
+                                where v.EnvType != 0 && (v.State == (int)VmManager.State.STARTING | v.State == (int)VmManager.State.STARTED | v.State == (int)VmManager.State.STOPPING)
+                                select v).Count();
+                return String.Format("{0}%", Math.Round((runitems / allitems)*100.0));
             }
         }
 
@@ -123,27 +131,37 @@ namespace SandBox.Db
         public static IQueryable<string> GetModules()
         {
             var db = new SandBoxDataContext();
-            return from m in db.EventsModulesDescriptions
-                   select m.Description;
+            return (from m in db.EventsModulesDescriptions
+                   select m.Description).Distinct();
         }
 
-        public static IQueryable<string> GetEventsDescrByModule(string moduleDesctiption)
+        //public static IQueryable<string> GetEventsDescrByModule(string moduleDesctiption)
+        //{
+        //    var db = new SandBoxDataContext();
+        //    int modId = -1;
+        //    var mod = db.EventsModulesDescriptions.FirstOrDefault<EventsModulesDescriptions>(x => x.Description == moduleDesctiption);
+        //    if (mod != null)
+        //    {
+        //        modId = mod.EventModuleID;
+        //    }
+        //    if (modId != -1)
+        //    {
+        //        return from ev in db.ModulesVsEvents
+        //                  where ev.Module == modId
+        //                  select ResearchManager. GetEvtEvtDescription( ev.Event);
+        //    }
+        //    return null;
+
+        //}
+
+        public static IQueryable GetEventsDescrByModule(string moduleDesctiption)
         {
             var db = new SandBoxDataContext();
-            int modId = -1;
-            var mod = db.EventsModulesDescriptions.FirstOrDefault<EventsModulesDescriptions>(x => x.Description == moduleDesctiption);
-            if (mod != null)
-            {
-                modId = mod.EventModuleID;
-            }
-            if (modId != -1)
-            {
-                return from ev in db.ModulesVsEvents
-                          where ev.Module == modId
-                          select ResearchManager. GetEvtEvtDescription( ev.Event);
-            }
-            return null;
-
+            return from ed in db.EventsEventDescriptions
+                   join mve in db.ModulesVsEvents on ed.EventID equals mve.Event
+                   join md in db.EventsModulesDescriptions on mve.Module equals md.EventModuleID
+                   where md.Description == moduleDesctiption
+                   select ed;
         }
 
         public static IQueryable GetRowDirectoriesOfEvents()
@@ -165,7 +183,7 @@ namespace SandBox.Db
         {
             switch (s)
             {
-                case 0:
+                case 2:
                     {
                         return "Критически важное";
                     }
@@ -216,7 +234,7 @@ namespace SandBox.Db
             var db = new SandBoxDataContext();
             var dofe = db.DirectoryOfEvents.FirstOrDefault<DirectoryOfEvents>(x => ((x.dest == evt.dest) && (x.module == evt.module) 
                                                             && (x.@event == evt.@event)&&(x.who==evt.who)));
-            return dofe == null ? -1 : dofe.significance;
+            return dofe == null ? 0 : dofe.significance;
         }
 
         public static int GetEvtSignif(events evt, List<DirectoryOfEvents> data)

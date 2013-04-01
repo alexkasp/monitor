@@ -31,6 +31,15 @@ namespace SandBox.WebUi.Account {
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbUserName;
         
         /// <summary>
+        /// tbLogin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbLogin;
+        
+        /// <summary>
         /// tbPassword control.
         /// </summary>
         /// <remarks>
@@ -56,6 +65,15 @@ namespace SandBox.WebUi.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbRole;
+        
+        /// <summary>
+        /// btnCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnCancel;
         
         /// <summary>
         /// btnCreate control.

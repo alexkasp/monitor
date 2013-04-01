@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web.Security;
+using System.Net;
+using System.Web;
 
 namespace SandBox.Db
 {
@@ -109,11 +111,11 @@ namespace SandBox.Db
         //**********************************************************
         //* Получение пользователя по имени
         //**********************************************************
-        public static MembershipUser GetUser(String username)
+        public static MembershipUser GetUser(String login)
         {
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
-                User dbuser = db.Users.FirstOrDefault(x => x.Login == username);
+                User dbuser = db.Users.FirstOrDefault(x => x.Login == login);
                 if (dbuser == null) return null;
                 return new MembershipUser("CustomMembershipProvider",
                                                          dbuser.Login,
@@ -157,6 +159,58 @@ namespace SandBox.Db
         }
 
         //**********************************************************
+        //* Получение пользователя по id
+        //**********************************************************
+        public static User GetdbUser(Int32 userId)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                User dbuser = db.Users.FirstOrDefault(x => x.UserId == userId);
+                if (dbuser == null) return null;
+                return dbuser;
+            }
+        }
+
+        //**********************************************************
+        //* Получение пользователя по логину
+        //**********************************************************
+        public static User GetdbUser(String login)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                User dbuser = db.Users.FirstOrDefault(x => x.Login == login);
+                if (dbuser == null) return null;
+                return dbuser;
+            }
+        }
+
+        //**********************************************************
+        //* Получение полного имени пользователя по id
+        //**********************************************************
+        public static string GetUserFullName(Int32 userId)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                User dbuser = db.Users.FirstOrDefault(x => x.UserId == userId);
+                if (dbuser == null) return null;
+                return dbuser.UserName;
+            }
+        }
+
+        //**********************************************************
+        //* Получение полного имени пользователя по логину
+        //**********************************************************
+        public static string GetUserFullName(string login)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                User dbuser = db.Users.FirstOrDefault(x => x.Login == login);
+                if (dbuser == null) return null;
+                return dbuser.UserName;
+            }
+        }
+
+        //**********************************************************
         //* Получение всех пользователей
         //**********************************************************
         public static IQueryable<User> GetUsers()
@@ -182,7 +236,7 @@ namespace SandBox.Db
                         join r in db.Roles
                           on ur.RoleId equals r.RoleId
                         orderby u.UserId
-                        select new { u.UserId, u.Login, u.CreatedDate, u.LastLoginDate, r.Name };
+                        select new { u.UserId, u.UserName, u.Login, u.CreatedDate, u.LastLoginDate, r.Name };
             return users;
         }
 
@@ -195,6 +249,35 @@ namespace SandBox.Db
             {
                 var dbuser = db.Users.FirstOrDefault(x => x.Login == login);
                 return dbuser != null && dbuser.Password == CreatePasswordHash(password, dbuser.PasswordSalt);
+            }
+        }
+
+        //**********************************************************
+        //* Получения ip-адреса пользователя
+        //**********************************************************
+        private static string GetUserIP()
+        {
+            string ipList = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+            if (!string.IsNullOrEmpty(ipList))
+            {
+                return ipList.Split(',')[0];
+            }
+
+            return System.Web.HttpContext.Current.Request.UserHostAddress;
+        }
+
+        //**********************************************************
+        //* Запись времени входа и ip-адреса пользователя
+        //**********************************************************
+        public static void LoginLog(String login)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                User dbuser = db.Users.FirstOrDefault(x => x.Login == login);
+                dbuser.LastLoginDate = DateTime.Now;
+                dbuser.LastLoginIp = GetUserIP();
+                db.SubmitChanges();
             }
         }
 
@@ -237,33 +320,58 @@ namespace SandBox.Db
         //**********************************************************
         //* Создание пользователя
         //**********************************************************
-        public static MembershipUser CreateUser(String username, String password, Int32 roleId)
+        public static MembershipUser CreateUser(String username, String login, String password, Int32 roleId)
         {
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
                 var users = UserManager.GetUsers();
-                if (Enumerable.Any(users, us => us.Login == username)) return null;
+                if (Enumerable.Any(users, us => us.Login == login)) return null;
                 
                 User user = new User
                 {
-                    Login = username,
+                    Login = login,
+                    UserName = username,
                     Password = password,
                     PasswordSalt = CreateSalt(),
                     CreatedDate = DateTime.Now,
-                    LastLoginDate = DateTime.Now
+//                    LastLoginDate = DateTime.Now
                 };
                 user.Password = CreatePasswordHash(password, user.PasswordSalt);
                 db.Users.InsertOnSubmit(user);
                 db.SubmitChanges();
 
-                var usr = db.Users.FirstOrDefault(x => x.Login == username);
+                var usr = db.Users.FirstOrDefault(x => x.Login == login);
                 if (usr == null) return null;
 
                 UsersInRole userInRole = new UsersInRole {UserId = usr.UserId, RoleId = roleId};
                 db.UsersInRoles.InsertOnSubmit(userInRole);
                 db.SubmitChanges();
 
-                return GetUser(username);
+                return GetUser(login);
+            }
+        }
+
+        //**********************************************************
+        //* Изменение пользователя
+        //**********************************************************
+        public static void EditUser(Int32 userid, String username, String login, String password, Int32 roleId)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                User user = db.Users.FirstOrDefault(x => x.UserId == userid);
+                if (user == null) return;
+                user.Login = login;
+                user.UserName = username;
+                if (password!=String.Empty)
+                {
+                    user.PasswordSalt = CreateSalt();
+                    user.Password = CreatePasswordHash(password, user.PasswordSalt);
+                }
+                UsersInRole role = db.UsersInRoles.FirstOrDefault(x => x.UserId == user.UserId);
+                db.UsersInRoles.DeleteOnSubmit(user.UsersInRole);
+                UsersInRole userInRole = new UsersInRole { UserId = user.UserId, RoleId = roleId };
+                db.UsersInRoles.InsertOnSubmit(userInRole);
+                db.SubmitChanges();
             }
         }
 

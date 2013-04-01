@@ -11,6 +11,8 @@ using SandBox.WebUi.Base;
 using System.Web.UI;
 using DevExpress.Web.ASPxGridView;
 using System.Collections.Generic;
+using SandBox.WebUi;
+using System.Collections;
 
 namespace SandBox.WebUi.Pages.Research
 {
@@ -23,8 +25,8 @@ namespace SandBox.WebUi.Pages.Research
         protected new void Page_Load(object sender, EventArgs e)
         {
             base.Page_Load(sender, e);
-            PageTitle = "Текущие исследования";
-            PageMenu = "~/App_Data/SideMenu/Research/ResearchMenu.xml";
+            PageTitle = "Исследования";
+            //PageMenu = "~/App_Data/SideMenu/Research/ResearchMenu.xml";
             
             if (!IsPostBack)
             {
@@ -33,8 +35,8 @@ namespace SandBox.WebUi.Pages.Research
                 labelNoItems.Text = "";
                 _userId = UserId;
                 
-                // UpdateTableView();
-                gridViewResearches.DataBind();
+                UpdateTableView();
+//                gridViewResearches.DataBind();
             }
             gridViewResearchesPager.Visible = gridViewResearches.Visible;
             if (gridViewResearches.VisibleRowCount > 0) { gridViewResearchesPager.ItemCount = gridViewResearches.VisibleRowCount; }
@@ -312,7 +314,7 @@ namespace SandBox.WebUi.Pages.Research
                     case (Int32)ResearchState.EXECUTING:
                         {
                             currentReportLink.Visible = true;
-                            currentReportLink.NavigateUrl = String.Format("{0}/CurrentReportList.aspx?research={1}", RootPath, e.KeyValue);
+                            currentReportLink.NavigateUrl = String.Format("{0}/ReportList.aspx?research={1}", RootPath, e.KeyValue);
                             break;
                         }
                     default:
@@ -569,8 +571,6 @@ namespace SandBox.WebUi.Pages.Research
                 
                 throw;
             }
-
-            int t = 0999;
         }
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
@@ -626,6 +626,17 @@ namespace SandBox.WebUi.Pages.Research
         {
             gridViewResearches.SettingsPager.PageSize = gridViewResearchesPager.ItemsPerPage;
             gridViewResearches.DataBind();
+        }
+
+        protected void gridViewResearches_CustomJSProperties(object sender, ASPxGridViewClientJSPropertiesEventArgs e)
+        {
+            Hashtable table = new Hashtable(gridViewResearches.DetailRows.VisibleCount);
+            for (int i = 0; i < gridViewResearches.VisibleRowCount; i++)
+            {
+                    if (gridViewResearches.DetailRows.IsVisible(i))
+                        table[i] = true;
+                }
+                e.Properties["cpVisibleDetails"] = table;
         }
         
 

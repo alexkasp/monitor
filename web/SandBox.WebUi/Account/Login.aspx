@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="True" MasterPageFile="~/Empty.master" CodeBehind="Login.aspx.cs" Inherits="SandBox.WebUi.Account.Login" %>
+<%@ Page Language="C#" AutoEventWireup="True" MasterPageFile="~/Empty.master" CodeBehind="Login.aspx.cs" Inherits="SandBox.WebUi.Account.Login" Title="¬ход" %>
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
   <div id="loginbox" class="vpanel">

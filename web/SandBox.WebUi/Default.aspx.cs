@@ -9,7 +9,7 @@ namespace SandBox.WebUi
         {
             base.Page_Load(sender, e);
             PageTitle = Application.Get("ApplicationTitle").ToString();
-            Response.Redirect("~/Pages/Information/Index.aspx");
+            Response.Redirect("~/Pages/Research/Current.aspx");
             //Response.Redirect("~/Pages/Index.aspx");
         }
     }//end class

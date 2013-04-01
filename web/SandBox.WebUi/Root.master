@@ -105,7 +105,7 @@
                                                 <%=SandBox.Db.ReportManager.GetVnUsage() %>
                                             </td>
                                             <td valign="middle" rowspan="2" id="vresilir">
-                                                Загружено сред
+                                                ЛИР загружено
                                             </td>
                                             <td valign="top" class="vrescpuinv">
                                                 CPU

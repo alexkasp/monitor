@@ -26,20 +26,22 @@ namespace SandBox.WebUi.Pages.Information
         {
             String newName = (tbLir.Text).Replace(" ", "_");
             String macstr = tbLirMac.Text;
+            bool ValidPass = true;
             if (tbLir.Text == String.Empty || IsNameInBase(newName))
             {
                 LValidation.Visible = true;
                 LValidation.ForeColor = System.Drawing.Color.Red;
                 LValidation.Text = tbLir.Text == String.Empty ? "Необходимо ввести имя ЛИР!" : "Такое имя уже сущеcтвует!";
-                return;
+                ValidPass = false;
             }
-            if (tbLirMac.Text == String.Empty || IsMACInBase(newName))
+            if (tbLirMac.Text == String.Empty || IsMACInBase(tbLirMac.Text) || tbLirMac.Text == "00-00-00-00-00-00")
             {
                 LValidation2.Visible = true;
                 LValidation2.ForeColor = System.Drawing.Color.Red;
-                LValidation2.Text = tbLirMac.Text == String.Empty ? "Необходимо ввести имя ЛИР!" : "Такое имя уже сущеcтвует!";
-                return;
+                LValidation2.Text = tbLirMac.Text == String.Empty ? "Неверный MAC-адрес!" : tbLirMac.Text == "00-00-00-00-00-00" ? "Неверный MAC-адрес!" : "Такой MAC-адрес уже сущеcтвует!";
+                ValidPass = false;
             }
+            if (!ValidPass) return;
             if (ASPxEdit.AreEditorsValid(tbLirMac))
             {
                 List<String> list = VmManager.GetVmSystemDescriptionList();

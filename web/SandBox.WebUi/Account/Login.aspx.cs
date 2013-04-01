@@ -11,7 +11,7 @@ namespace SandBox.WebUi.Account {
         protected new void Page_Load(object sender, EventArgs e)
         {
             base.Page_Load(sender, e);
-            PageTitle = "вход";
+            PageTitle = "¬ход";
 
             if (DbManager.GetConnectionStatus())
             {
@@ -34,8 +34,11 @@ namespace SandBox.WebUi.Account {
                    if (Membership.ValidateUser(tbUserName.Text, tbPassword.Text))
                     {
                        FormsAuthentication.SetAuthCookie(tbUserName.Text, rememberme.Checked);
-                        MLogger.LogTo(Level.TRACE, false, "New user logged as '" + tbUserName.Text + "'");
-                        Response.Redirect("~/Pages/Research/Current.aspx");
+                       MLogger.LogTo(Level.TRACE, false, "New user logged as '" + tbUserName.Text + "'");
+                       UserManager.LoginLog(tbUserName.Text);
+                       string ReturnUrl = Request.QueryString["ReturnUrl"];
+                       if (ReturnUrl != null) Response.Redirect(ReturnUrl);
+                       else Response.Redirect("~/Pages/Research/Current.aspx");
                     }
                     else
                     {

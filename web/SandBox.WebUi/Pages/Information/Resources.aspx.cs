@@ -8,6 +8,7 @@ using SandBox.Db;
 using SandBox.Log;
 using SandBox.WebUi.Base;
 using DevExpress.Web.ASPxEditors;
+using System.Web.UI;
 
 namespace SandBox.WebUi.Pages.Information
 {
@@ -17,7 +18,7 @@ namespace SandBox.WebUi.Pages.Information
         {
             base.Page_Load(sender, e);
             PageTitle = "Ресурсы";
-            PageMenu = "~/App_Data/SideMenu/Information/InformationMenu.xml";
+//            PageMenu = "~/App_Data/SideMenu/Information/InformationMenu.xml";
 
             if (!IsPostBack)
             {
@@ -143,7 +144,6 @@ namespace SandBox.WebUi.Pages.Information
             }
             Int32 vmId = (Int32)e.KeyValue;
             Vm vm = VmManager.GetVm(vmId);
-            var rsch = ResearchManager.GetRunnigResearchByVmID(vmId);
 //            btnStatus.Image.Url = "../../Content/Images/Icons/run.png";
 //            btnStatus.Image.ToolTip = "Запустить";
             switch (vm.State)
@@ -160,10 +160,11 @@ namespace SandBox.WebUi.Pages.Information
                         e.Row.BackColor = Color.FromArgb(0xDB, 0xFA, 0xA5);
                         if (linkSession != null && linkMlwr != null)
                         {
+                            var rsch = ResearchManager.GetRunnigResearchByVmID(vmId);
                             if (rsch != null)
                             {
                                 linkMlwr.NavigateUrl += "?mlwrID=" + rsch.MlwrId;
-                                linkSession.NavigateUrl += "?research=" + rsch.Id;
+                                linkSession.NavigateUrl += "?researchId=" + rsch.Id;
                                 linkSession.Text = rsch.ResearchName;
                                 linkMlwr.Text = MlwrManager.GetMlwr(rsch.MlwrId).Name;
                                 linkSession.Visible = true;
@@ -252,11 +253,11 @@ namespace SandBox.WebUi.Pages.Information
         protected void gridViewMachines_CustomCallback(object sender, DevExpress.Web.ASPxGridView.ASPxGridViewCustomCallbackEventArgs e)
         {
             string[] Params = e.Parameters.Split(',');
-            Int32 id = Convert.ToInt32(Params[1]); 
+            Int32 id = Convert.ToInt32(Params[1]);
+            Vm vm = VmManager.GetVm(id);
             switch (Params[0])
             {
                 case "btnStatus":
-                    Vm vm = VmManager.GetVm(id);
                     switch (vm.State)
                     {
                         case (Int32)VmManager.State.STARTED:
@@ -266,9 +267,32 @@ namespace SandBox.WebUi.Pages.Information
                         case (Int32)VmManager.State.UNAVAILABLE:
                         case (Int32)VmManager.State.UPDATING:
                             {
-                                Debug.Print("stop: " + id);
-                                StopVm(id);
-                                VmManager.UpdateVmState(id, (Int32)VmManager.State.STOPPED);
+                                bool doStop = true;
+                                if (!IsUserInRole("Administrator")) {
+                                    var rsch = ResearchManager.GetRunnigResearchByVmID(id);
+                                    if (rsch != null)
+                                    {
+                                        User usr = UserManager.GetdbUser(rsch.UserId);
+                                        if (usr == null)
+                                        {
+                                            doStop = false;
+                                            string scriptstring = "alert(\"На ЛИР '" + vm.Name + "' запущено исследование '" + rsch.ResearchName + "'.\\nПерезапустить этот ЛИР может только администратор.\");";
+                                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", scriptstring, true);
+                                        }
+                                        else if (usr.Login != Page.User.Identity.Name) {
+                                            doStop = false;
+                                            string scriptstring = "alert(\"На ЛИР '" + vm.Name + "' запущено исследование '" + rsch.ResearchName + "' пользователем '" + usr.UserName + "'(" + usr.Login + ").\\nПерезапустить этот ЛИР может только пользователь, запустивший исследование, или администратор.\");";
+                                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", scriptstring, true);
+                                        }
+                                    }
+                                }
+                                if (doStop)
+                                {
+                                    Debug.Print("stop: " + id);
+                                    StopVm(id);
+                                    VmManager.UpdateVmState(id, (Int32)VmManager.State.STOPPED);
+                                    gridViewMachines.DataBind();
+                                }
                                 break;
                             }
                         case (Int32)VmManager.State.STOPPED:
@@ -277,13 +301,28 @@ namespace SandBox.WebUi.Pages.Information
                                 Debug.Print("run: " + id);
                                 StartVm(id);
                                 VmManager.UpdateVmState(id, (Int32)VmManager.State.STARTING);
+                                gridViewMachines.DataBind();
                                 break;
                             }
                     }
                     break;
                 case "btnDelete":
-                    Debug.Print("delete: " + id);
-                    DeleteVm(id);
+                    bool doDel = true;
+                    if (!IsUserInRole("Administrator")) {
+                        doDel = false;
+                        string scriptstring = "alert(\"Удалить ЛИР может только администратор.\");";
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert2", scriptstring, true);
+                    }
+                    else if (vm.State != (Int32)VmManager.State.STOPPED)
+                    {
+                        doDel = false;
+                        string scriptstring = "alert(\"До удаления ресурса необходимо его остановить.\");";
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert2", scriptstring, true);
+                    }
+                    if (doDel) {
+                        Debug.Print("delete: " + id);
+                        DeleteVm(id);
+                    }
                     break;
             }
 
