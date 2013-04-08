@@ -188,8 +188,9 @@ namespace SandBox.WebUi.Pages.Research
             if (cbEventEnd.Checked)
             {
                 //int sign = ASPxComboBox1.Text == "Критически важное" ? 0 : 1;
-                int module = ResearchManager.GetModuleIdByDescr(cbModule.Text);
+//                int module = ResearchManager.GetModuleIdByDescr(cbModule.Text);
                 Int32 evt = Convert.ToInt32(cbEvent.Value);
+                int module = ReportManager.GetModuleIdByEventId(evt);
                 string dest = tbDest.Text;
                 string who = tbWho.Text;
                 //if (module != -1 && evt != -1 && dest != String.Empty && who != String.Empty)
@@ -201,7 +202,8 @@ namespace SandBox.WebUi.Pages.Research
             #endregion
 
             MLogger.LogTo(Level.TRACE, false, "Create research '" + rschName.Text + "' by user '" + UserManager.GetUser(UserId).UserName + "'");
-            if (CreateOrStartVm(vm.Name,NewName))
+            MLogger.LogTo(Level.TRACE, false, "Create or start vm '" + vm.Name + "' with name '" + NewName + "'");
+            if (CreateOrStartVm(vm.Name, NewName))
                 Current.StartResearch(String.Format("{0}", researchId));
             Response.Redirect("~/Pages/Research/Current.aspx");
         }

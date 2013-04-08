@@ -16,6 +16,10 @@ namespace SandBox.WebUi.Base
             var user = UserManager.GetUser(User.Identity.Name);
             if (user.ProviderUserKey != null) UserId = (Int32)user.ProviderUserKey;
             _client = ConnectionClientEx.Instance;
+            if (User.IsInRole("FileManager") && !User.IsInRole("Administrator") && !User.IsInRole("User"))
+            {
+                Response.Redirect("~/Pages/Malware/Malwares.aspx");
+            }
         }
 
         protected String PageMenu

@@ -16,7 +16,7 @@ namespace SandBox.WebUi.Pages.Information
 
             if (!IsPostBack)
             {
-                cbEtalon.DataSource = VmManager.GetVmsEtalonList();
+                cbEtalon.DataSource = VmManager.GetEtlnReadyForResearch();
                 cbEtalon.DataBind();
                 cbEtalon.SelectedIndex = 0;
             }
@@ -30,7 +30,7 @@ namespace SandBox.WebUi.Pages.Information
                 String newName = (tbLir.Text).Replace(" ", "_");
                 if (!IsNameInBase(newName))
                 {
-                    Vm etalon = VmManager.GetVmsEtalonByNumber(cbEtalon.SelectedIndex);
+                    Vm etalon = VmManager.GetVm(Convert.ToInt32(cbEtalon.Value));
                     String etalonName = etalon.Name;
                     Int32 etalonEnvType = Convert.ToInt32(etalon.EnvType);
                     VmManager.AddVm(newName, 2, etalon.System, UserId, etalonEnvType);

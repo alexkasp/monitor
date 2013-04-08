@@ -33,8 +33,17 @@
               <td><span style="float:left">
                 <input name="rememberme" id="rememberme" type="checkbox" runat="server" value="0" />
                 Запомнить меня</span><span style="float:right">
-        <dx:ASPxButton ID="btnLogin" runat="server" Text="Войти" ValidationGroup="LoginUserValidationGroup" OnClick="btnLogin_Click" CssClass="button" Native="True" HoverStyle-CssClass="buttonHover" ClientIDMode="Inherit" EnableDefaultAppearance="True" EnableTheming="True" EnableViewState="True" EncodeHtml="True" SkinID="btnLogin">
-        </dx:ASPxButton>
+                        <dx:ASPxButton ID="btnLogin" AutoPostBack="False" runat="server" 
+                            Text="Войти" onclick="btnLogin_Click" CssClass="button" Native="True" ValidationGroup="LoginUserValidationGroup"
+                            HoverStyle-CssClass="buttonHover" ClientIDMode="Inherit" EnableDefaultAppearance="True" EnableTheming="True" EnableViewState="True" EncodeHtml="True" SkinID="btnLogin" Height="25px">
+                            <PressedStyle CssClass="buttonHover">
+                            </PressedStyle>
+                            <HoverStyle CssClass="buttonHover">
+                            </HoverStyle>
+                            <Border BorderColor="Gainsboro" BorderStyle="Solid" BorderWidth="1px" />
+                            <DisabledStyle CssClass="buttonDisable">
+                            </DisabledStyle>
+                        </dx:ASPxButton>
                 </span></td>
             </tr>
           </table></td>

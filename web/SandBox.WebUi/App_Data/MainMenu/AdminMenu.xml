@@ -3,6 +3,6 @@
   <item Text="Исследования" NavigateUrl="~/Pages/Research/Current.aspx" />
   <item Text="Ресурсы" NavigateUrl="~/Pages/Information/Resources.aspx" />
   <item Text="ВПО" NavigateUrl="~/Pages/Malware/Malwares.aspx" />
-  <item Text="Настройки" NavigateUrl="~/Pages/Settings/Users.aspx" />
+  <item Text="Настройки" NavigateUrl="~/Pages/Settings/Main.aspx" />
   <item Text="Поиск" NavigateUrl="~/Pages/Research/Search.aspx" />
 </items>

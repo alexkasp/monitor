@@ -12,7 +12,7 @@ body {
 {
  font-family: "Trebuchet MS", Arial;
 }
-.dxeListBox 
+.lbpar 
 {
     border-left: none;
     border-right: none;
@@ -21,26 +21,26 @@ body {
     border-bottom-color: #b0b0b0;
 }
 
-.dxeListBox,  .dxeListBoxItem 
+.lbpar,  .lbpar .dxeListBoxItem 
 {
  font-family: "Trebuchet MS", Arial;
 }
 
-.dxeHFC, .dxeFTM 
+.lbpar .dxeHFC, .lbpar .dxeFTM 
 {
  padding-left: 20px;   
 }
 
-.dxeHLC, .dxeLTM 
+.lbpar .dxeHLC, .lbpar .dxeLTM 
 {
  padding-right: 20px;   
 }
 
-.dxeListBox .dxeHC, .dxeListBox .dxeHLC, .dxeListBox td.dxeHMIC, .dxeListBoxItem, .dxeListBox td.dxeLTM, .dxeListBox td.dxeTM, .dxeListBox td.dxeMIM 
+.lbpar .dxeHC, .lbpar .dxeHLC, .lbpar td.dxeHMIC, .lbpar .dxeListBoxItem, .lbpar td.dxeLTM, .lbpar td.dxeTM, .lbpar td.dxeMIM 
 {
     border-left: none !important;
 }
-.dxeListBox .dxeHD 
+.lbpar .dxeHD 
 {
 	background-image: url(/Content/images/lb_hdr.png);
 	background-repeat: repeat-x;
@@ -48,13 +48,9 @@ body {
 	height: 34px;
 	border-bottom: none;
 }
-.dxeListBox .dxeHD table
+.lbpar .dxeHD table
 {
 	padding-top: 5px;
-}
-.dxeListBoxItem 
-{
- font:    
 }
 .wrapper_full {
 	width: 100%;
@@ -589,4 +585,8 @@ td.nvtxtr {
 	width: 100%;
 	height: 5px;
 	background-color: #2b5360;
+}
+.centerdiv 
+{
+    margin: auto;
 }

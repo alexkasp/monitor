@@ -70,18 +70,6 @@
                         --%>
                         <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" RenderingMode="List"
                             CssClass="top-menu" StaticMenuStyle-CssClass="top-menu">
-                            <Items>
-                                <asp:MenuItem NavigateUrl="/Pages/Research/Current.aspx" Text="Èññëåäîâàíèÿ" Value="Ãëàâíàÿ">
-                                </asp:MenuItem>
-                                <asp:MenuItem NavigateUrl="/Pages/Information/Resources.aspx" Text="Ðåñóðñû" Value="Ðåñóðñû">
-                                </asp:MenuItem>
-                                <asp:MenuItem NavigateUrl="/Pages/Malware/Malwares.aspx" Text="ÂÏÎ" Value="Ðåñóðñû">
-                                </asp:MenuItem>
-                                <asp:MenuItem NavigateUrl="/Pages/Settings/Users.aspx" Text="Íàñòðîéêè" Value="Íàñòðîéêè">
-                                </asp:MenuItem>
-                                <asp:MenuItem Text="Ïîèñê" Value="Ïîèñê" NavigateUrl="/Pages/Research/Search.aspx">
-                                </asp:MenuItem>
-                            </Items>
                             <StaticMenuStyle CssClass="top-menu" />
                         </asp:Menu>
                     </div>
@@ -171,6 +159,7 @@
                     </div>
                     <div id="vresearchbox" class="vpanelbox">
                         <div id="vresearch" class="vpanel">
+                            <a href="/Pages/Information/ÑonsolidatedReport.aspx" style="color:#FBF9F9; text-decoration: none;">
                             <table width="407" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                     <td class="vname">
@@ -237,10 +226,12 @@
                                     </td>
                                 </tr>
                             </table>
+                            </a>
                         </div>
                     </div>
                     <div id="vtopdangerbox" class="vpanelbox">
                         <div id="vtopdanger" class="vpanel">
+                            <a href="/Pages/Information/ÑonsolidatedReport.aspx" style="color:#FBF9F9; text-decoration: none;">
                             <table width="194" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                     <td class="vname">
@@ -267,10 +258,12 @@
                                     </td>
                                 </tr>
                             </table>
+                            </a>
                         </div>
                     </div>
                     <div id="vimpactdirbox" class="vpanelbox">
                         <div id="vimpactdir" class="vpanel">
+                            <a href="/Pages/Information/ÑonsolidatedReport.aspx" style="color:#FBF9F9; text-decoration: none;">
                             <table width="336" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                     <td colspan="4" class="vname" height="40px">
@@ -306,6 +299,7 @@
                                     </td>
                                 </tr>
                             </table>
+                            </a>
                         </div>
                     </div>
                 </div>

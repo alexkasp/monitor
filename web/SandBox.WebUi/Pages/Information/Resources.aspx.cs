@@ -36,10 +36,10 @@ namespace SandBox.WebUi.Pages.Information
                 //    GetVmStatus(machine.Id);
                 //}
 
-                if (IsUserInRole("Administrator"))
+                if (!User.IsInRole("Administrator"))
                 {
-                    btnAddLIR.Visible = true;
-                    btnAddHardware.Visible = true;
+                        btnAddLIR.ClientVisible = false;
+                        btnAddHardware.ClientVisible = false;
                 }
             }
 

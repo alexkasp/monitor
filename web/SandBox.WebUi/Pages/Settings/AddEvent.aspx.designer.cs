@@ -10,7 +10,7 @@
 namespace SandBox.WebUi.Account {
     
     
-    public partial class AddUser {
+    public partial class AddEvent {
         
         /// <summary>
         /// Image1 control.
@@ -22,49 +22,49 @@ namespace SandBox.WebUi.Account {
         protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
-        /// tbUserName control.
+        /// cbModule control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbUserName;
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbModule;
         
         /// <summary>
-        /// tbLogin control.
+        /// cbEvent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbLogin;
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbEvent;
         
         /// <summary>
-        /// tbPassword control.
+        /// tbWho control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbPassword;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbWho;
         
         /// <summary>
-        /// tbPasswordConfirm control.
+        /// tbDest control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbPasswordConfirm;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbDest;
         
         /// <summary>
-        /// cblRole control.
+        /// cbSign control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBoxList cblRole;
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbSign;
         
         /// <summary>
         /// btnCancel control.

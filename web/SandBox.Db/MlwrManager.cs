@@ -8,6 +8,227 @@ namespace SandBox.Db
     public class MlwrManager : DbManager
     {
 
+        //**********************************************************
+        //* Получение класса Mlwr по id
+        //**********************************************************
+        public static IQueryable<MlwrClass> GetClasses()
+        {
+            var db = new SandBoxDataContext();
+            return from c in db.MlwrClasses
+                   select c; 
+        }
+
+        public static MlwrClass GetClass(Int32 mlwrclid)
+        {
+            SandBoxDataContext db = new SandBoxDataContext();
+            return db.MlwrClasses.FirstOrDefault<MlwrClass>(x => x.id == mlwrclid);
+        }
+
+        public static MlwrClass GetClass(String name)
+        {
+            SandBoxDataContext db = new SandBoxDataContext();
+            return db.MlwrClasses.FirstOrDefault<MlwrClass>(x => x.Name == name);
+        }
+
+        public static MlwrClass GetClassByItemId(Int32 Itemid)
+        {
+            SandBoxDataContext db = new SandBoxDataContext();
+            return (from c in db.MlwrClassItems
+                    where c.id == Itemid
+                   join d in db.MlwrClasses on c.MlwrClassId equals d.id
+                   
+                    select d).FirstOrDefault<MlwrClass>(); 
+        }
+
+        public static Int32 GetClassItemsCount(Int32 mlwrclid)
+        {
+            SandBoxDataContext db = new SandBoxDataContext();
+            return (from c in db.MlwrClassViews
+                   where c.MlwrId == mlwrclid
+                   select c).Count();
+        }
+
+        public static IEnumerable<int> GetClassItemsId(Int32 mlwrclid)
+        {
+            var db = new SandBoxDataContext();
+            return from c in db.MlwrClassItems
+                   where c.MlwrClassId == mlwrclid
+                   select c.id;
+        }
+
+        public static IQueryable<MlwrClassView> GetClassModuleItems(Int32 mlwrclid, string moduleDesctiption)
+        {
+            var db = new SandBoxDataContext();
+            return from c in db.MlwrClassViews
+                   where c.MlwrId == mlwrclid && c.Module == moduleDesctiption
+                   select c;
+        }
+
+        public static IEnumerable<int> GetVPOClassItemsId(Int32 mlwrid)
+        {
+            var db = new SandBoxDataContext();
+            return (from c in db.MlwrVPOClassItems
+                   where c.MlwrId == mlwrid
+                   select c.id).ToList();
+        }
+
+        public static void ClearVPOClassTable()
+        {
+            var db = new SandBoxDataContext();
+            db.ExecuteCommand("TRUNCATE TABLE MlwrCl");
+        }
+
+        public static void AddVPOClass(Int32 mlwrid, Int32 mlwrclid)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                MlwrCl mlwrcl = new MlwrCl()
+                {
+                    MlwrId = mlwrid,
+                    ClMlwrId = mlwrclid
+                };
+                db.MlwrCls.InsertOnSubmit(mlwrcl);
+                db.SubmitChanges();
+            }
+        }
+
+        public static IQueryable<MlwrClass> GetVPOClasses(Int32 mlwrid)
+        {
+            var db = new SandBoxDataContext();
+            return from c in db.MlwrCls
+                   join d in db.MlwrClasses on c.ClMlwrId equals d.id
+                   where c.MlwrId == mlwrid
+                   orderby d.Name
+                   select d;
+        }
+
+        //**********************************************************
+        //* Добавление нового класса Mlwr
+        //**********************************************************
+        public static Int32 AddMlwrClass(String name)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                MlwrClass mlwrcl = new MlwrClass()
+                {
+                    Name = name,
+                    Comment = null
+                };
+                db.MlwrClasses.InsertOnSubmit(mlwrcl);
+                db.SubmitChanges();
+                return db.MlwrClasses.FirstOrDefault<MlwrClass>(x => x.Name == name).id;
+            }
+//            TableUpdated(Table.MLWRS);
+        }
+
+        public static void UpdateMlwrClass(Int32 mlwrclassid, String name)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                MlwrClass mlwrcl = db.MlwrClasses.FirstOrDefault(x => x.id == mlwrclassid);
+                if (mlwrcl == null) return;
+                mlwrcl.Name = name;
+                db.SubmitChanges();
+            }
+            //            TableUpdated(Table.MLWRS);
+        }
+
+        public static void UpdateMlwrClass(Int32 mlwrclassid, String name, String comment)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                MlwrClass mlwrcl = db.MlwrClasses.FirstOrDefault(x => x.id == mlwrclassid);
+                if (mlwrcl == null) return;
+                mlwrcl.Name = name;
+                mlwrcl.Comment = comment;
+                db.SubmitChanges();
+            }
+            //            TableUpdated(Table.MLWRS);
+        }
+
+        public static void DeleteMlwrClass(Int32 mlwrclassid)
+        {
+            var db = new SandBoxDataContext();
+            var mlwrcl = db.MlwrClasses.FirstOrDefault<MlwrClass>(x => x.id == mlwrclassid);
+            if (mlwrcl != null) db.MlwrClasses.DeleteOnSubmit(mlwrcl);
+            db.SubmitChanges();
+        }
+
+        public static void DeleteMlwrClassItem(Int32 itemid)
+        {
+            var db = new SandBoxDataContext();
+            var clitem = db.MlwrClassItems.FirstOrDefault<MlwrClassItem>(x => x.id == itemid);
+            if (clitem != null) db.MlwrClassItems.DeleteOnSubmit(clitem);
+            db.SubmitChanges();
+        }
+
+        public static void DeleteMlwrClassItems(Int32 mlwrclassid)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                var mlcltems =
+                    from c in db.MlwrClassItems
+                    where c.MlwrClassId == mlwrclassid
+                    select c;
+
+                foreach (var item in mlcltems)
+                {
+                    db.MlwrClassItems.DeleteOnSubmit(item);
+                }
+
+                try
+                {
+                    db.SubmitChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+        }
+
+        public static Int32 AddMlwrClass(String name, String comment)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                MlwrClass mlwrcl = new MlwrClass()
+                {
+                    Name = name,
+                    Comment = comment
+                };
+                db.MlwrClasses.InsertOnSubmit(mlwrcl);
+                db.SubmitChanges();
+                return db.MlwrClasses.FirstOrDefault<MlwrClass>(x => x.Name == name).id;
+            }
+            //            TableUpdated(Table.MLWRS);
+        }
+
+        public static void AddMlwrClassItem(Int32 mlwrclassid, String evdesk, String evparam)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                Int32 eventid = db.EventsEventDescriptions.FirstOrDefault<EventsEventDescriptions>(x => x.EventsEventDescription == evdesk).EventID;
+                Int32 moduleid = db.ModulesVsEvents.FirstOrDefault<ModulesVsEvents>(x => x.Event == eventid).Module;
+                MlwrClassItem mlwrclitm = new MlwrClassItem()
+                {
+                    MlwrClassId = mlwrclassid,
+                    ModuleId = moduleid,
+                    EventId = eventid,
+                    Param = evparam
+                };
+                db.MlwrClassItems.InsertOnSubmit(mlwrclitm);
+                db.SubmitChanges();
+            }
+            //            TableUpdated(Table.MLWRS);
+        }
+
+        public static IQueryable GetMlwrClassItems()
+        {
+            var db = new SandBoxDataContext();
+            return from c in db.MlwrClassViews
+                   select c;
+        }
+
         public static string GetStrMlwrClassification(int mlwrId)
         {
             String res = "Не классифицировано";
@@ -198,6 +419,27 @@ namespace SandBox.Db
             }
         }
 
+        public static Mlwr GetMlwrByName(String name)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                return db.Mlwrs.FirstOrDefault(x => x.Name == name);
+            }
+        }
+
+        public static void UpdateMlwr(Int32 id, String name, String mlwrcl, String comment)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                Mlwr mlwr = db.Mlwrs.FirstOrDefault(x => x.Id == id);
+                if (mlwr == null) return;
+                mlwr.Name = name;
+                mlwr.Class = mlwrcl;
+                mlwr.Comment = comment;
+                db.SubmitChanges();
+            }
+        }
+
         //**********************************************************
         //* Получение Mlwr для отображения
         //**********************************************************
@@ -205,23 +447,8 @@ namespace SandBox.Db
         {
             var db = new SandBoxDataContext();
 
-            var items = from m in db.Mlwrs
-                        join mc in db.MlwrClasses
-                            on m.Class equals mc.Class
-                        join u in db.Users
-                            on m.LoadedBy equals u.UserId
-                        where m.IsDeleted != 1
-                        select
-                            new
-                                {
-                                    m.Id,
-                                    m.Name,
-                                    m.Path,
-                                    m.ResearchCount,
-                                    Class = mc.Description,
-                                    Loaded = "Загружено " + m.LoadedDate + " пользователем " + u.Login
-                                };
-            return items;
+            return from m in db.MlwrsTableViews
+                   select m;
         }
 
         /// <summary>
@@ -229,17 +456,17 @@ namespace SandBox.Db
         /// </summary>
         /// <param name="mlwrId"></param>
         /// <returns></returns>
-        public static IQueryable GetMlwrClass(int mlwrId)
-        { 
-            var db = new SandBoxDataContext();
-            var items = from m in db.Mlwrs
-                        join mc in db.MlwrClasses
-                            on m.Class equals mc.Class
-                        where m.Id == mlwrId
-                        select mc.Description;               
-            return items;
+        //public static IQueryable GetMlwrClass(int mlwrId)
+        //{ 
+        //    var db = new SandBoxDataContext();
+        //    var items = from m in db.Mlwrs
+        //                join mc in db.MlwrClasses
+        //                    on m.Class equals mc.id
+        //                where m.Id == mlwrId
+        //                select mc.Name;               
+        //    return items;
 
-        }
+        //}
 
 
         //**********************************************************
@@ -291,8 +518,8 @@ namespace SandBox.Db
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
                 var classes = from mc in db.MlwrClasses
-                            orderby mc.Description
-                            select mc.Description;
+                            orderby mc.Name
+                            select mc.Name;
                 return classes.ToList();
             }
         }
@@ -352,7 +579,7 @@ namespace SandBox.Db
                                   Name = name,
                                   Path = path,
                                   ResearchCount = 0,
-                                  Class = 0,
+                                  Class = null,
                                   LoadedDate = DateTime.Now,
                                   LoadedBy = loadedBy
                 };

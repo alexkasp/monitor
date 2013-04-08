@@ -39,10 +39,18 @@ namespace SandBox.WebUi.Account
             {
                 tbUserName.Text = user.UserName;
                 tbLogin.Text = user.Login;
-                cbRole.Text = UserManager.GetRolesForUser(userId)[0];
                 List<string> rolesList = UserManager.GetRoleList();
-                cbRole.DataSource = rolesList;
-                cbRole.DataBind();
+                cblRole.DataSource = rolesList;
+                cblRole.DataBind();
+                List<string> userroles = UserManager.GetRolesForUser(userId);
+                foreach (string role in userroles)
+                {
+                    cblRole.Items.FindByText(role).Selected = true;
+                }
+                //cbRole.Text = UserManager.GetRolesForUser(userId)[0];
+                //List<string> rolesList = UserManager.GetRoleList();
+                //cbRole.DataSource = rolesList;
+                //cbRole.DataBind();
             }
         }
 
@@ -64,19 +72,26 @@ namespace SandBox.WebUi.Account
                 tbPasswordConfirm.IsValid = false;
                 return;
             }
-            String role = cbRole.Value.ToString();
+
+            String role = cblRole.SelectedValues[0].ToString();
             Int32 roleId = UserManager.GetRole(role).RoleId;
+            if (cblRole.SelectedItems.Count > 1)
+            {
+                String role2 = cblRole.SelectedValues[1].ToString();
+                Int32 roleId2 = UserManager.GetRole(role2).RoleId;
+                UserManager.EditUser((Int32)Session["userId"], username, login, password, roleId, roleId2);
+            }
+            else UserManager.EditUser((Int32)Session["userId"], username, login, password, roleId);
             Boolean CurrentUser = (int)Membership.GetUser(User.Identity.Name).ProviderUserKey == userId;
-            UserManager.EditUser((Int32)Session["userId"],username, login, password, roleId);
             if (CurrentUser)
             {
-                string scriptstring = "alert(\"Изменен Ваш логин. Необходимо пройти аутентификацию.\");document.location.href = '/Account/Login.aspx?ReturnUrl=/Pages/Settings/Users.aspx';";
+                string scriptstring = "alert(\"Изменен Ваш логин. Необходимо пройти аутентификацию.\");document.location.href = '/Account/Login.aspx?ReturnUrl=/Pages/Settings/Main.aspx';";
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", scriptstring, true);
                 FormsAuthentication.SignOut();
                 Session.Clear();
-//                Response.Redirect("~/Account/Login.aspx?ReturnUrl=/Pages/Settings/Users.aspx");
+//                Response.Redirect("~/Account/Login.aspx?ReturnUrl=/Pages/Settings/Main.aspx");
             }
-            else Response.Redirect("~/Pages/Settings/Users.aspx");
+            else Response.Redirect("~/Pages/Settings/Main.aspx");
         }
     }//end class
 }//end namespace

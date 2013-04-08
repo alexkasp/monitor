@@ -14,7 +14,7 @@ namespace SandBox.WebUi.Account
         protected void btnCreateUser_Click(object sender, EventArgs e) {
             try {
                 MembershipUser user = Membership.CreateUser(tbUserName.Text, tbPassword.Text);
-                Response.Redirect("~/Pages/Settings/Users.aspx");
+                Response.Redirect("~/Pages/Settings/Main.aspx");
             }
             catch (MembershipCreateUserException exc) 
             {

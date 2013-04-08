@@ -10,22 +10,12 @@
       <Column Name="LastLoginDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="true" />
       <Column Name="LastLoginIp" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="UserName" Type="System.String" DbType="NVarChar(100)" CanBeNull="false" />
-      <Association Name="UsersInRole_User" Member="UsersInRole" ThisKey="UserId" OtherKey="UserId" Type="UsersInRole" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Roles" Member="Roles">
     <Type Name="Role">
       <Column Name="RoleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="UsersInRole_Role" Member="UsersInRole" ThisKey="RoleId" OtherKey="RoleId" Type="UsersInRole" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.UsersInRoles" Member="UsersInRoles">
-    <Type Name="UsersInRole">
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="RoleId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="UsersInRole_User" Member="Users" ThisKey="UserId" OtherKey="UserId" Type="User" />
-      <Association Name="UsersInRole_Role" Member="Roles" ThisKey="RoleId" OtherKey="RoleId" Type="Role" />
     </Type>
   </Table>
   <Table Name="dbo.ConnectionSettings" Member="ConnectionSettings">
@@ -55,26 +45,6 @@
       <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Association Name="Vm_VmType" Member="Vm" ThisKey="Type" OtherKey="Type" Type="Vm" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Mlwr" Member="Mlwrs">
-    <Type Name="Mlwr">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Path" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="ResearchCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Class" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="LoadedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="LoadedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IsDeleted" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Mlwr_MlwrClass" Member="MlwrClasses" ThisKey="Class" OtherKey="Class" Type="MlwrClass" />
-    </Type>
-  </Table>
-  <Table Name="dbo.MlwrClass" Member="MlwrClasses">
-    <Type Name="MlwrClass">
-      <Column Name="Class" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Association Name="Mlwr_MlwrClass" Member="Mlwr" ThisKey="Class" OtherKey="Class" Type="Mlwr" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ResearchesState" Member="ResearchesStates">
@@ -540,6 +510,97 @@
       <Column Name="regEventsCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="netEventsCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="procEventsCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DirectoriesOfEventsView" Member="DirectoriesOfEventsViews">
+    <Type Name="DirectoriesOfEventsView">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="module" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="event" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="who" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="dest" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="signdesc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MlwrClass" Member="MlwrClasses">
+    <Type Name="MlwrClass">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MlwrClassItems" Member="MlwrClassItems">
+    <Type Name="MlwrClassItem">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MlwrClassId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ModuleId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Param" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MlwrsTableView" Member="MlwrsTableViews">
+    <Type Name="MlwrsTableView">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Path" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ResearchCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Class" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Loaded" Type="System.String" DbType="NVarChar(105)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MlwrClassView" Member="MlwrClassViews">
+    <Type Name="MlwrClassView">
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Module" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Event" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Param" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MlwrId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MlwrVPOClassItems" Member="MlwrVPOClassItems">
+    <Type Name="MlwrVPOClassItem">
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Class" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ModuleId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Param" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MlwrId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Mlwr" Member="Mlwrs">
+    <Type Name="Mlwr">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Path" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ResearchCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Class" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LoadedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LoadedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsDeleted" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="md5" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="sha1" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="sha256" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UsersInRoles" Member="UsersInRoles">
+    <Type Name="UsersInRole">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UsersTableView" Member="UsersTableViews">
+    <Type Name="UsersTableView">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Login" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastLoginDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastLoginIp" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

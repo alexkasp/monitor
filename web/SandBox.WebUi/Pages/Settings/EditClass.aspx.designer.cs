@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SandBox.WebUi.Pages.Malware {
+namespace SandBox.WebUi.Account {
     
     
-    public partial class MalwareCard {
+    public partial class EditClass {
         
         /// <summary>
         /// Image1 control.
@@ -22,157 +22,166 @@ namespace SandBox.WebUi.Pages.Malware {
         protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
-        /// LMlwrRsch control.
+        /// tbClass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel LMlwrRsch;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbClass;
         
         /// <summary>
-        /// pcSettings control.
+        /// hfFS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTabControl.ASPxPageControl pcSettings;
+        protected global::DevExpress.Web.ASPxHiddenField.ASPxHiddenField hfFS;
         
         /// <summary>
-        /// ContentControl1 control.
+        /// lbFSParams control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxClasses.ContentControl ContentControl1;
+        protected global::DevExpress.Web.ASPxEditors.ASPxListBox lbFSParams;
         
         /// <summary>
-        /// tbVPO control.
+        /// CBFileActiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbVPO;
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox CBFileActiv;
         
         /// <summary>
-        /// lVPOFile control.
+        /// TBNFileTaskValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel lVPOFile;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox TBNFileTaskValue;
         
         /// <summary>
-        /// lUploadDate control.
+        /// hfReg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel lUploadDate;
+        protected global::DevExpress.Web.ASPxHiddenField.ASPxHiddenField hfReg;
         
         /// <summary>
-        /// lUploadBy control.
+        /// lbRegParams control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel lUploadBy;
+        protected global::DevExpress.Web.ASPxEditors.ASPxListBox lbRegParams;
         
         /// <summary>
-        /// lMD5 control.
+        /// CBRegActiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel lMD5;
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox CBRegActiv;
         
         /// <summary>
-        /// lSHA1 control.
+        /// TBNRegTaskValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel lSHA1;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox TBNRegTaskValue;
         
         /// <summary>
-        /// lSHA256 control.
+        /// hfProc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel lSHA256;
+        protected global::DevExpress.Web.ASPxHiddenField.ASPxHiddenField hfProc;
         
         /// <summary>
-        /// gridMlwrClView control.
+        /// lbProcParams control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxGridView.ASPxGridView gridMlwrClView;
+        protected global::DevExpress.Web.ASPxEditors.ASPxListBox lbProcParams;
         
         /// <summary>
-        /// tbHandClass control.
+        /// CBProcActiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbHandClass;
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox CBProcActiv;
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// TBProcTaskValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox TBProcTaskValue;
         
         /// <summary>
-        /// HyperLink1 control.
+        /// hfNet control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HyperLink1;
+        protected global::DevExpress.Web.ASPxHiddenField.ASPxHiddenField hfNet;
         
         /// <summary>
-        /// ASPxButton2 control.
+        /// lbNetParams control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton ASPxButton2;
+        protected global::DevExpress.Web.ASPxEditors.ASPxListBox lbNetParams;
         
         /// <summary>
-        /// Timer1 control.
+        /// CBNetActiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.Timer Timer1;
+        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox CBNetActiv;
         
         /// <summary>
-        /// mmComment control.
+        /// TBNetTaskValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxMemo mmComment;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox TBNetTaskValue;
+        
+        /// <summary>
+        /// mmClass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxMemo mmClass;
         
         /// <summary>
         /// btnCancel control.
@@ -191,86 +200,5 @@ namespace SandBox.WebUi.Pages.Malware {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxEditors.ASPxButton btnCreate;
-        
-        /// <summary>
-        /// ContentControl2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxClasses.ContentControl ContentControl2;
-        
-        /// <summary>
-        /// btnCopy control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnCopy;
-        
-        /// <summary>
-        /// btnComp control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnComp;
-        
-        /// <summary>
-        /// btnStop control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnStop;
-        
-        /// <summary>
-        /// btnDel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnDel;
-        
-        /// <summary>
-        /// UpdatePagerPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePagerPanel;
-        
-        /// <summary>
-        /// gridViewResearchesPager control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxPager.ASPxPager gridViewResearchesPager;
-        
-        /// <summary>
-        /// UpdatePanelResearches control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanelResearches;
-        
-        /// <summary>
-        /// gridViewResearches control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxGridView.ASPxGridView gridViewResearches;
     }
 }

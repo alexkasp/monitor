@@ -41,7 +41,7 @@
     </script>
     <div id="content-top">
         <div id="pagename">
-            Добавление нового пользователя <a href="/Pages/Settings/Users.aspx">
+            Редактирование пользователя <a href="/Pages/Settings/Main.aspx">
                 <asp:Image ID="Image1" runat="server" ImageUrl="~/Content/Images/btn_back.jpg" CssClass="backbtn" />
             </a>
         </div>
@@ -115,11 +115,25 @@
                             Роль:</div>
                     </td>
                     <td>
-                        <dx:ASPxComboBox ID="cbRole" runat="server" ValueType="System.String" Width="200px">
+<%--                        <dx:ASPxComboBox ID="cbRole" runat="server" ValueType="System.String" Width="200px">
                             <ValidationSettings ValidationGroup="AddResearchValidationGroup">
                                 <RequiredField ErrorText=" " IsRequired="true" />
                             </ValidationSettings>
                         </dx:ASPxComboBox>
+--%>                               <dx:ASPxCheckBoxList ID="cblRole" runat="server" 
+                           ClientInstanceName="cblRole" >
+                                   <ClientSideEvents SelectedIndexChanged="function(s, e) {
+	if (s.GetSelectedIndex()==0) 
+        {
+        s.UnselectAll();
+        s.SetSelectedIndex(0);
+        }
+}" />
+                         <ValidationSettings SetFocusOnError="True" ValidationGroup="AddResearchValidationGroup">
+	                      <RequiredField ErrorText="Выберите роль" IsRequired="true" />
+	                     </ValidationSettings>
+        </dx:ASPxCheckBoxList>
+
                     </td>
                 </tr>
                 <tr>
@@ -132,7 +146,7 @@
                                 <dx:ASPxButton ID="btnCancel" runat="server" Text="Отменить" AutoPostBack="False"
                                     CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" Width="90px">
                                     <ClientSideEvents Click="function(s, e) {
-	document.location.href = '/Pages/Settings/Users.aspx';
+	document.location.href = '/Pages/Settings/Main.aspx';
 }" />
                                     <PressedStyle CssClass="buttonHover">
                                     </PressedStyle>

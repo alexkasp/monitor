@@ -35,8 +35,14 @@
                             Эталон ВЛИР:</div>
                     </td>
                     <td>
-                        <dx:ASPxComboBox ID="cbEtalon" runat="server" ValueType="System.String" Width="200px">
-                        </dx:ASPxComboBox>
+                                                <dx:ASPxComboBox ID="cbEtalon" runat="server" Width="200px" ShowLoadingPanel="False"
+                                                    ClientInstanceName="cbEtalon" AutoResizeWithContainer="True" ValueField="Id" TextFormatString="{0}"
+                                                    IncrementalFilteringMode="StartsWith" EnableIncrementalFiltering="True">
+                                                    <Columns>
+                                                        <dx:ListBoxColumn FieldName="Name" Caption="Имя" />
+                                                        <dx:ListBoxColumn FieldName="System" Caption="Система" Width="200px" />
+                                                    </Columns>
+                                                </dx:ASPxComboBox>
                     </td>
                 </tr>
                 <tr>

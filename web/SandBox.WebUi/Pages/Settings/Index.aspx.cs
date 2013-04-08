@@ -8,12 +8,12 @@ namespace SandBox.WebUi.Pages.Settings
         protected new void Page_Load(object sender, EventArgs e)
         {
             base.Page_Load(sender, e);
-            PageTitle = "настройки";
+            PageTitle = "Настройки";
             PageMenu  = "~/App_Data/SideMenu/Settings/SettingsMenu.xml";
-            
-            if (IsUserInRole("Administrator"))
+
+            if (IsUserInRole("Administrator") || IsUserInRole("User"))
             {
-                Response.Redirect("~/Pages/Settings/Users.aspx");
+                Response.Redirect("~/Pages/Settings/Main.aspx");
             }
             else
             {

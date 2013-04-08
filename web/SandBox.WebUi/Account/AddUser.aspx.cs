@@ -17,8 +17,10 @@ namespace SandBox.WebUi.Account
             if (!IsPostBack)
             {
                 List<string> rolesList = UserManager.GetRoleList();
-                cbRole.DataSource = rolesList;
-                cbRole.DataBind();
+                //cbRole.DataSource = rolesList;
+                //cbRole.DataBind();
+                cblRole.DataSource = rolesList;
+                cblRole.DataBind();
             }
         }
 
@@ -40,10 +42,16 @@ namespace SandBox.WebUi.Account
                 tbPasswordConfirm.IsValid=false;
                 return;
             }
-            String role = cbRole.Value.ToString();
+            String role = cblRole.SelectedItems[0].ToString();
             Int32 roleId = UserManager.GetRole(role).RoleId;
-            UserManager.CreateUser(username, login, password, roleId);
-            Response.Redirect("~/Pages/Settings/Users.aspx");
+            if (cblRole.SelectedItems.Count > 1)
+            {
+                String role2 = cblRole.SelectedItems[1].ToString();
+                Int32 roleId2 = UserManager.GetRole(role2).RoleId;
+                UserManager.CreateUser(username, login, password, roleId, roleId2);
+            }
+            else UserManager.CreateUser(username, login, password, roleId);
+            Response.Redirect("~/Pages/Settings/Main.aspx");
         }
     }//end class
 }//end namespace

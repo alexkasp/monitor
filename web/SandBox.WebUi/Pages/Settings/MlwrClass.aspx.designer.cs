@@ -10,142 +10,133 @@
 namespace SandBox.WebUi.Pages.Malware {
     
     
-    public partial class MalwareCard {
+    public partial class MlwrClass {
         
         /// <summary>
-        /// Image1 control.
+        /// ASPxLabel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
+        protected global::DevExpress.Web.ASPxEditors.ASPxLabel ASPxLabel1;
         
         /// <summary>
-        /// LMlwrRsch control.
+        /// RPNetwork control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel LMlwrRsch;
+        protected global::DevExpress.Web.ASPxRoundPanel.ASPxRoundPanel RPNetwork;
         
         /// <summary>
-        /// pcSettings control.
+        /// ASPxGridView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTabControl.ASPxPageControl pcSettings;
+        protected global::DevExpress.Web.ASPxGridView.ASPxGridView ASPxGridView1;
         
         /// <summary>
-        /// ContentControl1 control.
+        /// SqlDataSource1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxClasses.ContentControl ContentControl1;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
         
         /// <summary>
-        /// tbVPO control.
+        /// ASPxPanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbVPO;
+        protected global::DevExpress.Web.ASPxPanel.ASPxPanel ASPxPanel1;
         
         /// <summary>
-        /// lVPOFile control.
+        /// DropDownList5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel lVPOFile;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownList5;
         
         /// <summary>
-        /// lUploadDate control.
+        /// ASPxTextBox1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel lUploadDate;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox ASPxTextBox1;
         
         /// <summary>
-        /// lUploadBy control.
+        /// ASPxButton1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel lUploadBy;
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton ASPxButton1;
         
         /// <summary>
-        /// lMD5 control.
+        /// RPFileSystem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel lMD5;
+        protected global::DevExpress.Web.ASPxRoundPanel.ASPxRoundPanel RPFileSystem;
         
         /// <summary>
-        /// lSHA1 control.
+        /// ASPxGridView2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel lSHA1;
+        protected global::DevExpress.Web.ASPxGridView.ASPxGridView ASPxGridView2;
         
         /// <summary>
-        /// lSHA256 control.
+        /// SqlDataSource2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel lSHA256;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
         
         /// <summary>
-        /// gridMlwrClView control.
+        /// ASPxPanel2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxGridView.ASPxGridView gridMlwrClView;
+        protected global::DevExpress.Web.ASPxPanel.ASPxPanel ASPxPanel2;
         
         /// <summary>
-        /// tbHandClass control.
+        /// DropDownList6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbHandClass;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownList6;
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// ASPxTextBox2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
-        /// <summary>
-        /// HyperLink1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HyperLink1;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox ASPxTextBox2;
         
         /// <summary>
         /// ASPxButton2 control.
@@ -157,120 +148,129 @@ namespace SandBox.WebUi.Pages.Malware {
         protected global::DevExpress.Web.ASPxEditors.ASPxButton ASPxButton2;
         
         /// <summary>
-        /// Timer1 control.
+        /// RPRegister control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.Timer Timer1;
+        protected global::DevExpress.Web.ASPxRoundPanel.ASPxRoundPanel RPRegister;
         
         /// <summary>
-        /// mmComment control.
+        /// ASPxGridView3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxMemo mmComment;
+        protected global::DevExpress.Web.ASPxGridView.ASPxGridView ASPxGridView3;
         
         /// <summary>
-        /// btnCancel control.
+        /// SqlDataSource3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnCancel;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource3;
         
         /// <summary>
-        /// btnCreate control.
+        /// ASPxPanel3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnCreate;
+        protected global::DevExpress.Web.ASPxPanel.ASPxPanel ASPxPanel3;
         
         /// <summary>
-        /// ContentControl2 control.
+        /// DropDownList7 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxClasses.ContentControl ContentControl2;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownList7;
         
         /// <summary>
-        /// btnCopy control.
+        /// ASPxTextBox3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnCopy;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox ASPxTextBox3;
         
         /// <summary>
-        /// btnComp control.
+        /// ASPxButton3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnComp;
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton ASPxButton3;
         
         /// <summary>
-        /// btnStop control.
+        /// RPProc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnStop;
+        protected global::DevExpress.Web.ASPxRoundPanel.ASPxRoundPanel RPProc;
         
         /// <summary>
-        /// btnDel control.
+        /// ASPxGridView4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnDel;
+        protected global::DevExpress.Web.ASPxGridView.ASPxGridView ASPxGridView4;
         
         /// <summary>
-        /// UpdatePagerPanel control.
+        /// SqlDataSource4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePagerPanel;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource4;
         
         /// <summary>
-        /// gridViewResearchesPager control.
+        /// ASPxPanel4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxPager.ASPxPager gridViewResearchesPager;
+        protected global::DevExpress.Web.ASPxPanel.ASPxPanel ASPxPanel4;
         
         /// <summary>
-        /// UpdatePanelResearches control.
+        /// DropDownList8 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanelResearches;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownList8;
         
         /// <summary>
-        /// gridViewResearches control.
+        /// ASPxTextBox4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxGridView.ASPxGridView gridViewResearches;
+        protected global::DevExpress.Web.ASPxEditors.ASPxTextBox ASPxTextBox4;
+        
+        /// <summary>
+        /// ASPxButton4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton ASPxButton4;
     }
 }

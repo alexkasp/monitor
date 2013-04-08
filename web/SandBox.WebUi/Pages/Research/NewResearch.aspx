@@ -310,7 +310,7 @@
                         </Header>
                         <Content>
                             <dx:ASPxListBox ID="lbFSParams" runat="server" Width="100%" 
-                                ClientInstanceName="lbFSParams" EncodeHtml="False" ItemStyle-Wrap="True" Height="50px" ValueField="ID" >
+                                ClientInstanceName="lbFSParams" EncodeHtml="False" ItemStyle-Wrap="True" Height="50px" ValueField="ID" CssClass="lbpar">
                                 <Columns>
                                     <dx:ListBoxColumn FieldName="ID" Caption="№" Width="10px" />
                                     <dx:ListBoxColumn FieldName="Task" Caption="ЗАДАНИЕ" Width="200px" />
@@ -354,7 +354,7 @@
                                     <img style="cursor:pointer;" alt="Добавить" src="../../Content/Images/Icons/btn_addparam.png" onclick="AddLbItem(lbFSParams,CBFileActiv.GetText(),TBNFileTaskValue.GetValue());" title="Добавить">
                                     </td>
                                     <td>
-                                    <img style="cursor:pointer;" alt="Очистить" src="../../Content/Images/Icons/btn_clearpr.png" onclick="lbFSParams.ClearItems(); lbFSParams.SetHeight(50);" title="Очистить">
+                                    <img style="cursor:pointer;" alt="Очистить" src="../../Content/Images/Icons/btn_clearpr.png" onclick="if (confirm('Вы уверены, что хотите очистить задания?')) { lbFSParams.ClearItems(); lbFSParams.SetHeight(50); }" title="Очистить">
                                     </td>
                                 </tr>
                             </table>
@@ -454,7 +454,7 @@
                                 Реестр</div>
                         </Header>
                         <Content>
-                            <dx:ASPxListBox ID="lbRegParams" runat="server" Width="100%" 
+                            <dx:ASPxListBox ID="lbRegParams" runat="server" Width="100%"  CssClass="lbpar"
                                 ClientInstanceName="lbRegParams" EncodeHtml="False" ItemStyle-Wrap="True" Height="50px" ValueField="ID">
                                 <Columns>
                                     <dx:ListBoxColumn FieldName="ID" Caption="№" Width="10px" />
@@ -502,7 +502,7 @@
                                     <img style="cursor:pointer;" alt="Добавить" src="../../Content/Images/Icons/btn_addparam.png" onclick="AddLbItem(lbRegParams,CBRegActiv.GetText(),TBNRegTaskValue.GetValue());" title="Добавить">
                                     </td>
                                     <td>
-                                    <img style="cursor:pointer;" alt="Очистить" src="../../Content/Images/Icons/btn_clearpr.png" onclick="lbRegParams.ClearItems(); lbRegParams.SetHeight(50);" title="Очистить">
+                                    <img style="cursor:pointer;" alt="Очистить" src="../../Content/Images/Icons/btn_clearpr.png" onclick="if (confirm('Вы уверены, что хотите очистить задания?')) { lbRegParams.ClearItems(); lbRegParams.SetHeight(50); }" title="Очистить">
                                     </td>
                                 </tr>
                             </table>
@@ -566,7 +566,7 @@
                                 Процессы</div>
                         </Header>
                         <Content>
-                            <dx:ASPxListBox ID="lbProcParams" runat="server" Width="100%" 
+                            <dx:ASPxListBox ID="lbProcParams" runat="server" Width="100%"  CssClass="lbpar"
                                 ClientInstanceName="lbProcParams"  EncodeHtml="False" ItemStyle-Wrap="True" Height="50px" ValueField="ID">
                                 <Columns>
                                     <dx:ListBoxColumn FieldName="ID" Caption="№" Width="10px" />
@@ -614,7 +614,7 @@
                                     <img style="cursor:pointer;" alt="Добавить" src="../../Content/Images/Icons/btn_addparam.png" onclick="AddLbItem(lbProcParams,CBProcActiv.GetText(),TBProcTaskValue.GetValue());" title="Добавить">
                                     </td>
                                     <td>
-                                    <img style="cursor:pointer;" alt="Очистить" src="../../Content/Images/Icons/btn_clearpr.png" onclick="lbProcParams.ClearItems(); lbProcParams.SetHeight(50);" title="Очистить">
+                                    <img style="cursor:pointer;" alt="Очистить" src="../../Content/Images/Icons/btn_clearpr.png" onclick="if (confirm('Вы уверены, что хотите очистить задания?')) { lbProcParams.ClearItems(); lbProcParams.SetHeight(50); }" title="Очистить">
                                     </td>
                                 </tr>
                             </table>
@@ -651,7 +651,7 @@
                                 Сетевая активность</div>
                         </Header>
                         <Content>
-                            <dx:ASPxListBox ID="lbNetParams" runat="server" Width="100%" 
+                            <dx:ASPxListBox ID="lbNetParams" runat="server" Width="100%"  CssClass="lbpar"
                                 ClientInstanceName="lbNetParams" EncodeHtml="False" ItemStyle-Wrap="True" Height="50px" ValueField="ID">
                                 <Columns>
                                     <dx:ListBoxColumn FieldName="ID" Caption="№" Width="10px" />
@@ -700,7 +700,7 @@
                                     <img style="cursor:pointer;" alt="Добавить" src="../../Content/Images/Icons/btn_addparam.png" onclick="AddLbItem(lbNetParams,CBNetActiv.GetText(),TBNetTaskValue.GetValue());" title="Добавить">
                                     </td>
                                     <td>
-                                    <img style="cursor:pointer;" alt="Очистить" src="../../Content/Images/Icons/btn_clearpr.png" onclick="lbNetParams.ClearItems(); lbNetParams.SetHeight(50);" title="Очистить">
+                                    <img style="cursor:pointer;" alt="Очистить" src="../../Content/Images/Icons/btn_clearpr.png" onclick="if (confirm('Вы уверены, что хотите очистить задания?')) { lbNetParams.ClearItems(); lbNetParams.SetHeight(50); }" title="Очистить">
                                     </td>
                                 </tr>
                             </table>

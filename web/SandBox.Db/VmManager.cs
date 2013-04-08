@@ -330,7 +330,8 @@ namespace SandBox.Db
                         on v.System equals vst.System
                         orderby v.Name
                         where v.Type == 1
-                        select new { v.Id, v.Name, System = vst.Description};
+                        where v.State != Convert.ToInt32(VmManager.State.DELETED)
+                        select new { v.Id, v.Name, System = vst.Description };
             return names;
         }
 

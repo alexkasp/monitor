@@ -4,12 +4,14 @@
 		    <div id="pagename">Сводный отчет</div>
          </div>
   <div id="content-main">
+  <div style="text-align:center">
     <dx:ASPxLabel ID="LUsageOfDifferentTypesOfLIR" runat="server" 
         Text="Статистика по использованию различных типов ЛИР" Theme="iOS">
     </dx:ASPxLabel>
     <br />
     <dx:WebChartControl ID="WCCUsageOfDifferentTypesOfLIR" runat="server" 
-        Height="400px" LoadingPanelText="Загрузка&amp;hellip;" Width="800px">
+        Height="400px" LoadingPanelText="Загрузка&amp;hellip;" Width="800px" 
+          CssClass="centerdiv">
         <diagramserializable>
             <dx:SimpleDiagram>
             </dx:SimpleDiagram>
@@ -91,7 +93,7 @@
     <br />
     <dx:WebChartControl ID="WCCUsageOSForResearch" runat="server" Height="400px" 
         Width="800px" LoadingPanelText="Загрузка&amp;hellip;" BackColor="#FFFFFF" 
-        PaletteBaseColorNumber="1">
+        PaletteBaseColorNumber="1" CssClass="centerdiv">
         <diagramserializable>
             <dx:XYDiagram>
                 <axisx visibleinpanesserializable="-1">
@@ -171,7 +173,7 @@
     <br />
     <dx:WebChartControl ID="WCCUsageOSForResearch0" runat="server" Height="400px" 
         Width="800px" LoadingPanelText="Загрузка&amp;hellip;" 
-        PaletteBaseColorNumber="1">
+        PaletteBaseColorNumber="1" CssClass="centerdiv">
         <diagramserializable>
             <dx:XYDiagram>
                 <axisx visibleinpanesserializable="-1">
@@ -244,6 +246,6 @@
 </ToolTipOptions>
     </dx:WebChartControl>
     <br />
-
+ </div>
 </div>
 </asp:Content>

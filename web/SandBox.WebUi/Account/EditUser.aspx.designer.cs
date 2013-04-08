@@ -58,13 +58,13 @@ namespace SandBox.WebUi.Account {
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbPasswordConfirm;
         
         /// <summary>
-        /// cbRole control.
+        /// cblRole control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxComboBox cbRole;
+        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBoxList cblRole;
         
         /// <summary>
         /// btnCancel control.

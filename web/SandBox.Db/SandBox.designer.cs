@@ -36,9 +36,6 @@ namespace SandBox.Db
     partial void InsertRole(Role instance);
     partial void UpdateRole(Role instance);
     partial void DeleteRole(Role instance);
-    partial void InsertUsersInRole(UsersInRole instance);
-    partial void UpdateUsersInRole(UsersInRole instance);
-    partial void DeleteUsersInRole(UsersInRole instance);
     partial void InsertVmState(VmState instance);
     partial void UpdateVmState(VmState instance);
     partial void DeleteVmState(VmState instance);
@@ -48,12 +45,6 @@ namespace SandBox.Db
     partial void InsertVmType(VmType instance);
     partial void UpdateVmType(VmType instance);
     partial void DeleteVmType(VmType instance);
-    partial void InsertMlwr(Mlwr instance);
-    partial void UpdateMlwr(Mlwr instance);
-    partial void DeleteMlwr(Mlwr instance);
-    partial void InsertMlwrClass(MlwrClass instance);
-    partial void UpdateMlwrClass(MlwrClass instance);
-    partial void DeleteMlwrClass(MlwrClass instance);
     partial void InsertResearchesState(ResearchesState instance);
     partial void UpdateResearchesState(ResearchesState instance);
     partial void DeleteResearchesState(ResearchesState instance);
@@ -141,6 +132,18 @@ namespace SandBox.Db
     partial void InsertSetting(Setting instance);
     partial void UpdateSetting(Setting instance);
     partial void DeleteSetting(Setting instance);
+    partial void InsertMlwrClass(MlwrClass instance);
+    partial void UpdateMlwrClass(MlwrClass instance);
+    partial void DeleteMlwrClass(MlwrClass instance);
+    partial void InsertMlwrClassItem(MlwrClassItem instance);
+    partial void UpdateMlwrClassItem(MlwrClassItem instance);
+    partial void DeleteMlwrClassItem(MlwrClassItem instance);
+    partial void InsertMlwr(Mlwr instance);
+    partial void UpdateMlwr(Mlwr instance);
+    partial void DeleteMlwr(Mlwr instance);
+    partial void InsertUsersInRole(UsersInRole instance);
+    partial void UpdateUsersInRole(UsersInRole instance);
+    partial void DeleteUsersInRole(UsersInRole instance);
     #endregion
 		
 		public SandBoxDataContext() : 
@@ -189,14 +192,6 @@ namespace SandBox.Db
 			}
 		}
 		
-		public System.Data.Linq.Table<UsersInRole> UsersInRoles
-		{
-			get
-			{
-				return this.GetTable<UsersInRole>();
-			}
-		}
-		
 		public System.Data.Linq.Table<ConnectionSetting> ConnectionSettings
 		{
 			get
@@ -226,22 +221,6 @@ namespace SandBox.Db
 			get
 			{
 				return this.GetTable<VmType>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Mlwr> Mlwrs
-		{
-			get
-			{
-				return this.GetTable<Mlwr>();
-			}
-		}
-		
-		public System.Data.Linq.Table<MlwrClass> MlwrClasses
-		{
-			get
-			{
-				return this.GetTable<MlwrClass>();
 			}
 		}
 		
@@ -636,6 +615,78 @@ namespace SandBox.Db
 				return this.GetTable<ResearchesTableView>();
 			}
 		}
+		
+		public System.Data.Linq.Table<DirectoriesOfEventsView> DirectoriesOfEventsViews
+		{
+			get
+			{
+				return this.GetTable<DirectoriesOfEventsView>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MlwrClass> MlwrClasses
+		{
+			get
+			{
+				return this.GetTable<MlwrClass>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MlwrClassItem> MlwrClassItems
+		{
+			get
+			{
+				return this.GetTable<MlwrClassItem>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MlwrsTableView> MlwrsTableViews
+		{
+			get
+			{
+				return this.GetTable<MlwrsTableView>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MlwrClassView> MlwrClassViews
+		{
+			get
+			{
+				return this.GetTable<MlwrClassView>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MlwrVPOClassItem> MlwrVPOClassItems
+		{
+			get
+			{
+				return this.GetTable<MlwrVPOClassItem>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Mlwr> Mlwrs
+		{
+			get
+			{
+				return this.GetTable<Mlwr>();
+			}
+		}
+		
+		public System.Data.Linq.Table<UsersInRole> UsersInRoles
+		{
+			get
+			{
+				return this.GetTable<UsersInRole>();
+			}
+		}
+		
+		public System.Data.Linq.Table<UsersTableView> UsersTableViews
+		{
+			get
+			{
+				return this.GetTable<UsersTableView>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
@@ -659,8 +710,6 @@ namespace SandBox.Db
 		private string _LastLoginIp;
 		
 		private string _UserName;
-		
-		private EntityRef<UsersInRole> _UsersInRole;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -686,7 +735,6 @@ namespace SandBox.Db
 		
 		public User()
 		{
-			this._UsersInRole = default(EntityRef<UsersInRole>);
 			OnCreated();
 		}
 		
@@ -701,10 +749,6 @@ namespace SandBox.Db
 			{
 				if ((this._UserId != value))
 				{
-					if (this._UsersInRole.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnUserIdChanging(value);
 					this.SendPropertyChanging();
 					this._UserId = value;
@@ -854,40 +898,6 @@ namespace SandBox.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersInRole_User", Storage="_UsersInRole", ThisKey="UserId", OtherKey="UserId", IsForeignKey=true)]
-		public UsersInRole UsersInRole
-		{
-			get
-			{
-				return this._UsersInRole.Entity;
-			}
-			set
-			{
-				UsersInRole previousValue = this._UsersInRole.Entity;
-				if (((previousValue != value) 
-							|| (this._UsersInRole.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UsersInRole.Entity = null;
-						previousValue.Users.Remove(this);
-					}
-					this._UsersInRole.Entity = value;
-					if ((value != null))
-					{
-						value.Users.Add(this);
-						this._UserId = value.UserId;
-					}
-					else
-					{
-						this._UserId = default(int);
-					}
-					this.SendPropertyChanged("UsersInRole");
-				}
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -919,8 +929,6 @@ namespace SandBox.Db
 		
 		private string _Name;
 		
-		private EntityRef<UsersInRole> _UsersInRole;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -933,7 +941,6 @@ namespace SandBox.Db
 		
 		public Role()
 		{
-			this._UsersInRole = default(EntityRef<UsersInRole>);
 			OnCreated();
 		}
 		
@@ -948,10 +955,6 @@ namespace SandBox.Db
 			{
 				if ((this._RoleId != value))
 				{
-					if (this._UsersInRole.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnRoleIdChanging(value);
 					this.SendPropertyChanging();
 					this._RoleId = value;
@@ -981,40 +984,6 @@ namespace SandBox.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersInRole_Role", Storage="_UsersInRole", ThisKey="RoleId", OtherKey="RoleId", IsForeignKey=true)]
-		public UsersInRole UsersInRole
-		{
-			get
-			{
-				return this._UsersInRole.Entity;
-			}
-			set
-			{
-				UsersInRole previousValue = this._UsersInRole.Entity;
-				if (((previousValue != value) 
-							|| (this._UsersInRole.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UsersInRole.Entity = null;
-						previousValue.Roles.Remove(this);
-					}
-					this._UsersInRole.Entity = value;
-					if ((value != null))
-					{
-						value.Roles.Add(this);
-						this._RoleId = value.RoleId;
-					}
-					else
-					{
-						this._RoleId = default(int);
-					}
-					this.SendPropertyChanged("UsersInRole");
-				}
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1033,148 +1002,6 @@ namespace SandBox.Db
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsersInRoles")]
-	public partial class UsersInRole : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _UserId;
-		
-		private int _RoleId;
-		
-		private EntitySet<User> _Users;
-		
-		private EntitySet<Role> _Roles;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnUserIdChanging(int value);
-    partial void OnUserIdChanged();
-    partial void OnRoleIdChanging(int value);
-    partial void OnRoleIdChanged();
-    #endregion
-		
-		public UsersInRole()
-		{
-			this._Users = new EntitySet<User>(new Action<User>(this.attach_Users), new Action<User>(this.detach_Users));
-			this._Roles = new EntitySet<Role>(new Action<Role>(this.attach_Roles), new Action<Role>(this.detach_Roles));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int UserId
-		{
-			get
-			{
-				return this._UserId;
-			}
-			set
-			{
-				if ((this._UserId != value))
-				{
-					this.OnUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._UserId = value;
-					this.SendPropertyChanged("UserId");
-					this.OnUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoleId", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int RoleId
-		{
-			get
-			{
-				return this._RoleId;
-			}
-			set
-			{
-				if ((this._RoleId != value))
-				{
-					this.OnRoleIdChanging(value);
-					this.SendPropertyChanging();
-					this._RoleId = value;
-					this.SendPropertyChanged("RoleId");
-					this.OnRoleIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersInRole_User", Storage="_Users", ThisKey="UserId", OtherKey="UserId")]
-		public EntitySet<User> Users
-		{
-			get
-			{
-				return this._Users;
-			}
-			set
-			{
-				this._Users.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersInRole_Role", Storage="_Roles", ThisKey="RoleId", OtherKey="RoleId")]
-		public EntitySet<Role> Roles
-		{
-			get
-			{
-				return this._Roles;
-			}
-			set
-			{
-				this._Roles.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Users(User entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersInRole = this;
-		}
-		
-		private void detach_Users(User entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersInRole = null;
-		}
-		
-		private void attach_Roles(Role entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersInRole = this;
-		}
-		
-		private void detach_Roles(Role entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersInRole = null;
 		}
 	}
 	
@@ -1621,391 +1448,6 @@ namespace SandBox.Db
 						this._Type = default(int);
 					}
 					this.SendPropertyChanged("Vm");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Mlwr")]
-	public partial class Mlwr : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _Name;
-		
-		private string _Path;
-		
-		private int _ResearchCount;
-		
-		private int _Class;
-		
-		private System.DateTime _LoadedDate;
-		
-		private int _LoadedBy;
-		
-		private System.Nullable<int> _IsDeleted;
-		
-		private EntitySet<MlwrClass> _MlwrClasses;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnPathChanging(string value);
-    partial void OnPathChanged();
-    partial void OnResearchCountChanging(int value);
-    partial void OnResearchCountChanged();
-    partial void OnClassChanging(int value);
-    partial void OnClassChanged();
-    partial void OnLoadedDateChanging(System.DateTime value);
-    partial void OnLoadedDateChanged();
-    partial void OnLoadedByChanging(int value);
-    partial void OnLoadedByChanged();
-    partial void OnIsDeletedChanging(System.Nullable<int> value);
-    partial void OnIsDeletedChanged();
-    #endregion
-		
-		public Mlwr()
-		{
-			this._MlwrClasses = new EntitySet<MlwrClass>(new Action<MlwrClass>(this.attach_MlwrClasses), new Action<MlwrClass>(this.detach_MlwrClasses));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Path", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Path
-		{
-			get
-			{
-				return this._Path;
-			}
-			set
-			{
-				if ((this._Path != value))
-				{
-					this.OnPathChanging(value);
-					this.SendPropertyChanging();
-					this._Path = value;
-					this.SendPropertyChanged("Path");
-					this.OnPathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ResearchCount", DbType="Int NOT NULL")]
-		public int ResearchCount
-		{
-			get
-			{
-				return this._ResearchCount;
-			}
-			set
-			{
-				if ((this._ResearchCount != value))
-				{
-					this.OnResearchCountChanging(value);
-					this.SendPropertyChanging();
-					this._ResearchCount = value;
-					this.SendPropertyChanged("ResearchCount");
-					this.OnResearchCountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Class", DbType="Int NOT NULL")]
-		public int Class
-		{
-			get
-			{
-				return this._Class;
-			}
-			set
-			{
-				if ((this._Class != value))
-				{
-					this.OnClassChanging(value);
-					this.SendPropertyChanging();
-					this._Class = value;
-					this.SendPropertyChanged("Class");
-					this.OnClassChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadedDate", DbType="DateTime NOT NULL")]
-		public System.DateTime LoadedDate
-		{
-			get
-			{
-				return this._LoadedDate;
-			}
-			set
-			{
-				if ((this._LoadedDate != value))
-				{
-					this.OnLoadedDateChanging(value);
-					this.SendPropertyChanging();
-					this._LoadedDate = value;
-					this.SendPropertyChanged("LoadedDate");
-					this.OnLoadedDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadedBy", DbType="Int NOT NULL")]
-		public int LoadedBy
-		{
-			get
-			{
-				return this._LoadedBy;
-			}
-			set
-			{
-				if ((this._LoadedBy != value))
-				{
-					this.OnLoadedByChanging(value);
-					this.SendPropertyChanging();
-					this._LoadedBy = value;
-					this.SendPropertyChanged("LoadedBy");
-					this.OnLoadedByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsDeleted", DbType="Int")]
-		public System.Nullable<int> IsDeleted
-		{
-			get
-			{
-				return this._IsDeleted;
-			}
-			set
-			{
-				if ((this._IsDeleted != value))
-				{
-					this.OnIsDeletedChanging(value);
-					this.SendPropertyChanging();
-					this._IsDeleted = value;
-					this.SendPropertyChanged("IsDeleted");
-					this.OnIsDeletedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Mlwr_MlwrClass", Storage="_MlwrClasses", ThisKey="Class", OtherKey="Class")]
-		public EntitySet<MlwrClass> MlwrClasses
-		{
-			get
-			{
-				return this._MlwrClasses;
-			}
-			set
-			{
-				this._MlwrClasses.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_MlwrClasses(MlwrClass entity)
-		{
-			this.SendPropertyChanging();
-			entity.Mlwr = this;
-		}
-		
-		private void detach_MlwrClasses(MlwrClass entity)
-		{
-			this.SendPropertyChanging();
-			entity.Mlwr = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MlwrClass")]
-	public partial class MlwrClass : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Class;
-		
-		private string _Description;
-		
-		private EntityRef<Mlwr> _Mlwr;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnClassChanging(int value);
-    partial void OnClassChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    #endregion
-		
-		public MlwrClass()
-		{
-			this._Mlwr = default(EntityRef<Mlwr>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Class", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Class
-		{
-			get
-			{
-				return this._Class;
-			}
-			set
-			{
-				if ((this._Class != value))
-				{
-					if (this._Mlwr.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnClassChanging(value);
-					this.SendPropertyChanging();
-					this._Class = value;
-					this.SendPropertyChanged("Class");
-					this.OnClassChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Mlwr_MlwrClass", Storage="_Mlwr", ThisKey="Class", OtherKey="Class", IsForeignKey=true)]
-		public Mlwr Mlwr
-		{
-			get
-			{
-				return this._Mlwr.Entity;
-			}
-			set
-			{
-				Mlwr previousValue = this._Mlwr.Entity;
-				if (((previousValue != value) 
-							|| (this._Mlwr.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Mlwr.Entity = null;
-						previousValue.MlwrClasses.Remove(this);
-					}
-					this._Mlwr.Entity = value;
-					if ((value != null))
-					{
-						value.MlwrClasses.Add(this);
-						this._Class = value.Class;
-					}
-					else
-					{
-						this._Class = default(int);
-					}
-					this.SendPropertyChanged("Mlwr");
 				}
 			}
 		}
@@ -9287,6 +8729,1331 @@ namespace SandBox.Db
 				if ((this._procEventsCount != value))
 				{
 					this._procEventsCount = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DirectoriesOfEventsView")]
+	public partial class DirectoriesOfEventsView
+	{
+		
+		private long _Id;
+		
+		private string _module;
+		
+		private string _event;
+		
+		private string _who;
+		
+		private string _dest;
+		
+		private string _signdesc;
+		
+		public DirectoriesOfEventsView()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="BigInt NOT NULL")]
+		public long Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_module", DbType="VarChar(MAX)")]
+		public string module
+		{
+			get
+			{
+				return this._module;
+			}
+			set
+			{
+				if ((this._module != value))
+				{
+					this._module = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="event", Storage="_event", DbType="VarChar(MAX)")]
+		public string @event
+		{
+			get
+			{
+				return this._event;
+			}
+			set
+			{
+				if ((this._event != value))
+				{
+					this._event = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_who", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string who
+		{
+			get
+			{
+				return this._who;
+			}
+			set
+			{
+				if ((this._who != value))
+				{
+					this._who = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dest", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string dest
+		{
+			get
+			{
+				return this._dest;
+			}
+			set
+			{
+				if ((this._dest != value))
+				{
+					this._dest = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_signdesc", DbType="NVarChar(50)")]
+		public string signdesc
+		{
+			get
+			{
+				return this._signdesc;
+			}
+			set
+			{
+				if ((this._signdesc != value))
+				{
+					this._signdesc = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MlwrClass")]
+	public partial class MlwrClass : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _Name;
+		
+		private string _Comment;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnCommentChanging(string value);
+    partial void OnCommentChanged();
+    #endregion
+		
+		public MlwrClass()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="NVarChar(MAX)")]
+		public string Comment
+		{
+			get
+			{
+				return this._Comment;
+			}
+			set
+			{
+				if ((this._Comment != value))
+				{
+					this.OnCommentChanging(value);
+					this.SendPropertyChanging();
+					this._Comment = value;
+					this.SendPropertyChanged("Comment");
+					this.OnCommentChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MlwrClassItems")]
+	public partial class MlwrClassItem : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _MlwrClassId;
+		
+		private int _ModuleId;
+		
+		private int _EventId;
+		
+		private string _Param;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnMlwrClassIdChanging(int value);
+    partial void OnMlwrClassIdChanged();
+    partial void OnModuleIdChanging(int value);
+    partial void OnModuleIdChanged();
+    partial void OnEventIdChanging(int value);
+    partial void OnEventIdChanged();
+    partial void OnParamChanging(string value);
+    partial void OnParamChanged();
+    #endregion
+		
+		public MlwrClassItem()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MlwrClassId", DbType="Int NOT NULL")]
+		public int MlwrClassId
+		{
+			get
+			{
+				return this._MlwrClassId;
+			}
+			set
+			{
+				if ((this._MlwrClassId != value))
+				{
+					this.OnMlwrClassIdChanging(value);
+					this.SendPropertyChanging();
+					this._MlwrClassId = value;
+					this.SendPropertyChanged("MlwrClassId");
+					this.OnMlwrClassIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModuleId", DbType="Int NOT NULL")]
+		public int ModuleId
+		{
+			get
+			{
+				return this._ModuleId;
+			}
+			set
+			{
+				if ((this._ModuleId != value))
+				{
+					this.OnModuleIdChanging(value);
+					this.SendPropertyChanging();
+					this._ModuleId = value;
+					this.SendPropertyChanged("ModuleId");
+					this.OnModuleIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventId", DbType="Int NOT NULL")]
+		public int EventId
+		{
+			get
+			{
+				return this._EventId;
+			}
+			set
+			{
+				if ((this._EventId != value))
+				{
+					this.OnEventIdChanging(value);
+					this.SendPropertyChanging();
+					this._EventId = value;
+					this.SendPropertyChanged("EventId");
+					this.OnEventIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param", DbType="NVarChar(MAX)")]
+		public string Param
+		{
+			get
+			{
+				return this._Param;
+			}
+			set
+			{
+				if ((this._Param != value))
+				{
+					this.OnParamChanging(value);
+					this.SendPropertyChanging();
+					this._Param = value;
+					this.SendPropertyChanged("Param");
+					this.OnParamChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MlwrsTableView")]
+	public partial class MlwrsTableView
+	{
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private string _Path;
+		
+		private int _ResearchCount;
+		
+		private string _Class;
+		
+		private string _Loaded;
+		
+		public MlwrsTableView()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL")]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Path", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Path
+		{
+			get
+			{
+				return this._Path;
+			}
+			set
+			{
+				if ((this._Path != value))
+				{
+					this._Path = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ResearchCount", DbType="Int NOT NULL")]
+		public int ResearchCount
+		{
+			get
+			{
+				return this._ResearchCount;
+			}
+			set
+			{
+				if ((this._ResearchCount != value))
+				{
+					this._ResearchCount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Class", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Class
+		{
+			get
+			{
+				return this._Class;
+			}
+			set
+			{
+				if ((this._Class != value))
+				{
+					this._Class = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Loaded", DbType="NVarChar(105)")]
+		public string Loaded
+		{
+			get
+			{
+				return this._Loaded;
+			}
+			set
+			{
+				if ((this._Loaded != value))
+				{
+					this._Loaded = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MlwrClassView")]
+	public partial class MlwrClassView
+	{
+		
+		private string _Name;
+		
+		private string _Module;
+		
+		private string _Event;
+		
+		private string _Param;
+		
+		private int _id;
+		
+		private System.Nullable<int> _MlwrId;
+		
+		public MlwrClassView()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Module", DbType="VarChar(MAX)")]
+		public string Module
+		{
+			get
+			{
+				return this._Module;
+			}
+			set
+			{
+				if ((this._Module != value))
+				{
+					this._Module = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Event", DbType="VarChar(MAX)")]
+		public string Event
+		{
+			get
+			{
+				return this._Event;
+			}
+			set
+			{
+				if ((this._Event != value))
+				{
+					this._Event = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param", DbType="NVarChar(MAX)")]
+		public string Param
+		{
+			get
+			{
+				return this._Param;
+			}
+			set
+			{
+				if ((this._Param != value))
+				{
+					this._Param = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this._id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MlwrId", DbType="Int")]
+		public System.Nullable<int> MlwrId
+		{
+			get
+			{
+				return this._MlwrId;
+			}
+			set
+			{
+				if ((this._MlwrId != value))
+				{
+					this._MlwrId = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MlwrVPOClassItems")]
+	public partial class MlwrVPOClassItem
+	{
+		
+		private string _Name;
+		
+		private string _Class;
+		
+		private int _ModuleId;
+		
+		private int _EventId;
+		
+		private string _Param;
+		
+		private int _id;
+		
+		private int _MlwrId;
+		
+		public MlwrVPOClassItem()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Class", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Class
+		{
+			get
+			{
+				return this._Class;
+			}
+			set
+			{
+				if ((this._Class != value))
+				{
+					this._Class = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModuleId", DbType="Int NOT NULL")]
+		public int ModuleId
+		{
+			get
+			{
+				return this._ModuleId;
+			}
+			set
+			{
+				if ((this._ModuleId != value))
+				{
+					this._ModuleId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventId", DbType="Int NOT NULL")]
+		public int EventId
+		{
+			get
+			{
+				return this._EventId;
+			}
+			set
+			{
+				if ((this._EventId != value))
+				{
+					this._EventId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param", DbType="NVarChar(MAX)")]
+		public string Param
+		{
+			get
+			{
+				return this._Param;
+			}
+			set
+			{
+				if ((this._Param != value))
+				{
+					this._Param = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this._id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MlwrId", DbType="Int NOT NULL")]
+		public int MlwrId
+		{
+			get
+			{
+				return this._MlwrId;
+			}
+			set
+			{
+				if ((this._MlwrId != value))
+				{
+					this._MlwrId = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Mlwr")]
+	public partial class Mlwr : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private string _Path;
+		
+		private int _ResearchCount;
+		
+		private string _Class;
+		
+		private System.DateTime _LoadedDate;
+		
+		private int _LoadedBy;
+		
+		private System.Nullable<int> _IsDeleted;
+		
+		private string _md5;
+		
+		private string _sha1;
+		
+		private string _sha256;
+		
+		private string _Comment;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnPathChanging(string value);
+    partial void OnPathChanged();
+    partial void OnResearchCountChanging(int value);
+    partial void OnResearchCountChanged();
+    partial void OnClassChanging(string value);
+    partial void OnClassChanged();
+    partial void OnLoadedDateChanging(System.DateTime value);
+    partial void OnLoadedDateChanged();
+    partial void OnLoadedByChanging(int value);
+    partial void OnLoadedByChanged();
+    partial void OnIsDeletedChanging(System.Nullable<int> value);
+    partial void OnIsDeletedChanged();
+    partial void Onmd5Changing(string value);
+    partial void Onmd5Changed();
+    partial void Onsha1Changing(string value);
+    partial void Onsha1Changed();
+    partial void Onsha256Changing(string value);
+    partial void Onsha256Changed();
+    partial void OnCommentChanging(string value);
+    partial void OnCommentChanged();
+    #endregion
+		
+		public Mlwr()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Path", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Path
+		{
+			get
+			{
+				return this._Path;
+			}
+			set
+			{
+				if ((this._Path != value))
+				{
+					this.OnPathChanging(value);
+					this.SendPropertyChanging();
+					this._Path = value;
+					this.SendPropertyChanged("Path");
+					this.OnPathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ResearchCount", DbType="Int NOT NULL")]
+		public int ResearchCount
+		{
+			get
+			{
+				return this._ResearchCount;
+			}
+			set
+			{
+				if ((this._ResearchCount != value))
+				{
+					this.OnResearchCountChanging(value);
+					this.SendPropertyChanging();
+					this._ResearchCount = value;
+					this.SendPropertyChanged("ResearchCount");
+					this.OnResearchCountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Class", DbType="NVarChar(50)")]
+		public string Class
+		{
+			get
+			{
+				return this._Class;
+			}
+			set
+			{
+				if ((this._Class != value))
+				{
+					this.OnClassChanging(value);
+					this.SendPropertyChanging();
+					this._Class = value;
+					this.SendPropertyChanged("Class");
+					this.OnClassChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadedDate", DbType="DateTime NOT NULL")]
+		public System.DateTime LoadedDate
+		{
+			get
+			{
+				return this._LoadedDate;
+			}
+			set
+			{
+				if ((this._LoadedDate != value))
+				{
+					this.OnLoadedDateChanging(value);
+					this.SendPropertyChanging();
+					this._LoadedDate = value;
+					this.SendPropertyChanged("LoadedDate");
+					this.OnLoadedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadedBy", DbType="Int NOT NULL")]
+		public int LoadedBy
+		{
+			get
+			{
+				return this._LoadedBy;
+			}
+			set
+			{
+				if ((this._LoadedBy != value))
+				{
+					this.OnLoadedByChanging(value);
+					this.SendPropertyChanging();
+					this._LoadedBy = value;
+					this.SendPropertyChanged("LoadedBy");
+					this.OnLoadedByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsDeleted", DbType="Int")]
+		public System.Nullable<int> IsDeleted
+		{
+			get
+			{
+				return this._IsDeleted;
+			}
+			set
+			{
+				if ((this._IsDeleted != value))
+				{
+					this.OnIsDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._IsDeleted = value;
+					this.SendPropertyChanged("IsDeleted");
+					this.OnIsDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_md5", DbType="VarChar(100)")]
+		public string md5
+		{
+			get
+			{
+				return this._md5;
+			}
+			set
+			{
+				if ((this._md5 != value))
+				{
+					this.Onmd5Changing(value);
+					this.SendPropertyChanging();
+					this._md5 = value;
+					this.SendPropertyChanged("md5");
+					this.Onmd5Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sha1", DbType="VarChar(100)")]
+		public string sha1
+		{
+			get
+			{
+				return this._sha1;
+			}
+			set
+			{
+				if ((this._sha1 != value))
+				{
+					this.Onsha1Changing(value);
+					this.SendPropertyChanging();
+					this._sha1 = value;
+					this.SendPropertyChanged("sha1");
+					this.Onsha1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sha256", DbType="VarChar(100)")]
+		public string sha256
+		{
+			get
+			{
+				return this._sha256;
+			}
+			set
+			{
+				if ((this._sha256 != value))
+				{
+					this.Onsha256Changing(value);
+					this.SendPropertyChanging();
+					this._sha256 = value;
+					this.SendPropertyChanged("sha256");
+					this.Onsha256Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="NVarChar(MAX)")]
+		public string Comment
+		{
+			get
+			{
+				return this._Comment;
+			}
+			set
+			{
+				if ((this._Comment != value))
+				{
+					this.OnCommentChanging(value);
+					this.SendPropertyChanging();
+					this._Comment = value;
+					this.SendPropertyChanged("Comment");
+					this.OnCommentChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsersInRoles")]
+	public partial class UsersInRole : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _UserId;
+		
+		private int _RoleId;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnUserIdChanging(int value);
+    partial void OnUserIdChanged();
+    partial void OnRoleIdChanging(int value);
+    partial void OnRoleIdChanged();
+    #endregion
+		
+		public UsersInRole()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int NOT NULL")]
+		public int UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					this.OnUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._UserId = value;
+					this.SendPropertyChanged("UserId");
+					this.OnUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoleId", DbType="Int NOT NULL")]
+		public int RoleId
+		{
+			get
+			{
+				return this._RoleId;
+			}
+			set
+			{
+				if ((this._RoleId != value))
+				{
+					this.OnRoleIdChanging(value);
+					this.SendPropertyChanging();
+					this._RoleId = value;
+					this.SendPropertyChanged("RoleId");
+					this.OnRoleIdChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsersTableView")]
+	public partial class UsersTableView
+	{
+		
+		private int _UserId;
+		
+		private string _UserName;
+		
+		private string _Login;
+		
+		private System.DateTime _CreatedDate;
+		
+		private System.Nullable<System.DateTime> _LastLoginDate;
+		
+		private string _LastLoginIp;
+		
+		private string _Name;
+		
+		public UsersTableView()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					this._UserId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this._UserName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Login", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Login
+		{
+			get
+			{
+				return this._Login;
+			}
+			set
+			{
+				if ((this._Login != value))
+				{
+					this._Login = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreatedDate
+		{
+			get
+			{
+				return this._CreatedDate;
+			}
+			set
+			{
+				if ((this._CreatedDate != value))
+				{
+					this._CreatedDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastLoginDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> LastLoginDate
+		{
+			get
+			{
+				return this._LastLoginDate;
+			}
+			set
+			{
+				if ((this._LastLoginDate != value))
+				{
+					this._LastLoginDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastLoginIp", DbType="NVarChar(50)")]
+		public string LastLoginIp
+		{
+			get
+			{
+				return this._LastLoginIp;
+			}
+			set
+			{
+				if ((this._LastLoginIp != value))
+				{
+					this._LastLoginIp = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
 				}
 			}
 		}

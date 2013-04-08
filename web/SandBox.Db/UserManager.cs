@@ -8,7 +8,7 @@ using System.Web;
 
 namespace SandBox.Db
 {
-    public class UserManager : DbManager 
+    public class UserManager : DbManager
     {
         //**********************************************************
         //* Добавление новой роли
@@ -71,7 +71,12 @@ namespace SandBox.Db
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
                 User user = db.Users.FirstOrDefault(x => x.Login == username);
-                return user == null ? null : user.UsersInRole.Roles.Select(x => x.Name).ToList();
+                if (user == null) return null;
+                else return (from r in db.Roles
+                             join ur in db.UsersInRoles
+                               on r.RoleId equals ur.RoleId
+                             where ur.UserId == user.UserId
+                             select r.Name).ToList();
             }
         }
 
@@ -83,7 +88,13 @@ namespace SandBox.Db
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
                 User user = db.Users.FirstOrDefault(x => x.UserId == userid);
-                return user == null ? null : user.UsersInRole.Roles.Select(x => x.Name).ToList();
+                if (user == null) return null;
+                else return (from r in db.Roles
+                             join ur in db.UsersInRoles
+                               on r.RoleId equals ur.RoleId
+                             where ur.UserId == user.UserId
+                             select r.Name).ToList();
+//                return user == null ? null : user.UsersInRole.Roles.Select(x => x.Name).ToList();
             }
         }
 
@@ -230,13 +241,8 @@ namespace SandBox.Db
         {
             var db = new SandBoxDataContext();
 
-            var users = from u in db.Users
-                        join ur in db.UsersInRoles
-                          on u.UserId equals ur.UserId
-                        join r in db.Roles
-                          on ur.RoleId equals r.RoleId
-                        orderby u.UserId
-                        select new { u.UserId, u.UserName, u.Login, u.CreatedDate, u.LastLoginDate, r.Name };
+            var users = from u in db.UsersTableViews
+                        select u;
             return users;
         }
 
@@ -290,8 +296,10 @@ namespace SandBox.Db
             {
                 var user = db.Users.FirstOrDefault(x => x.UserId == id);
                 if (user == null) return;
-
-                db.UsersInRoles.DeleteOnSubmit(user.UsersInRole);
+                var userinroles = from ur in db.UsersInRoles
+                                     where ur.UserId == user.UserId
+                                     select ur;
+                foreach (UsersInRole userinrole in userinroles) db.UsersInRoles.DeleteOnSubmit(userinrole);
                 db.SubmitChanges();
 
                 db.Users.DeleteOnSubmit(user);
@@ -309,7 +317,10 @@ namespace SandBox.Db
                 var user = db.Users.FirstOrDefault(x => x.Login == username);
                 if (user == null) return;
 
-                db.UsersInRoles.DeleteOnSubmit(user.UsersInRole);
+                var userinroles = from ur in db.UsersInRoles
+                                  where ur.UserId == user.UserId
+                                  select ur;
+                foreach (UsersInRole userinrole in userinroles) db.UsersInRoles.DeleteOnSubmit(userinrole);
                 db.SubmitChanges();
 
                 db.Users.DeleteOnSubmit(user);
@@ -326,7 +337,7 @@ namespace SandBox.Db
             {
                 var users = UserManager.GetUsers();
                 if (Enumerable.Any(users, us => us.Login == login)) return null;
-                
+
                 User user = new User
                 {
                     Login = login,
@@ -334,7 +345,7 @@ namespace SandBox.Db
                     Password = password,
                     PasswordSalt = CreateSalt(),
                     CreatedDate = DateTime.Now,
-//                    LastLoginDate = DateTime.Now
+                    //                    LastLoginDate = DateTime.Now
                 };
                 user.Password = CreatePasswordHash(password, user.PasswordSalt);
                 db.Users.InsertOnSubmit(user);
@@ -343,8 +354,41 @@ namespace SandBox.Db
                 var usr = db.Users.FirstOrDefault(x => x.Login == login);
                 if (usr == null) return null;
 
-                UsersInRole userInRole = new UsersInRole {UserId = usr.UserId, RoleId = roleId};
+                UsersInRole userInRole = new UsersInRole { UserId = usr.UserId, RoleId = roleId };
                 db.UsersInRoles.InsertOnSubmit(userInRole);
+                db.SubmitChanges();
+
+                return GetUser(login);
+            }
+        }
+
+        public static MembershipUser CreateUser(String username, String login, String password, Int32 roleId, Int32 roleId2)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                var users = UserManager.GetUsers();
+                if (Enumerable.Any(users, us => us.Login == login)) return null;
+
+                User user = new User
+                {
+                    Login = login,
+                    UserName = username,
+                    Password = password,
+                    PasswordSalt = CreateSalt(),
+                    CreatedDate = DateTime.Now,
+                    //                    LastLoginDate = DateTime.Now
+                };
+                user.Password = CreatePasswordHash(password, user.PasswordSalt);
+                db.Users.InsertOnSubmit(user);
+                db.SubmitChanges();
+
+                var usr = db.Users.FirstOrDefault(x => x.Login == login);
+                if (usr == null) return null;
+
+                UsersInRole userInRole = new UsersInRole { UserId = usr.UserId, RoleId = roleId };
+                db.UsersInRoles.InsertOnSubmit(userInRole);
+                UsersInRole userInRole2 = new UsersInRole { UserId = usr.UserId, RoleId = roleId2 };
+                db.UsersInRoles.InsertOnSubmit(userInRole2);
                 db.SubmitChanges();
 
                 return GetUser(login);
@@ -362,15 +406,42 @@ namespace SandBox.Db
                 if (user == null) return;
                 user.Login = login;
                 user.UserName = username;
-                if (password!=String.Empty)
+                if (password != String.Empty)
                 {
                     user.PasswordSalt = CreateSalt();
                     user.Password = CreatePasswordHash(password, user.PasswordSalt);
                 }
-                UsersInRole role = db.UsersInRoles.FirstOrDefault(x => x.UserId == user.UserId);
-                db.UsersInRoles.DeleteOnSubmit(user.UsersInRole);
+                var userinroles = from ur in db.UsersInRoles
+                                  where ur.UserId == user.UserId
+                                  select ur;
+                foreach (UsersInRole userinrole in userinroles) db.UsersInRoles.DeleteOnSubmit(userinrole);
                 UsersInRole userInRole = new UsersInRole { UserId = user.UserId, RoleId = roleId };
                 db.UsersInRoles.InsertOnSubmit(userInRole);
+                db.SubmitChanges();
+            }
+        }
+
+        public static void EditUser(Int32 userid, String username, String login, String password, Int32 roleId, Int32 roleId2)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                User user = db.Users.FirstOrDefault(x => x.UserId == userid);
+                if (user == null) return;
+                user.Login = login;
+                user.UserName = username;
+                if (password != String.Empty)
+                {
+                    user.PasswordSalt = CreateSalt();
+                    user.Password = CreatePasswordHash(password, user.PasswordSalt);
+                }
+                var userinroles = from ur in db.UsersInRoles
+                                  where ur.UserId == user.UserId
+                                  select ur;
+                foreach (UsersInRole userinrole in userinroles) db.UsersInRoles.DeleteOnSubmit(userinrole);
+                UsersInRole userInRole = new UsersInRole { UserId = user.UserId, RoleId = roleId };
+                db.UsersInRoles.InsertOnSubmit(userInRole);
+                UsersInRole userInRole2 = new UsersInRole { UserId = user.UserId, RoleId = roleId2 };
+                db.UsersInRoles.InsertOnSubmit(userInRole2);
                 db.SubmitChanges();
             }
         }

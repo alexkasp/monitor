@@ -135,6 +135,12 @@ namespace SandBox.Db
                    select m.Description).Distinct();
         }
 
+        public static string GetModuleById(int moduleId)
+        {
+            var db = new SandBoxDataContext();
+            return db.EventsModulesDescriptions.FirstOrDefault<EventsModulesDescriptions>(x => x.EventModuleID == moduleId).Description;
+        }
+
         //public static IQueryable<string> GetEventsDescrByModule(string moduleDesctiption)
         //{
         //    var db = new SandBoxDataContext();
@@ -164,11 +170,50 @@ namespace SandBox.Db
                    select ed;
         }
 
+        public static List<string> GetEventsDescrByModuleList(string moduleDesctiption)
+        {
+            var db = new SandBoxDataContext();
+            return (from ed in db.EventsEventDescriptions
+                   join mve in db.ModulesVsEvents on ed.EventID equals mve.Event
+                   join md in db.EventsModulesDescriptions on mve.Module equals md.EventModuleID
+                   where md.Description == moduleDesctiption
+                   select ed.EventsEventDescription).ToList();
+        }
+
+        public static IQueryable GetEventsDescrByModuleId(int moduleId)
+        {
+            var db = new SandBoxDataContext();
+            return from ed in db.EventsEventDescriptions
+                   join mve in db.ModulesVsEvents on ed.EventID equals mve.Event
+                   where mve.Module == moduleId
+                   select ed;
+        }
+
+        public static int GetModuleIdByEventId(int eventid)
+        {
+            var db = new SandBoxDataContext();
+            var dofe = db.ModulesVsEvents.FirstOrDefault<ModulesVsEvents>(x => x.Event == eventid);
+            return dofe == null ? 0 : dofe.Module;
+        }
+
         public static IQueryable GetRowDirectoriesOfEvents()
         {
             var db = new SandBoxDataContext();
             return from dOfE in db.DirectoryOfEvents
                    select new { Id = dOfE.Id, eventt = ResearchManager.GetEvtEvtDescription(dOfE.@event), module = ResearchManager.GetEvtModuleDescription(dOfE.module), significance =GetSignifStringValue(dOfE.significance), dest = dOfE.dest, Who = dOfE.who };
+        }
+
+        public static IQueryable GetDirectoriesOfEvents()
+        {
+            var db = new SandBoxDataContext();
+            return from dOfE in db.DirectoriesOfEventsViews
+                   select dOfE;
+        }
+
+        public static DirectoryOfEvents GetDirectorysOfEvent(int id)
+        {
+            var db = new SandBoxDataContext();
+            return db.DirectoryOfEvents.FirstOrDefault<DirectoryOfEvents>(x => x.Id == id);
         }
 
         public static void DeleteDirectorysOfEvent(long id)
@@ -185,7 +230,7 @@ namespace SandBox.Db
             {
                 case 2:
                     {
-                        return "Критически важное";
+                        return "Критическое";
                     }
                 case 1:
                     {
@@ -212,6 +257,21 @@ namespace SandBox.Db
             var db = new SandBoxDataContext();
             db.StopEvents.InsertOnSubmit(se);
             db.SubmitChanges();
+        }
+
+        public static void UpdateRowDirectoriesOfEvents(int dofId, int segn, int m, int evt, string d, string wh)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                DirectoryOfEvents dofe = db.DirectoryOfEvents.FirstOrDefault(x => x.Id == dofId);
+                if (dofe == null) return;
+                dofe.module = m;
+                dofe.@event = evt;
+                dofe.who = wh;
+                dofe.dest = d;
+                dofe.significance = segn;
+                db.SubmitChanges();
+            }
         }
 
         public static void InsertRowDirectoriesOfEvents(int segn, int m, int evt, string d, string wh)

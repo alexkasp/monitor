@@ -3,6 +3,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SandBox.Db;
 using System.Collections.Generic;
+using SandBox.WebUi.Base;
 
 namespace SandBox.WebUi
 {
@@ -29,7 +30,8 @@ namespace SandBox.WebUi
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-/*            if (!Page.User.Identity.IsAuthenticated)
+
+            /*            if (!Page.User.Identity.IsAuthenticated)
             {
                 SetMenu(MENU_EMPTY);
             }
@@ -57,6 +59,7 @@ namespace SandBox.WebUi
                     item.Selected = true;
                 }
             }
+            GetMenuItems();
             LoginName loginName = HeadLoginView.FindControl("HeadLoginName") as LoginName;
 
             if (loginName != null)
@@ -139,6 +142,16 @@ namespace SandBox.WebUi
             Lcpu1.Text = GetCpuInfoFromString(stat.cpu1);
             Lcpu2.Text = GetCpuInfoFromString(stat.cpu2);
             Lcpu3.Text = GetCpuInfoFromString(stat.cpu3);
+        }
+
+        protected void GetMenuItems()
+        {
+            Menu1.Items.Clear();
+            if (Page.User.IsInRole("Administrator") || Page.User.IsInRole("User")) Menu1.Items.Add(new MenuItem("Исследования", "Исследования", String.Empty, "/Pages/Research/Current.aspx"));
+            if (Page.User.IsInRole("Administrator") || Page.User.IsInRole("User")) Menu1.Items.Add(new MenuItem("Ресурсы", "Ресурсы", String.Empty, "/Pages/Information/Resources.aspx"));
+            if (Page.User.IsInRole("Administrator") || Page.User.IsInRole("User") || Page.User.IsInRole("FileManager")) Menu1.Items.Add(new MenuItem("ВПО", "ВПО", String.Empty, "/Pages/Malware/Malwares.aspx"));
+            if (Page.User.IsInRole("Administrator") || Page.User.IsInRole("User")) Menu1.Items.Add(new MenuItem("Настройки", "Настройки", String.Empty, "/Pages/Settings/Main.aspx"));
+            if (Page.User.IsInRole("Administrator") || Page.User.IsInRole("User")) Menu1.Items.Add(new MenuItem("Поиск", "Поиск", String.Empty, "/Pages/Research/Search.aspx"));
         }
 
         protected void Timer1_Tick(object sender, EventArgs e)
