@@ -22,8 +22,7 @@
                         </dx:ASPxButton>
                     </td>
                  <td width="170px">
-                        <dx:ASPxButton ID="btnAddHardware" AutoPostBack="False" runat="server" 
-                            Text="Добавить ЛИР"  Visible="False" CssClass="button" 
+                        <dx:ASPxButton ID="btnAddHardware" AutoPostBack="False" runat="server" Text="Добавить ЛИР"  CssClass="button" 
                             EnableDefaultAppearance="False" EnableTheming="False" Width="150px">
                             <Border BorderColor="Gainsboro" BorderStyle="Solid" BorderWidth="1px" />
                             <PressedStyle CssClass="buttonHover">
@@ -38,8 +37,7 @@
                         </dx:ASPxButton>
                     </td>
                     <td>
-                        <dx:ASPxButton ID="btnAddLIR" AutoPostBack="False" runat="server" 
-                            Text="Добавить эталон ВЛИР"  Visible="False" CssClass="button" 
+                        <dx:ASPxButton ID="btnAddLIR" AutoPostBack="False" runat="server" Text="Добавить эталон ВЛИР"  CssClass="button" 
                             EnableDefaultAppearance="False" EnableTheming="False" Width="225px">
                             <Border BorderColor="Gainsboro" BorderStyle="Solid" BorderWidth="1px" />
                             <PressedStyle CssClass="buttonHover">

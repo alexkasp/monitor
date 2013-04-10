@@ -13,6 +13,7 @@ using DevExpress.Web.ASPxGridView;
 using System.Collections.Generic;
 using SandBox.WebUi;
 using System.Collections;
+using SandBox.WebUi.Pages.Information;
 
 namespace SandBox.WebUi.Pages.Research
 {
@@ -240,23 +241,24 @@ namespace SandBox.WebUi.Pages.Research
                 ResearchManager.UpdateResearchState(researchId, ResearchState.COMPLETING);
 
                 //Останаливаем виртуалку
-                String machineName = VmManager.GetVmName(research.VmId);
-                Packet packet = new Packet { Type = PacketType.CMD_VM_STOP, Direction = PacketDirection.REQUEST };
-                packet.AddParameter(Encoding.UTF8.GetBytes(machineName));
-                SendPacket(packet.ToByteArray());
+                Resources.StopVm(research.VmId);
+                //String machineName = VmManager.GetVmName(research.VmId);
+                //Packet packet = new Packet { Type = PacketType.CMD_VM_STOP, Direction = PacketDirection.REQUEST };
+                //packet.AddParameter(Encoding.UTF8.GetBytes(machineName));
+                //SendPacket(packet.ToByteArray());
 
                 //Добавил---
                 ResearchManager.UpdateResearchStopTime(research.Id);
                 ResearchManager.UpdateResearchState(research.Id, ResearchState.COMPLETED);
                 //----------
-                int res1 = ResearchManager.UpdateEnents(researchId);
+                int res1 = ResearchManager.UpdateEvents(researchId);
             }
             else
             {
                 MLogger.LogTo(Level.TRACE, false, "Unsuccessful attempt to stop research '" + ResearchManager.GetResearch(researchId).ResearchName + "' by user '" + UserManager.GetUser(_userId).UserName + "' , research already stopped");
             }
             //Приведение таблтцы [dbo].[events] в актуальное состояние
-            int res = ResearchManager.UpdateEnents(researchId);
+            int res = ResearchManager.UpdateEvents(researchId);
 
         }
 
@@ -549,12 +551,13 @@ namespace SandBox.WebUi.Pages.Research
                                 case 1: ProcessEvs[0] += (int)rr.Count; break;
                                 default: ProcessEvs[1] += (int)rr.Count; break;
                             } break;
-                        case "TDIMON":
-                        case "NDISMON":
+                        case "Сеть":
+//                        case "TDIMON":
+//                        case "NDISMON":
                             switch (rr.Sign)
                             {
                                 case 1: NetEvs[0] += (int)rr.Count; break;
-                                default: NetEvs[1] += (int)rr.Count; break;
+                                case 2: NetEvs[1] += (int)rr.Count; break;
                             } break;
                     }
                 }

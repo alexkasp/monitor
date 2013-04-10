@@ -40,31 +40,35 @@ namespace SandBox.WebUi.Pages.Research
             ProcTreeList.KeyFieldName = "Pid1";
             ProcTreeList.ParentFieldName = "Pid2";
             ProcTreeList.DataBind();
+            ProcVPOTreeList.DataSource = TreeViewBuilder.GetResearchProcesses(researchId);
+            ProcVPOTreeList.KeyFieldName = "pid";
+            ProcVPOTreeList.ParentFieldName = "parentpid";
+            ProcVPOTreeList.DataBind();
         }
-        protected void ProcTree_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
-        {
-            Procs rowView = e.NodeObject as Procs;
-            if (rowView == null) return;
-            e.NodeKeyValue = rowView.Pid1;
-            e.SetNodeValue("Name", rowView.Name);
-            e.SetNodeValue("PID", rowView.Pid1);
-            e.SetNodeValue("ThrCount", rowView.Count);
-        }
+        //protected void ProcTree_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
+        //{
+        //    Procs rowView = e.NodeObject as Procs;
+        //    if (rowView == null) return;
+        //    e.NodeKeyValue = rowView.Pid1;
+        //    e.SetNodeValue("Name", rowView.Name);
+        //    e.SetNodeValue("PID", rowView.Pid1);
+        //    e.SetNodeValue("ThrCount", rowView.Count);
+        //}
 
-        protected void ProcTree_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
-        {
-            List<Procs> children = null;
-            Procs parent = e.NodeObject as Procs;
-            if (parent == null)
-            {
-                children = TreeViewBuilder.GetProcTableViewByParentId((int)Session["rsch"], 0);
-                if (children.Count == 0) ProcTreeList.ClearNodes();
-            }
-            else
-            {
-                children = TreeViewBuilder.GetProcTableViewByParentId((int)Session["rsch"], (int)parent.Pid1);
-            }
-            e.Children = children;
-        }
+        //protected void ProcTree_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
+        //{
+        //    List<Procs> children = null;
+        //    Procs parent = e.NodeObject as Procs;
+        //    if (parent == null)
+        //    {
+        //        children = TreeViewBuilder.GetProcTableViewByParentId((int)Session["rsch"], 0);
+        //        if (children.Count == 0) ProcTreeList.ClearNodes();
+        //    }
+        //    else
+        //    {
+        //        children = TreeViewBuilder.GetProcTableViewByParentId((int)Session["rsch"], (int)parent.Pid1);
+        //    }
+        //    e.Children = children;
+        //}
     }
 }

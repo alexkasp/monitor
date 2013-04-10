@@ -25,9 +25,7 @@ namespace SandBox.WebUi.Pages.Information
                 gridViewMachines.KeyFieldName = "Id";
                 gridViewMachines.Visible = false;
                 labelNoItems.Text = "";
-                btnAddLIR.Visible = false;
 
-                UpdateTableView();
                 DbManager.OnTableUpdated += VmManager_OnTableUpdated;
 
                 //foreach (var machine in VmManager.GetVms())
@@ -122,12 +120,20 @@ namespace SandBox.WebUi.Pages.Information
 
             if (vm != null)
             {
-                Packet packet = new Packet { Type = PacketType.CMD_VM_STOP, Direction = PacketDirection.REQUEST };
-                packet.AddParameter(Encoding.UTF8.GetBytes(vm.Name));
-                SendPacket(packet.ToByteArray());
-
-                if (vm.EnvType == 0)
-                    TryDeleteVm(vm.Id);
+                if (vm.EnvType == (int)VmManager.LIRType.LIR)
+                {
+                    Packet packet = new Packet { Type = PacketType.CMD_VM_STOP_LIR, Direction = PacketDirection.REQUEST };
+                    byte[] envIdBytes = BitConverter.GetBytes(vm.EnvId);
+                    packet.AddParameter(new[] { envIdBytes[0] });
+                    SendPacket(packet.ToByteArray());
+                }
+                else
+                {
+                    Packet packet = new Packet { Type = PacketType.CMD_VM_STOP, Direction = PacketDirection.REQUEST };
+                    packet.AddParameter(Encoding.UTF8.GetBytes(vm.Name));
+                    SendPacket(packet.ToByteArray());
+                    if (vm.EnvType == 0) TryDeleteVm(vm.Id);
+                }
             }
 
         }
@@ -158,19 +164,6 @@ namespace SandBox.WebUi.Pages.Information
 //                        btnStatus.Image.Url = "../../Content/Images/Icons/stop.png";
 //                        btnStatus.Image.ToolTip = "Остановить";
                         e.Row.BackColor = Color.FromArgb(0xDB, 0xFA, 0xA5);
-                        if (linkSession != null && linkMlwr != null)
-                        {
-                            var rsch = ResearchManager.GetRunnigResearchByVmID(vmId);
-                            if (rsch != null)
-                            {
-                                linkMlwr.NavigateUrl += "?mlwrID=" + rsch.MlwrId;
-                                linkSession.NavigateUrl += "?researchId=" + rsch.Id;
-                                linkSession.Text = rsch.ResearchName;
-                                linkMlwr.Text = MlwrManager.GetMlwr(rsch.MlwrId).Name;
-                                linkSession.Visible = true;
-                                linkMlwr.Visible = true;
-                            }
-                        }
                         break;
                     }
                 case (Int32)VmManager.State.STARTING:
@@ -183,7 +176,19 @@ namespace SandBox.WebUi.Pages.Information
                 case (Int32)VmManager.State.RESEARCHING:
                     {
                         e.Row.BackColor = Color.FromArgb(100, 150, 200);
-                        break;
+                        if (linkSession != null && linkMlwr != null)
+                        {
+                            var rsch = ResearchManager.GetRunnigResearchByVmID(vmId);
+                            if (rsch != null)
+                            {
+                                linkMlwr.NavigateUrl += "?mlwrID=" + rsch.MlwrId;
+                                linkSession.NavigateUrl += "?researchId=" + rsch.Id;
+                                linkSession.Text = rsch.ResearchName;
+                                linkMlwr.Text = MlwrManager.GetMlwr(rsch.MlwrId).Name;
+                                linkSession.Visible = true;
+                                linkMlwr.Visible = true;
+                            }
+                        } break;
                     }
                 case (Int32)VmManager.State.STOPPED:
                     {

@@ -6,6 +6,7 @@ using SandBox.Db;
 using SandBox.Log;
 using System.Text;
 using System.Linq;
+using SandBox.TestConnection.Properties;
 
 
 namespace SandBox.TestConnection
@@ -132,23 +133,24 @@ namespace SandBox.TestConnection
                 ResearchManager.UpdateResearchState(researchId, ResearchState.COMPLETING);
 
                 //Останаливаем виртуалку
-                String machineName = VmManager.GetVmName(research.VmId);
-                Packet packet = new Packet { Type = PacketType.CMD_VM_STOP, Direction = PacketDirection.REQUEST };
-                packet.AddParameter(Encoding.UTF8.GetBytes(machineName));
-                SendPacket(packet.ToByteArray());
+                Resources.StopVm(research.VmId);
+                //String machineName = VmManager.GetVmName(research.VmId);
+                //Packet packet = new Packet { Type = PacketType.CMD_VM_STOP, Direction = PacketDirection.REQUEST };
+                //packet.AddParameter(Encoding.UTF8.GetBytes(machineName));
+                //SendPacket(packet.ToByteArray());
 
                 //Добавил---
                 ResearchManager.UpdateResearchStopTime(research.Id);
                 ResearchManager.UpdateResearchState(research.Id, ResearchState.COMPLETED);
                 //----------
-                int res1 = ResearchManager.UpdateEnents(researchId);
+                int res1 = ResearchManager.UpdateEvents(researchId);
             }
             else
             {
                 MLogger.LogTo(Level.TRACE, false, "Unsuccessful attempt to stop research '" /*+ ResearchManager.GetResearch(researchId).ResearchName + "' by user '" + UserManager.GetUser(_userId).UserName + "' , research already stopped"*/);
             }
             //Приведение таблтцы [dbo].[events] в актуальное состояние
-            int res = ResearchManager.UpdateEnents(researchId);
+            int res = ResearchManager.UpdateEvents(researchId);
 
         }
 

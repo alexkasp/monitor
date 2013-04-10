@@ -328,40 +328,121 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.Web.ASPxEditors.ASPxButton ExportCSVBtn;
         
         /// <summary>
-        /// linkGetFileList control.
+        /// FileTreeUpdatePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkGetFileList;
+        protected global::System.Web.UI.UpdatePanel FileTreeUpdatePanel;
         
         /// <summary>
-        /// linkGetRegistryList control.
+        /// FileTreeList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkGetRegistryList;
+        protected global::DevExpress.Web.ASPxTreeList.ASPxTreeList FileTreeList;
         
         /// <summary>
-        /// ASPxHyperLink5 control.
+        /// FileTreeUpdateProgress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink ASPxHyperLink5;
+        protected global::System.Web.UI.UpdateProgress FileTreeUpdateProgress;
         
         /// <summary>
-        /// linkGetProcessList control.
+        /// RegTreeUpdatePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink linkGetProcessList;
+        protected global::System.Web.UI.UpdatePanel RegTreeUpdatePanel;
+        
+        /// <summary>
+        /// RegTreeList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxTreeList.ASPxTreeList RegTreeList;
+        
+        /// <summary>
+        /// RegTreeUpdateProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress RegTreeUpdateProgress;
+        
+        /// <summary>
+        /// ProcVPOTreeUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel ProcVPOTreeUpdatePanel;
+        
+        /// <summary>
+        /// ProcVPOTreeList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxTreeList.ASPxTreeList ProcVPOTreeList;
+        
+        /// <summary>
+        /// ProcVPOTreeUpdateProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress ProcVPOTreeUpdateProgress;
+        
+        /// <summary>
+        /// ProcTreeUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel ProcTreeUpdatePanel;
+        
+        /// <summary>
+        /// ProcTreeList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxTreeList.ASPxTreeList ProcTreeList;
+        
+        /// <summary>
+        /// ProcTreeUpdateProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress ProcTreeUpdateProgress;
+        
+        /// <summary>
+        /// NetUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel NetUpdatePanel;
         
         /// <summary>
         /// linkGetTraffic control.
@@ -382,13 +463,13 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.Web.ASPxEditors.ASPxButton ASPxButton1;
         
         /// <summary>
-        /// HLPorts control.
+        /// gvPorts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink HLPorts;
+        protected global::DevExpress.Web.ASPxGridView.ASPxGridView gvPorts;
         
         /// <summary>
         /// dsEventsDesc control.

@@ -11,6 +11,7 @@
         function OnStopButtonPress(values) {
             if (values.length == 0) return;
             for (var i = 0; i < values.length; i++) {
+                alert(values[i]);
                 PageMethods.StopResearch(values[i]);
             }
         }

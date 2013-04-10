@@ -432,7 +432,7 @@ namespace SandBox.Db
         /// </summary>
         /// <param name="rschId">идентификатор исследования</param>
         /// <returns>идентификатор среды, котрый был заменен</returns>
-    public static int UpdateEnents(int rschId)
+    public static int UpdateEvents(int rschId)
         {
             int envId = -1;
             using (SandBoxDataContext db = new SandBoxDataContext())

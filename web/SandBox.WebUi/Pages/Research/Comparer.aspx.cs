@@ -311,13 +311,13 @@ namespace SandBox.WebUi.Pages.Research
             wc.Series.Add(rseries);
             wc.Series.Add(pseries);
             wc.Series.Add(sseries);
-            ((SideBySideRangeBarSeriesView)fseries.View).Color = Color.FromArgb(74, 134, 153);
+            ((SideBySideRangeBarSeriesView)fseries.View).Color = Color.FromArgb(75, 89, 97);
             ((SideBySideRangeBarSeriesView)fseries.View).FillStyle.FillMode = FillMode.Solid;
-            ((SideBySideRangeBarSeriesView)rseries.View).Color = Color.FromArgb(43, 83, 96);
+            ((SideBySideRangeBarSeriesView)rseries.View).Color = Color.FromArgb(37, 119, 147);
             ((SideBySideRangeBarSeriesView)rseries.View).FillStyle.FillMode = FillMode.Solid;
-            ((SideBySideRangeBarSeriesView)pseries.View).Color = Color.FromArgb(163, 193, 204);
+            ((SideBySideRangeBarSeriesView)pseries.View).Color = Color.FromArgb(242, 148, 65);
             ((SideBySideRangeBarSeriesView)pseries.View).FillStyle.FillMode = FillMode.Solid;
-            ((SideBySideRangeBarSeriesView)sseries.View).Color = Color.FromArgb(18, 50, 59);
+            ((SideBySideRangeBarSeriesView)sseries.View).Color = Color.FromArgb(206, 72, 34);
             ((SideBySideRangeBarSeriesView)sseries.View).FillStyle.FillMode = FillMode.Solid;
             if (fDS.Count > 0) fseries.DataSource = fDS;
             fseries.ArgumentScaleType = ScaleType.Numerical;

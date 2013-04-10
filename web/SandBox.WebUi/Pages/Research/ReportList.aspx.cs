@@ -10,6 +10,9 @@ using DevExpress.Web.ASPxGridView;
 using DevExpress.XtraCharts;
 using System.Collections;
 using System.Web.Security;
+using System.Web.UI;
+using DevExpress.Web.ASPxTreeList;
+using System.Reflection;
 
 namespace SandBox.WebUi.Pages.Research
 {
@@ -68,6 +71,13 @@ namespace SandBox.WebUi.Pages.Research
             {
                 Response.Redirect("~/Error");
             }
+            LHeader.Text = String.Format("Исследование (№{0}): {1}", Rs.Id, Rs.ResearchName);
+            if (!User.IsInRole("Administrator")) 
+                if (Rs.UserId!=UserId) {
+                    string scriptstring = "alert(\"У Вас нет доступа к данному исследованию.\");document.location.href = '/Pages/Research/Current.aspx';";
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", scriptstring, true);
+                    return;
+                }
             Mlwr mlwrrec = ResearchManager.GetMlwrByRschId(researchId);
             if (mlwrrec != null) Mlwr.Text = mlwrrec.Name + " (" + mlwrrec.Path + ")";
             LOS.Text = ResearchManager.GetRschOS(researchId);
@@ -92,11 +102,10 @@ namespace SandBox.WebUi.Pages.Research
             {
                 LStatus.Text = "Готово к запуску";
             }
-            LHeader.Text = String.Format("Исследование (№{0}): {1}", Rs.Id, Rs.ResearchName);
-            HLPorts.NavigateUrl += ("?research=" + researchId);
-            linkGetRegistryList.NavigateUrl += ("?researchId=" + researchId);
-            linkGetFileList.NavigateUrl += ("?researchId=" + researchId);
-            linkGetProcessList.NavigateUrl += ("?researchId=" + researchId);
+//            HLPorts.NavigateUrl += ("?research=" + researchId);
+//            linkGetRegistryList.NavigateUrl += ("?researchId=" + researchId);
+//            linkGetFileList.NavigateUrl += ("?researchId=" + researchId);
+//            linkGetProcessList.NavigateUrl += ("?researchId=" + researchId);
             Session["rsch"] = researchId;
             DEventsCount.Clear();
 
@@ -107,6 +116,16 @@ namespace SandBox.WebUi.Pages.Research
 //            var newPageSize = (Int32)CBPagingSize.SelectedItem.Value;
 //            gridViewReports.SettingsPager.PageSize = newPageSize;
             gridViewReports.DataBind();
+            ProcTreeList.DataSource = TreeViewBuilder.GetProcsTableView(researchId);
+            ProcTreeList.KeyFieldName = "Pid1";
+            ProcTreeList.ParentFieldName = "Pid2";
+            ProcTreeList.DataBind();
+            ProcVPOTreeList.DataSource = TreeViewBuilder.GetResearchProcesses(researchId);
+            ProcVPOTreeList.KeyFieldName = "pid";
+            ProcVPOTreeList.ParentFieldName = "parentpid";
+            ProcVPOTreeList.DataBind();
+            gvPorts.DataSource = ResearchManager.GetPortsViewForRsch(Rs.Id);
+            gvPorts.DataBind();
 
             if (Rs.TrafficFileReady == (Int32)TrafficFileReady.COMPLETE)
             {
@@ -132,7 +151,7 @@ namespace SandBox.WebUi.Pages.Research
                 TableFilterMenu.Items.FindByName("ShowFiterRow").Checked = gridViewReports.Settings.ShowFilterRow;
 
 //                ReportsBuilder.RschPropsListBuilder(TreeView1, Rs.Id);
-                 ASPxHyperLink5.NavigateUrl += ("?research=" + researchId);
+//                 ASPxHyperLink5.NavigateUrl += ("?research=" + researchId);
                 if (Rs.TrafficFileReady == (Int32)TrafficFileReady.NOACTION)
                 {
                     AskPCAPFile(researchId);
@@ -242,16 +261,20 @@ namespace SandBox.WebUi.Pages.Research
             wcEventsSign.Series.Add(pseries);
             wcEventsSign.Series.Add(sseries);
 //            ((SideBySideRangeBarSeriesView)fseries.View).Color = Color.FromArgb(255, 255, 0);
-            ((SideBySideRangeBarSeriesView)fseries.View).Color = Color.FromArgb(74, 134, 153);
+//            ((SideBySideRangeBarSeriesView)fseries.View).Color = Color.FromArgb(74, 134, 153);
+            ((SideBySideRangeBarSeriesView)fseries.View).Color = Color.FromArgb(75, 89, 97);
             ((SideBySideRangeBarSeriesView)fseries.View).FillStyle.FillMode = FillMode.Solid;
 //            ((SideBySideRangeBarSeriesView)rseries.View).Color = Color.FromArgb(0, 0, 255);
-            ((SideBySideRangeBarSeriesView)rseries.View).Color = Color.FromArgb(43, 83, 96);
+//            ((SideBySideRangeBarSeriesView)rseries.View).Color = Color.FromArgb(43, 83, 96);
+            ((SideBySideRangeBarSeriesView)rseries.View).Color = Color.FromArgb(37, 119, 147);
             ((SideBySideRangeBarSeriesView)rseries.View).FillStyle.FillMode = FillMode.Solid;
 //            ((SideBySideRangeBarSeriesView)pseries.View).Color = Color.FromArgb(0, 255, 0);
-            ((SideBySideRangeBarSeriesView)pseries.View).Color = Color.FromArgb(163, 193, 204);
+//            ((SideBySideRangeBarSeriesView)pseries.View).Color = Color.FromArgb(163, 193, 204);
+            ((SideBySideRangeBarSeriesView)pseries.View).Color = Color.FromArgb(242, 148, 65);
             ((SideBySideRangeBarSeriesView)pseries.View).FillStyle.FillMode = FillMode.Solid;
 //            ((SideBySideRangeBarSeriesView)sseries.View).Color = Color.FromArgb(0, 255, 255);
-            ((SideBySideRangeBarSeriesView)sseries.View).Color = Color.FromArgb(18, 50, 59);
+//            ((SideBySideRangeBarSeriesView)sseries.View).Color = Color.FromArgb(18, 50, 59);
+            ((SideBySideRangeBarSeriesView)sseries.View).Color = Color.FromArgb(206, 72, 34);
             ((SideBySideRangeBarSeriesView)sseries.View).FillStyle.FillMode = FillMode.Solid;
             if (fDS.Count>0) fseries.DataSource = fDS;
             fseries.ArgumentScaleType = ScaleType.Numerical;
@@ -497,8 +520,123 @@ namespace SandBox.WebUi.Pages.Research
             gridExport.WriteCsvToResponse();
         }
 
+        protected void FileTree_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
+        {
+            Files rowView = e.NodeObject as Files;
+            if (rowView == null) return;
+            e.NodeKeyValue = rowView.fileindex;
+            e.IsLeaf = !rowView.IsDir;
+            e.SetNodeValue("Name", rowView.Name);
+            if (rowView.IsDir) e.SetNodeValue("IconName", "reg_dir");
+            else e.SetNodeValue("IconName", "reg_file");
+        }
 
-         //private void ApdateTraficLinq()
+        protected void FileTree_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
+        {
+            List<Files> children = null;
+            Files parent = e.NodeObject as Files;
+            if (parent == null)
+            {
+                children = TreeViewBuilder.GetFilesTableViewByParentId((int)Session["rsch"], 0);
+                if (children.Count == 0) FileTreeList.ClearNodes();
+            }
+            else
+            {
+                children = TreeViewBuilder.GetFilesTableViewByParentId((int)Session["rsch"], (int)parent.fileindex);
+            }
+            e.Children = children;
+        }
+
+        protected string GetIconUrl(TreeListDataCellTemplateContainer container)
+        {
+            return string.Format("~/Content/Images/Icons/{0}.png", container.GetValue("IconName"));
+        }
+
+        protected void RegTree_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
+        {
+            Regs rowView = e.NodeObject as Regs;
+            if (rowView == null) return;
+            e.NodeKeyValue = rowView.KeyIndex;
+            e.SetNodeValue("KeyName", rowView.KeyName);
+        }
+
+        protected void RegTree_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
+        {
+            List<Regs> children = null;
+            Regs parent = e.NodeObject as Regs;
+            if (parent == null)
+            {
+                children = TreeViewBuilder.GetRegsTableViewByParentId((int)Session["rsch"], 0);
+                if (children.Count == 0) RegTreeList.ClearNodes();
+            }
+            else
+            {
+                children = TreeViewBuilder.GetRegsTableViewByParentId((int)Session["rsch"], (int)parent.KeyIndex);
+            }
+            e.Children = children;
+        }
+
+        //protected void ProcTree_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
+        //{
+        //    Procs rowView = e.NodeObject as Procs;
+        //    if (rowView == null) return;
+        //    e.NodeKeyValue = rowView.Pid1;
+        //    e.SetNodeValue("Name", rowView.Name);
+        //    e.SetNodeValue("PID", rowView.Pid1);
+        //    e.SetNodeValue("ThrCount", rowView.Count);
+        //}
+
+        //protected void ProcTree_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
+        //{
+        //    List<Procs> children = null;
+        //    Procs parent = e.NodeObject as Procs;
+        //    if (parent == null)
+        //    {
+        //        children = TreeViewBuilder.GetProcTableViewByParentId((int)Session["rsch"], 0);
+        //        if (children.Count == 0) ProcTreeList.ClearNodes();
+        //    }
+        //    else
+        //    {
+        //        children = TreeViewBuilder.GetProcTableViewByParentId((int)Session["rsch"], (int)parent.Pid1);
+        //    }
+        //    e.Children = children;
+        //}
+
+        protected void gvPorts_HtmlRowPrepared(object sender, ASPxGridViewTableRowEventArgs e)
+        {
+            if (e.RowType != DevExpress.Web.ASPxGridView.GridViewRowType.Data) return;
+            PortList pl = ResearchManager.GetPortList((long)e.KeyValue);
+            if (pl != null)
+            {
+                switch (pl.status)
+                {
+                    case "LISTENING":
+                        {
+                            e.Row.BackColor = Color.Salmon;
+                            break;
+                        }
+                    case "ESTABLISHED":
+                        {
+                            e.Row.BackColor = Color.SandyBrown;
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
+            }
+        }
+        
+        //    protected void UpdatePanel_Unload(object sender, EventArgs e)
+    //    {
+    //        MethodInfo methodInfo = typeof(ScriptManager).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
+    //.Where(i => i.Name.Equals("System.Web.UI.IScriptManagerInternal.RegisterUpdatePanel")).First();
+    //        methodInfo.Invoke(ScriptManager.GetCurrent(Page),
+    //            new object[] { sender as UpdatePanel });
+    //    }
+
+        //private void ApdateTraficLinq()
         //{
         //    var research = ResearchManager.GetResearch(UserId, Rs.ResearchName);
         //    if (research == null) return;

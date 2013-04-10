@@ -40,6 +40,33 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::DevExpress.Web.ASPxEditors.ASPxLabel LOS;
         
         /// <summary>
+        /// ProcVPOTreeUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel ProcVPOTreeUpdatePanel;
+        
+        /// <summary>
+        /// ProcVPOTreeList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxTreeList.ASPxTreeList ProcVPOTreeList;
+        
+        /// <summary>
+        /// ProcVPOTreeUpdateProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress ProcVPOTreeUpdateProgress;
+        
+        /// <summary>
         /// ProcTreeUpdatePanel control.
         /// </summary>
         /// <remarks>

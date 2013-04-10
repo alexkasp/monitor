@@ -33,6 +33,14 @@ namespace SandBox.WebUi
                    select r;
         }
 
+        public static IQueryable<ProcessLifeView> GetResearchProcesses(int rschId)
+        {
+            var db = new SandBoxDataContext();
+            return from prc in db.ProcessLifeViews
+                   where prc.rschId == rschId
+                   select prc;
+        }
+
         public static List<Regs> GetRegsTableViewByParentId(Int32 researchId, Int32 parentId)
         {
             var db = new SandBoxDataContext();

@@ -428,5 +428,11 @@
         <elementListCompartment Id="2919cb46-49d6-43ff-8ff0-0b0e9f914076" absoluteBounds="2.89, 1.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="130db708-9b42-410e-9d56-e1d5f801d9bc" isExpanded="false" absoluteBounds="0.5, 1.75, 2, 0.45">
+      <DataClassMoniker Name="/SandBoxDataContext/ProcessLifeView" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1c8609c9-7e17-45d1-b8cc-bbe49d09b295" absoluteBounds="0.51500000000000012, 2.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

@@ -80,7 +80,7 @@ namespace SandBox.WebUi
                             ResearchManager.UpdateResearchState(research.Id, ResearchState.COMPLETED);
                             //**********************************
                             //Обновление таблицы [dbo].[events]
-                            int res = ResearchManager.UpdateEnents(research.Id);
+                            int res = ResearchManager.UpdateEvents(research.Id);
                         }
                     }
                 }

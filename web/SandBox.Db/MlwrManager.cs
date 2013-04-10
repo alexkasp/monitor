@@ -384,7 +384,8 @@ namespace SandBox.Db
             var db = new SandBoxDataContext();
 
             var mlwrs = from m in db.Mlwrs
-                      orderby m.Id
+                        where m.IsDeleted != 1
+                        orderby m.Id
                       select m;
             return mlwrs;
         }
@@ -532,6 +533,7 @@ namespace SandBox.Db
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
                 var names = from m in db.Mlwrs
+                            where m.IsDeleted != 1
                             orderby m.Name
                             select m.Name;
                 return names.ToList();
@@ -546,7 +548,8 @@ namespace SandBox.Db
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
                 var pathes = from m in db.Mlwrs
-                            orderby m.Path
+                             where m.IsDeleted != 1
+                             orderby m.Path
                             select m.Path;
                 return pathes.ToList();
             }
@@ -562,6 +565,7 @@ namespace SandBox.Db
                 var items = from m in db.Mlwrs
                                 join u in db.Users
                                     on m.LoadedBy equals u.UserId
+                            where m.IsDeleted != 1
                             select new { Loaded = "Загружено " + m.LoadedDate + " пользователем " + u.Login };
                 return items.Select(vr => vr.Loaded).ToList();
             }
@@ -581,7 +585,8 @@ namespace SandBox.Db
                                   ResearchCount = 0,
                                   Class = null,
                                   LoadedDate = DateTime.Now,
-                                  LoadedBy = loadedBy
+                                  LoadedBy = loadedBy,
+                                  IsDeleted = 0
                 };
                 db.Mlwrs.InsertOnSubmit(mlwr);
                 db.SubmitChanges();

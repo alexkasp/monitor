@@ -96,10 +96,7 @@ namespace SandBox.WebUi.Pages.Information
 
         private static void StopVm(Int32 id)
         {
-            String machineName = VmManager.GetVmName(id);
-            Packet packet = new Packet { Type = PacketType.CMD_VM_STOP, Direction = PacketDirection.REQUEST };
-            packet.AddParameter(Encoding.UTF8.GetBytes(machineName));
-            SendPacket(packet.ToByteArray());
+            Resources.StopVm(id);
         }
 
         private void DeleteVm(Int32 id)

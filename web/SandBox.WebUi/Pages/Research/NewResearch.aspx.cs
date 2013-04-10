@@ -67,7 +67,7 @@ namespace SandBox.WebUi.Pages.Research
                 cbEvent.DataBind();
                 cbEvent.SelectedIndex = 0;
 
-                List<string> mlwrList = MlwrManager.GetMlwrPathList();
+                List<string> mlwrList = MlwrManager.GetMlwrNameList();
 
 
                 cbMalware.DataSource = mlwrList;
@@ -161,7 +161,7 @@ namespace SandBox.WebUi.Pages.Research
             else if (rbLIR.Checked) vmid = Convert.ToInt32(cbLIR.Value);
             else if (rbVLIR.Checked) vmid = Convert.ToInt32(cbVLIR.Value);
             Vm vm = VmManager.GetVm(vmid);
-            Mlwr mlwr = MlwrManager.GetMlwr(cbMalware.Value.ToString());
+            Mlwr mlwr = MlwrManager.GetMlwrByName(cbMalware.Value.ToString());
             Int32 timeLeft = Convert.ToInt32(spinTime.Value);
 
             String NewName="";

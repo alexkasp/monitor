@@ -7,6 +7,13 @@ namespace SandBox.Db
 {
     public class VmManager : DbManager
     {
+        public enum LIRType : int
+        {
+            ETALON = 1,
+            VLIR = 2,
+            LIR = 3
+        }
+
         public enum State
         {
             UPDATING = 1,
@@ -212,6 +219,7 @@ namespace SandBox.Db
             var db = new SandBoxDataContext();
 
             var items = from v in db.Vms
+                        where v.State != (int)VmManager.State.DELETED
                         select v;
             return items.Count();
         }
@@ -225,8 +233,7 @@ namespace SandBox.Db
             var db = new SandBoxDataContext();
 
             var itemsForUser = from v in db.Vms
-                               where v.CreatedBy == userId
-                               where v.Type == 2
+                               where ((v.CreatedBy == userId && v.Type == 2) || v.Type == 3) && v.State != (int)VmManager.State.DELETED
                                select v;
             return itemsForUser.Count();
         }

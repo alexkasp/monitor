@@ -5,6 +5,7 @@ using SandBox.Log;
 using SandBox.WebUi.Base;
 using System.Web.Security;
 using System.Web.UI;
+using System.Collections;
 
 namespace SandBox.WebUi.Account
 {
@@ -72,12 +73,21 @@ namespace SandBox.WebUi.Account
                 tbPasswordConfirm.IsValid = false;
                 return;
             }
+            ArrayList sections = new ArrayList();
 
-            String role = cblRole.SelectedValues[0].ToString();
-            Int32 roleId = UserManager.GetRole(role).RoleId;
-            if (cblRole.SelectedItems.Count > 1)
+            //now loop through all the sections
+            for (int i = 0; i < cblRole.Items.Count; i++)
             {
-                String role2 = cblRole.SelectedValues[1].ToString();
+                if (cblRole.Items[i].Selected)
+                {
+                    sections.Add(cblRole.Items[i].Value);
+                }
+            }
+            String role = sections[0].ToString();
+            Int32 roleId = UserManager.GetRole(role).RoleId;
+            if (sections.Count > 1)
+            {
+                String role2 = sections[1].ToString();
                 Int32 roleId2 = UserManager.GetRole(role2).RoleId;
                 UserManager.EditUser((Int32)Session["userId"], username, login, password, roleId, roleId2);
             }

@@ -687,6 +687,14 @@ namespace SandBox.Db
 				return this.GetTable<UsersTableView>();
 			}
 		}
+		
+		public System.Data.Linq.Table<ProcessLifeView> ProcessLifeViews
+		{
+			get
+			{
+				return this.GetTable<ProcessLifeView>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
@@ -10054,6 +10062,159 @@ namespace SandBox.Db
 				if ((this._Name != value))
 				{
 					this._Name = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ProcessLifeView")]
+	public partial class ProcessLifeView
+	{
+		
+		private long _Id;
+		
+		private int _rschId;
+		
+		private string _process;
+		
+		private System.Nullable<int> _pid;
+		
+		private System.Nullable<int> _parentpid;
+		
+		private System.Nullable<System.DateTime> _timestart;
+		
+		private System.Nullable<System.DateTime> _timeend;
+		
+		private System.Nullable<System.DateTime> _timelife;
+		
+		public ProcessLifeView()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="BigInt NOT NULL")]
+		public long Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rschId", DbType="Int NOT NULL")]
+		public int rschId
+		{
+			get
+			{
+				return this._rschId;
+			}
+			set
+			{
+				if ((this._rschId != value))
+				{
+					this._rschId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_process", DbType="VarChar(150) NOT NULL", CanBeNull=false)]
+		public string process
+		{
+			get
+			{
+				return this._process;
+			}
+			set
+			{
+				if ((this._process != value))
+				{
+					this._process = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pid", DbType="Int")]
+		public System.Nullable<int> pid
+		{
+			get
+			{
+				return this._pid;
+			}
+			set
+			{
+				if ((this._pid != value))
+				{
+					this._pid = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_parentpid", DbType="Int")]
+		public System.Nullable<int> parentpid
+		{
+			get
+			{
+				return this._parentpid;
+			}
+			set
+			{
+				if ((this._parentpid != value))
+				{
+					this._parentpid = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_timestart", DbType="DateTime")]
+		public System.Nullable<System.DateTime> timestart
+		{
+			get
+			{
+				return this._timestart;
+			}
+			set
+			{
+				if ((this._timestart != value))
+				{
+					this._timestart = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_timeend", DbType="DateTime")]
+		public System.Nullable<System.DateTime> timeend
+		{
+			get
+			{
+				return this._timeend;
+			}
+			set
+			{
+				if ((this._timeend != value))
+				{
+					this._timeend = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_timelife", DbType="DateTime")]
+		public System.Nullable<System.DateTime> timelife
+		{
+			get
+			{
+				return this._timelife;
+			}
+			set
+			{
+				if ((this._timelife != value))
+				{
+					this._timelife = value;
 				}
 			}
 		}
