@@ -381,7 +381,11 @@ namespace SandBox.WebUi.Pages.Research
             if (rowView.EtlID > -1) e.SetNodeValue("Etl", rowView.EtlValue);
             if (rowView.RegID > -1) e.SetNodeValue("Reg", rowView.RegValue);
             if (rowView.RegID2 > -1) e.SetNodeValue("Reg2", rowView.RegValue2);
-            if (rowView.IsKey) e.SetNodeValue("IconName", "reg_file");
+            if (rowView.IsKey)
+            {
+                e.SetNodeValue("IconName", "reg_file");
+                e.IsLeaf = true;
+            }
             else e.SetNodeValue("IconName", "reg_dir");
         }
 
