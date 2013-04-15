@@ -95,6 +95,7 @@ namespace SandBox.WebUi.Pages.Research
             //{
             //    lEtalonEx.Text = "Эталонного ислледования не найдено";
             //}
+//            TreeViewBuilder.CompareRegTree(researchId, ResearchManager.GetRschOSId(researchId));
             Mlwr mlwrrec = ResearchManager.GetMlwrByRschId(researchId);
             if (mlwrrec != null) Mlwr.Text = mlwrrec.Name + " (" + mlwrrec.Path + ")";
             LOS.Text = ResearchManager.GetRschOS(researchId);
@@ -157,7 +158,19 @@ namespace SandBox.WebUi.Pages.Research
 
              if (!IsPostBack)
              {
-                 
+                 int rschsysid = ResearchManager.GetRschOSId(researchId);
+                 int rschsysid2 = ResearchManager.GetRschOSId(researchId2);
+                 if (rschsysid == rschsysid2)
+                 {
+                     string RschRegRoot = TaskManager.GetRegRootForRsch(researchId);
+                     string RschRegRoot2 = TaskManager.GetRegRootForRsch(researchId2);
+                     Session["rschsysid"] = rschsysid;
+                     //                 TreeViewBuilder.CompareRegTree(researchId, ResearchManager.GetRschOSId(researchId));
+                     long eltrootid = TreeViewBuilder.GetRegsEtlRowIdByRootstr2(rschsysid, RschRegRoot, RschRegRoot2);
+                     Session["eltrootid"] = eltrootid;
+                     lbNoComp.ClientVisible = false;
+                     RegTreeList.ClientVisible = true;
+                 }
                  //var rschs = ResearchManager.GetReadyResearches();
                  //foreach (var r in rschs)
                  //{
@@ -356,6 +369,49 @@ namespace SandBox.WebUi.Pages.Research
             UpdateEventChart((DevExpress.XtraCharts.Web.WebChartControl)sender, researchId2);
         }
 
+        protected void RegTree_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
+        {
+            RegCompareTreeItem2 rowView = e.NodeObject as RegCompareTreeItem2;
+            if (rowView == null) return;
+            e.NodeKeyValue = rowView.ID;
+            e.SetNodeValue("Text", rowView.Text);
+            e.SetNodeValue("EtlID", rowView.EtlID);
+            e.SetNodeValue("RegID", rowView.RegID);
+            e.SetNodeValue("RegID2", rowView.RegID2);
+            if (rowView.EtlID > -1) e.SetNodeValue("Etl", rowView.EtlValue);
+            if (rowView.RegID > -1) e.SetNodeValue("Reg", rowView.RegValue);
+            if (rowView.RegID2 > -1) e.SetNodeValue("Reg2", rowView.RegValue2);
+            if (rowView.IsKey) e.SetNodeValue("IconName", "reg_file");
+            else e.SetNodeValue("IconName", "reg_dir");
+        }
+
+        protected void RegTree_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
+        {
+            int eltrootid=-1;
+            if (Session["eltrootid"] != null) int.TryParse(Session["eltrootid"].ToString(), out eltrootid);
+            if (eltrootid > -1)
+            {
+                int rschsysid = -1;
+                if (Session["rschsysid"]!=null) int.TryParse(Session["rschsysid"].ToString(), out rschsysid);
+                int rsch = -1;
+                if (Session["rsch"] != null) int.TryParse(Session["rsch"].ToString(), out rsch);
+                int rsch2 = -1;
+                if (Session["rsch2"] != null) int.TryParse(Session["rsch2"].ToString(), out rsch2);
+                List<RegCompareTreeItem2> children = null;
+                RegCompareTreeItem2 parent = e.NodeObject as RegCompareTreeItem2;
+                if (parent == null)
+                {
+                    children = TreeViewBuilder.GetRegsCompTableView2(RegTreeList.TotalNodeCount + 1, 0, rschsysid, eltrootid, rsch, 0, rsch2, 0);
+                    if (children.Count == 0) RegTreeList.ClearNodes();
+                }
+                else
+                {
+                    children = TreeViewBuilder.GetRegsCompTableView2(RegTreeList.TotalNodeCount + 1, (int)parent.ID, rschsysid, (int)parent.EtlID, rsch, (int)parent.RegID, rsch2, (int)parent.RegID2);
+                }
+                e.Children = children;
+            }
+        }
+
         protected void ASPxButton1_Click(object sender, EventArgs e)
         {
             //if (etalonRsch == null)
@@ -405,6 +461,40 @@ namespace SandBox.WebUi.Pages.Research
             //}
         }
 
+        protected void RegTreeList_HtmlDataCellPrepared(object sender, TreeListHtmlDataCellEventArgs e)
+        {
+            if (e.Column.Name == "Etl")
+            {
+                TreeListNode node = RegTreeList.FindNodeByKeyValue(e.NodeKey);
+                if (Convert.ToInt32(node["EtlID"])>-1) e.Cell.BackColor = Color.DarkSeaGreen;
+                else e.Cell.BackColor = Color.DarkSalmon;
+            }
+            else if (e.Column.Name == "Reg")
+            {
+                TreeListNode node = RegTreeList.FindNodeByKeyValue(e.NodeKey);
+                if (Convert.ToInt32(node["RegID"]) > -1)
+                {
+                    if ((node["Reg"] == null && node["Etl"] == null)||(node["Reg"] != null && node["Etl"] != null && node["Reg"].ToString() == node["Etl"].ToString())) e.Cell.BackColor = Color.DarkSeaGreen;
+                    else e.Cell.BackColor = Color.Gold; 
+                }
+                else e.Cell.BackColor = Color.DarkSalmon;
+            }
+            else if (e.Column.Name == "Reg2")
+            {
+                TreeListNode node = RegTreeList.FindNodeByKeyValue(e.NodeKey);
+                if (Convert.ToInt32(node["RegID2"]) > -1)
+                {
+                    if ((node["Reg2"] == null && node["Etl"] == null) || (node["Reg2"] != null && node["Etl"] != null && node["Reg2"].ToString() == node["Etl"].ToString())) e.Cell.BackColor = Color.DarkSeaGreen;
+                    else e.Cell.BackColor = Color.Gold;
+                }
+                else e.Cell.BackColor = Color.DarkSalmon;
+            }
+        }
+
+        protected string GetIconUrl(TreeListDataCellTemplateContainer container)
+        {
+            return string.Format("~/Content/Images/Icons/{0}.png", container.GetValue("IconName"));
+        }
 
         //private void UpdateTreeView(bool testMode = false)
         //{

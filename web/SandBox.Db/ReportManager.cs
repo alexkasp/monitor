@@ -372,7 +372,7 @@ namespace SandBox.Db
             return regs;
         }
 
-        public static IQueryable<Regs> GetRowRegs(Int32 researchId, bool rschIDTransform = false)
+        public static IQueryable<Reg> GetRowRegs(Int32 researchId, bool rschIDTransform = false)
         {
 
             var db = new SandBoxDataContext();

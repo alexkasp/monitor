@@ -41,8 +41,31 @@ namespace SandBox.Db
 
         public static string GetRegRootForRsch(Int32 researchId)
         {
-            Task FileRoot = GetTasks(researchId).FirstOrDefault(x => x.Type == 17);
-            if (FileRoot != null) return FileRoot.Value;
+            Task RegRoot = GetTasks(researchId).FirstOrDefault(x => x.Type == 17);
+            if (RegRoot != null)
+            {
+                string res = "";
+                switch (RegRoot.Value[0])
+                {
+                    case '1':
+                        res = @"HKEY_CLASSES_ROOT";
+                        break;
+                    case '2':
+                        res = @"HKEY_CURRENT_USER";
+                        break;
+                    case '3':
+                        res = @"HKEY_LOCAL_MACHINE";
+                        break;
+                    case '4':
+                        res = @"HKEY_USERS";
+                        break;
+                    case '5':
+                        res = @"HKEY_CURRENT_CONFIG";
+                        break;
+                }
+                if (RegRoot.Value.Length > 1) res = res + RegRoot.Value.Substring(1);
+                return res;
+            }
             else return String.Empty;
         }
 

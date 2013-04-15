@@ -59,6 +59,170 @@
         </div>
     </div>
     <div id="content-main">
+                <dx:ASPxPopupControl ID="popup_reg" ClientInstanceName="popup_reg" runat="server"
+                    AllowDragging="True" AllowResize="True" PopupHorizontalAlign="WindowCenter"
+                    HeaderText="Выбор ветки реестра" PopupVerticalAlign="WindowCenter" 
+                    Modal="True" ShowLoadingPanel="False" ShowPageScrollbarWhenModal="True" 
+                    Width="400px">
+                    <ContentCollection>
+                        <dx:PopupControlContentControl ID="PopupControlContentControl1" runat="server">
+                                <asp:UpdatePanel ID="RegTreeUpdatePanel" runat="server" UpdateMode="Conditional">
+                                    <ContentTemplate>
+                                        <dx:ASPxTreeList ID="RegTreeList" runat="server" 
+                                            AutoGenerateColumns="False" EnableCallbacks="False"
+                                            OnVirtualModeCreateChildren="RegTree_VirtualModeCreateChildren" OnVirtualModeNodeCreating="RegTree_VirtualModeNodeCreating"
+                                            Width="100%" ClientInstanceName="RegTreeList" 
+                                            onfocusednodechanged="RegTreeList_FocusedNodeChanged">
+                                            <Columns>
+                                                <dx:TreeListDataColumn FieldName="KeyName" VisibleIndex="0" Caption="Раздел реестра"
+                                                    SortIndex="0" SortOrder="Ascending">
+                                                    <CellStyle>
+                                                        <Paddings PaddingLeft="20px" />
+                                                        <BackgroundImage HorizontalPosition="left" ImageUrl="~/Content/Images/Icons/reg_dir.png"
+                                                            Repeat="NoRepeat" VerticalPosition="center" />
+                                                    </CellStyle>
+                                                </dx:TreeListDataColumn>
+                                            </Columns>
+                                            <SettingsBehavior ExpandCollapseAction="NodeDblClick" AllowFocusedNode="True" 
+                                                ProcessFocusedNodeChangedOnServer="True" />
+                                            <SettingsLoadingPanel Enabled="False" />
+                                            <Styles>
+                                                <FocusedNode BackColor="#0C627F">
+                                                </FocusedNode>
+                                            </Styles>
+
+                                            <Border BorderStyle="Solid" />
+                                        </dx:ASPxTreeList>
+                                        <div style="padding-top: 10px; padding-bottom: 10px;">
+                                        <dx:ASPxTextBox ID="tbEtlRegRoot" runat="server" Width="100%" ClientInstanceName="tbEtlRegRoot" NullText="[Корневой раздел]">
+                                        </dx:ASPxTextBox>
+                                        </div>
+                            <div style="float: right; padding-left: 10px; padding-bottom: 10px;">
+                                <dx:ASPxButton ID="btnClose" runat="server" Text="Отмена" AutoPostBack="False"
+                                    CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" Width="90px">
+                                    <ClientSideEvents Click="function(s, e) {
+    popup_reg.Hide();
+}" />
+                                    <PressedStyle CssClass="buttonHover">
+                                    </PressedStyle>
+                                    <HoverStyle CssClass="buttonHover">
+                                    </HoverStyle>
+                                    <DisabledStyle CssClass="buttonDisable">
+                                    </DisabledStyle>
+                                </dx:ASPxButton>
+                            </div>
+                            <div style="float: right; padding-left: 10px; padding-bottom: 10px;">
+                                <dx:ASPxButton ID="btnChoose" runat="server" Text="Выбрать" AutoPostBack="False"
+                                    CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" Width="90px">
+                                    <ClientSideEvents Click="function(s, e) {
+            var s = tbEtlRegRoot.GetText();
+            if (s.indexOf('\\') > 0)
+            {
+            cmbRegRoot.SetText(s.substring(0,s.indexOf('\\')));
+            tbRegRoot.SetText(s.substring(s.indexOf('\\')+1,s.length));
+            }
+            else
+            {
+            cmbRegRoot.SetText(s);
+            tbRegRoot.SetText('');
+            }
+            popup_reg.Hide();
+}" />
+                                    <PressedStyle CssClass="buttonHover">
+                                    </PressedStyle>
+                                    <HoverStyle CssClass="buttonHover">
+                                    </HoverStyle>
+                                    <DisabledStyle CssClass="buttonDisable">
+                                    </DisabledStyle>
+                                </dx:ASPxButton>
+                            </div>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                                <asp:UpdateProgress ID="RegTreeUpdateProgress" runat="server" AssociatedUpdatePanelID="RegTreeUpdatePanel">
+                                    <ProgressTemplate>
+                                        Обновление данных:&nbsp;&nbsp;<img alt="Обновление данных..." src="/content/images/progress.gif">
+                                    </ProgressTemplate>
+                                </asp:UpdateProgress>
+                        </dx:PopupControlContentControl>
+                    </ContentCollection>
+                </dx:ASPxPopupControl>
+                <dx:ASPxPopupControl ID="popup_file" ClientInstanceName="popup_file" runat="server"
+                    AllowDragging="True" AllowResize="True" PopupHorizontalAlign="WindowCenter"
+                    HeaderText="Выбор каталога" PopupVerticalAlign="WindowCenter" 
+                    Modal="True" ShowLoadingPanel="False" ShowPageScrollbarWhenModal="True" 
+                    Width="400px">
+                    <ContentCollection>
+                        <dx:PopupControlContentControl ID="PopupControlContentControl2" runat="server">
+                                <asp:UpdatePanel ID="FileTreeUpdatePanel" runat="server" UpdateMode="Conditional">
+                                    <ContentTemplate>
+                                        <dx:ASPxTreeList ID="FileTreeList" runat="server" 
+                                            AutoGenerateColumns="False" EnableCallbacks="False"
+                                            OnVirtualModeCreateChildren="FileTree_VirtualModeCreateChildren" OnVirtualModeNodeCreating="FileTree_VirtualModeNodeCreating"
+                                            Width="100%" ClientInstanceName="FileTreeList" 
+                                            onfocusednodechanged="FileTreeList_FocusedNodeChanged">
+                                            <Columns>
+                                                <dx:TreeListDataColumn FieldName="KeyName" VisibleIndex="0" Caption="Каталог"
+                                                    SortIndex="0" SortOrder="Ascending">
+                                                    <CellStyle>
+                                                        <Paddings PaddingLeft="20px" />
+                                                        <BackgroundImage HorizontalPosition="left" ImageUrl="~/Content/Images/Icons/reg_dir.png"
+                                                            Repeat="NoRepeat" VerticalPosition="center" />
+                                                    </CellStyle>
+                                                </dx:TreeListDataColumn>
+                                            </Columns>
+                                            <SettingsBehavior ExpandCollapseAction="NodeDblClick" AllowFocusedNode="True" 
+                                                ProcessFocusedNodeChangedOnServer="True" />
+                                            <SettingsLoadingPanel Enabled="False" />
+                                            <Styles>
+                                                <FocusedNode BackColor="#0C627F">
+                                                </FocusedNode>
+                                            </Styles>
+
+                                            <Border BorderStyle="Solid" />
+                                        </dx:ASPxTreeList>
+                                        <div style="padding-top: 10px; padding-bottom: 10px;">
+                                        <dx:ASPxTextBox ID="tbEtlFileRoot" runat="server" Width="100%" ClientInstanceName="tbEtlFileRoot" NullText="[Корневой каталог]">
+                                        </dx:ASPxTextBox>
+                                        </div>
+                            <div style="float: right; padding-left: 10px; padding-bottom: 10px;">
+                                <dx:ASPxButton ID="btnFileCancel" runat="server" Text="Отмена" AutoPostBack="False"
+                                    CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" Width="90px">
+                                    <ClientSideEvents Click="function(s, e) {
+    popup_file.Hide();
+}" />
+                                    <PressedStyle CssClass="buttonHover">
+                                    </PressedStyle>
+                                    <HoverStyle CssClass="buttonHover">
+                                    </HoverStyle>
+                                    <DisabledStyle CssClass="buttonDisable">
+                                    </DisabledStyle>
+                                </dx:ASPxButton>
+                            </div>
+                            <div style="float: right; padding-left: 10px; padding-bottom: 10px;">
+                                <dx:ASPxButton ID="btnFileChoose" runat="server" Text="Выбрать" AutoPostBack="False"
+                                    CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" Width="90px">
+                                    <ClientSideEvents Click="function(s, e) {
+            tbFileRoot.SetText('c:\\'+tbEtlFileRoot.GetText());
+            popup_file.Hide();
+}" />
+                                    <PressedStyle CssClass="buttonHover">
+                                    </PressedStyle>
+                                    <HoverStyle CssClass="buttonHover">
+                                    </HoverStyle>
+                                    <DisabledStyle CssClass="buttonDisable">
+                                    </DisabledStyle>
+                                </dx:ASPxButton>
+                            </div>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                                <asp:UpdateProgress ID="FileUpdateProgress" runat="server" AssociatedUpdatePanelID="FileTreeUpdatePanel">
+                                    <ProgressTemplate>
+                                        Обновление данных:&nbsp;&nbsp;<img alt="Обновление данных..." src="/content/images/progress.gif">
+                                    </ProgressTemplate>
+                                </asp:UpdateProgress>
+                        </dx:PopupControlContentControl>
+                    </ContentCollection>
+                </dx:ASPxPopupControl>
         <div class="titlegr">
             <dx:ASPxTextBox ID="rschName" runat="server" Width="345px" 
                 NullText="Имя исследования">
@@ -365,13 +529,24 @@
                                             ClientInstanceName="cbFileRoot">
                                             <ClientSideEvents CheckedChanged="function(s, e) {
 	                                            tbFileRoot.SetEnabled(cbFileRoot.GetChecked());
-
+                                                btnSelFile.SetEnabled(cbFileRoot.GetChecked());
                                             }" />
                                         </dx:ASPxCheckBox>
                                     </td>
                             		<td>
+                                        <div style="float: left;">
                                         <dx:ASPxTextBox ID="tbFileRoot" runat="server" Width="390px" ClientInstanceName="tbFileRoot" ClientEnabled="False" NullText="[Корневой каталог]">
                                         </dx:ASPxTextBox>
+                                        </div>
+                                                                                <div style="float: left; padding-left:20px;">
+                                            <dx:ASPxButton ID="btnSelFile" runat="server" AutoPostBack="False"
+                                                EnableDefaultAppearance="False" EnableTheming="False"
+                                                Image-Url="~/Content/Images/Icons/reg_dir.png" Image-AlternateText="Выбрать каталог"
+                                                ClientInstanceName="btnSelFile" ClientEnabled="False" Cursor="pointer" DisabledStyle-Cursor="default" Image-UrlDisabled="~/Content/Images/Icons/reg_dird.png">
+                                             <ClientSideEvents Click="function(s, e) { popup_file.Show(); }" />
+                                            </dx:ASPxButton>
+                                        </div>
+
                                     </td>
                             	</tr>
                             	<tr>
@@ -514,6 +689,7 @@
                                             <ClientSideEvents CheckedChanged="function(s, e) {
 	                                            tbRegRoot.SetEnabled(cbRegRoot.GetChecked());
                                                 cmbRegRoot.SetEnabled(cbRegRoot.GetChecked());
+                                                btnSelReg.SetEnabled(cbRegRoot.GetChecked());
                                             }" />
                                         </dx:ASPxCheckBox>
                                     </td>
@@ -533,6 +709,14 @@
                                         </div>
                                         <div style="float: left"><dx:ASPxTextBox ID="tbRegRoot" runat="server" Width="230px" ClientInstanceName="tbRegRoot" ClientEnabled="False" NullText="[Корневой раздел]">
                                         </dx:ASPxTextBox></div>
+                                        <div style="float: left; padding-left:20px;">
+                                            <dx:ASPxButton ID="btnSelReg" runat="server" AutoPostBack="False"
+                                                EnableDefaultAppearance="False" EnableTheming="False"
+                                                Image-Url="~/Content/Images/Icons/reg_dir.png" Image-AlternateText="Выбрать раздел реестра"
+                                                ClientInstanceName="btnSelReg" ClientEnabled="False" Cursor="pointer" DisabledStyle-Cursor="default" Image-UrlDisabled="~/Content/Images/Icons/reg_dird.png">
+                                             <ClientSideEvents Click="function(s, e) { popup_reg.Show(); }" />
+                                            </dx:ASPxButton>
+                                        </div>
                                     </td>
                             	</tr>
                                 </table>
@@ -687,8 +871,8 @@
 --%>                            <table style="width: 100%;padding-top:5px;">
                                 <tr>
                                     <td style="width: 35px">Задание</td>
-                                    <td style="width: 210px">
-                                        <dx:ASPxComboBox ID="CBNetActiv" runat="server" ValueType="System.String" Width="210px" ClientInstanceName="CBNetActiv" ShowLoadingPanel="False" 
+                                    <td style="width: 230px">
+                                        <dx:ASPxComboBox ID="CBNetActiv" runat="server" ValueType="System.String" Width="230px" ClientInstanceName="CBNetActiv" ShowLoadingPanel="False" 
                                     IncrementalFilteringMode="StartsWith" EnableIncrementalFiltering="True">
                                         </dx:ASPxComboBox>
                                     </td>

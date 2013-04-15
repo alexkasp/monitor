@@ -46,7 +46,7 @@ namespace SandBox.WebUi.Pages.Research
 
         protected void RegTree_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
         {
-            Regs rowView = e.NodeObject as Regs;
+            Reg rowView = e.NodeObject as Reg;
             if (rowView == null) return;
             e.NodeKeyValue = rowView.KeyIndex;
             e.SetNodeValue("KeyName", rowView.KeyName);
@@ -54,8 +54,8 @@ namespace SandBox.WebUi.Pages.Research
 
         protected void RegTree_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
         {
-            List<Regs> children = null;
-            Regs parent = e.NodeObject as Regs;
+            List<Reg> children = null;
+            Reg parent = e.NodeObject as Reg;
             if (parent == null)
             {
                 children = TreeViewBuilder.GetRegsTableViewByParentId((int)Session["rsch"], 0);

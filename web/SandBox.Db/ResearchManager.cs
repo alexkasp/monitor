@@ -589,6 +589,17 @@ namespace SandBox.Db
             return os;
         }
 
+        public static int GetRschOSId(int id)
+        {
+            var db = new SandBoxDataContext();
+            var rsch = GetResearch(id);
+            if (rsch == null) return 0;
+            Vm vm = db.Vms.FirstOrDefault<Vm>(x => x.Id == rsch.VmId);
+            if (vm == null) return 0;
+            VmSystem vms = db.VmSystems.FirstOrDefault<VmSystem>(x => x.System == vm.System);
+            if (vms == null) return 0;
+            return vms.System;
+        }
         public static string GetRschVmType(int id)
         {
             var db = new SandBoxDataContext();

@@ -126,6 +126,11 @@ namespace SandBox.WebUi.Pages.Research
             ProcVPOTreeList.DataBind();
             gvPorts.DataSource = ResearchManager.GetPortsViewForRsch(Rs.Id);
             gvPorts.DataBind();
+            if (RegTreeList.FocusedNode != null)
+            {
+                gvRegKeys.DataSource = TreeViewBuilder.GetKeyValues(Convert.ToInt32(RegTreeList.FocusedNode.Key));
+                gvRegKeys.DataBind();
+            }
 
             if (Rs.TrafficFileReady == (Int32)TrafficFileReady.COMPLETE)
             {
@@ -149,6 +154,13 @@ namespace SandBox.WebUi.Pages.Research
                     gridViewReports.LoadClientLayout(gridState);
                 }
                 TableFilterMenu.Items.FindByName("ShowFiterRow").Checked = gridViewReports.Settings.ShowFilterRow;
+
+                string RschRegRoot = TaskManager.GetRegRootForRsch(researchId);
+                int rschsysid = ResearchManager.GetRschOSId(researchId);
+                Session["rschsysid"] = rschsysid;
+                //                 TreeViewBuilder.CompareRegTree(researchId, ResearchManager.GetRschOSId(researchId));
+                long eltrootid = TreeViewBuilder.GetRegsEtlRowIdByRootstr(rschsysid, RschRegRoot);
+                Session["eltrootid"] = eltrootid;
 
 //                ReportsBuilder.RschPropsListBuilder(TreeView1, Rs.Id);
 //                 ASPxHyperLink5.NavigateUrl += ("?research=" + researchId);
@@ -554,7 +566,7 @@ namespace SandBox.WebUi.Pages.Research
 
         protected void RegTree_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
         {
-            Regs rowView = e.NodeObject as Regs;
+            Reg rowView = e.NodeObject as Reg;
             if (rowView == null) return;
             e.NodeKeyValue = rowView.KeyIndex;
             e.SetNodeValue("KeyName", rowView.KeyName);
@@ -562,8 +574,8 @@ namespace SandBox.WebUi.Pages.Research
 
         protected void RegTree_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
         {
-            List<Regs> children = null;
-            Regs parent = e.NodeObject as Regs;
+            List<Reg> children = null;
+            Reg parent = e.NodeObject as Reg;
             if (parent == null)
             {
                 children = TreeViewBuilder.GetRegsTableViewByParentId((int)Session["rsch"], 0);
@@ -574,6 +586,61 @@ namespace SandBox.WebUi.Pages.Research
                 children = TreeViewBuilder.GetRegsTableViewByParentId((int)Session["rsch"], (int)parent.KeyIndex);
             }
             e.Children = children;
+        }
+
+        protected void RegComp_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
+        {
+            RegCompareTreeItem rowView = e.NodeObject as RegCompareTreeItem;
+            if (rowView == null) return;
+            e.NodeKeyValue = rowView.ID;
+            e.SetNodeValue("Text", rowView.Text);
+            e.SetNodeValue("EtlID", rowView.EtlID);
+            e.SetNodeValue("RegID", rowView.RegID);
+            if (rowView.EtlID > -1) e.SetNodeValue("Etl", rowView.EtlValue);
+            if (rowView.RegID > -1) e.SetNodeValue("Reg", rowView.RegValue);
+            if (rowView.IsKey) e.SetNodeValue("IconName", "reg_file");
+            else e.SetNodeValue("IconName", "reg_dir");
+        }
+
+        protected void RegComp_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
+        {
+            List<RegCompareTreeItem> children = null;
+            RegCompareTreeItem parent = e.NodeObject as RegCompareTreeItem;
+            if (parent == null)
+            {
+                children = TreeViewBuilder.GetRegsCompTableView(RegCompTreeList.TotalNodeCount + 1, 0, (int)Session["rschsysid"], 0, (int)Session["rsch"], 0);
+                if (children.Count == 0) RegTreeList.ClearNodes();
+            }
+            else
+            {
+                children = TreeViewBuilder.GetRegsCompTableView(RegCompTreeList.TotalNodeCount + 1, (int)parent.ID, (int)Session["rschsysid"], (int)parent.EtlID, (int)Session["rsch"], (int)parent.RegID);
+            }
+            e.Children = children;
+        }
+
+        protected void RegCompList_HtmlDataCellPrepared(object sender, TreeListHtmlDataCellEventArgs e)
+        {
+            if (e.Column.Name == "Etl")
+            {
+                TreeListNode node = RegCompTreeList.FindNodeByKeyValue(e.NodeKey);
+                if (Convert.ToInt32(node["EtlID"]) > -1) e.Cell.BackColor = Color.DarkSeaGreen;
+                else e.Cell.BackColor = Color.DarkSalmon;
+            }
+            else if (e.Column.Name == "Reg")
+            {
+                TreeListNode node = RegCompTreeList.FindNodeByKeyValue(e.NodeKey);
+                if (Convert.ToInt32(node["RegID"]) > -1)
+                {
+                    if ((node["Reg"] == null && node["Etl"] == null) || (node["Reg"] != null && node["Etl"] != null && node["Reg"].ToString() == node["Etl"].ToString())) e.Cell.BackColor = Color.DarkSeaGreen;
+                    else e.Cell.BackColor = Color.Gold;
+                }
+                else e.Cell.BackColor = Color.DarkSalmon;
+            }
+        }
+
+        protected string GetRegIconUrl(TreeListDataCellTemplateContainer container)
+        {
+            return string.Format("~/Content/Images/Icons/{0}.png", container.GetValue("IconName"));
         }
 
         //protected void ProcTree_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
@@ -626,6 +693,12 @@ namespace SandBox.WebUi.Pages.Research
                         }
                 }
             }
+        }
+
+        protected void RegTreeList_FocusedNodeChanged(object sender, EventArgs e)
+        {
+            gvRegKeys.DataSource = TreeViewBuilder.GetKeyValues(Convert.ToInt32(RegTreeList.FocusedNode.Key));
+            gvRegKeys.DataBind();
         }
         
         //    protected void UpdatePanel_Unload(object sender, EventArgs e)

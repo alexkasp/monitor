@@ -10,6 +10,7 @@ using SandBox.Connection;
 using System.Text;
 using DevExpress.Web.ASPxEditors;
 using System.Data;
+using DevExpress.Web.ASPxTreeList;
 
 namespace SandBox.WebUi.Pages.Research
 {
@@ -206,6 +207,16 @@ namespace SandBox.WebUi.Pages.Research
             if (CreateOrStartVm(vm.Name, NewName))
                 Current.StartResearch(String.Format("{0}", researchId));
             Response.Redirect("~/Pages/Research/Current.aspx");
+        }
+
+        private int GetSelectedSystemId()
+        {
+            Int32 vmid = -1; 
+            if (rbEtln.Checked) vmid = Convert.ToInt32(cbEtln.Value);
+            else if (rbLIR.Checked) vmid = Convert.ToInt32(cbLIR.Value);
+            else if (rbVLIR.Checked) vmid = Convert.ToInt32(cbVLIR.Value);
+            Vm vm = VmManager.GetVm(vmid);
+            return vm.System;
         }
 
         public static string GenRandString(int length)
@@ -526,6 +537,78 @@ namespace SandBox.WebUi.Pages.Research
             cbEvent.DataSource = ReportManager.GetEventsDescrByModule(e.Parameter);
             cbEvent.DataBind();
             cbEvent.SelectedIndex = 0;
+        }
+
+        protected void RegTree_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
+        {
+            RegsEtl rowView = e.NodeObject as RegsEtl;
+            if (rowView == null) return;
+            e.NodeKeyValue = rowView.KeyIndex;
+            e.SetNodeValue("KeyName", rowView.KeyName);
+        }
+
+        protected void RegTree_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
+        {
+            List<RegsEtl> children = null;
+            RegsEtl parent = e.NodeObject as RegsEtl;
+            if (parent == null)
+            {
+                children = TreeViewBuilder.GetRegsEtlTableViewByParentId(GetSelectedSystemId(), 0);
+                if (children.Count == 0) RegTreeList.ClearNodes();
+            }
+            else
+            {
+                children = TreeViewBuilder.GetRegsEtlTableViewByParentId(GetSelectedSystemId(), (int)parent.KeyIndex);
+            }
+            e.Children = children;
+        }
+
+        protected void RegTreeList_FocusedNodeChanged(object sender, EventArgs e)
+        {
+            string nodePath = RegTreeList.FocusedNode["KeyName"].ToString();
+            var currentNode = RegTreeList.FocusedNode.ParentNode;
+            while (currentNode != null && currentNode.Level > 0)
+            {
+                nodePath = currentNode["KeyName"] +@"\" + nodePath;
+                currentNode = currentNode.ParentNode;
+            }
+            tbEtlRegRoot.Text = nodePath;
+        }
+
+        protected void FileTree_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
+        {
+            FilesEtl rowView = e.NodeObject as FilesEtl;
+            if (rowView == null) return;
+            e.NodeKeyValue = rowView.KeyIndex;
+            e.SetNodeValue("KeyName", rowView.KeyName);
+        }
+
+        protected void FileTree_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
+        {
+            List<FilesEtl> children = null;
+            FilesEtl parent = e.NodeObject as FilesEtl;
+            if (parent == null)
+            {
+                children = TreeViewBuilder.GetFilesEtlTableViewByParentId(GetSelectedSystemId(), 0);
+                if (children.Count == 0) FileTreeList.ClearNodes();
+            }
+            else
+            {
+                children = TreeViewBuilder.GetFilesEtlTableViewByParentId(GetSelectedSystemId(), (int)parent.KeyIndex);
+            }
+            e.Children = children;
+        }
+
+        protected void FileTreeList_FocusedNodeChanged(object sender, EventArgs e)
+        {
+            string nodePath = FileTreeList.FocusedNode["KeyName"].ToString();
+            var currentNode = FileTreeList.FocusedNode.ParentNode;
+            while (currentNode != null && currentNode.Level > 0)
+            {
+                nodePath = currentNode["KeyName"] + @"\" + nodePath;
+                currentNode = currentNode.ParentNode;
+            }
+            tbEtlFileRoot.Text = nodePath;
         }
 
     }//end class
