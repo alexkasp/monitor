@@ -155,6 +155,9 @@ namespace SandBox.WebUi.Pages.Research
                 }
                 TableFilterMenu.Items.FindByName("ShowFiterRow").Checked = gridViewReports.Settings.ShowFilterRow;
 
+                RegCompTreeList.Columns[1].Caption = "Эталон " + LOS.Text;
+                RegCompTreeList.Columns[2].Caption = "Исследование " + researchId.ToString();
+
                 string RschRegRoot = TaskManager.GetRegRootForRsch(researchId);
                 int rschsysid = ResearchManager.GetRschOSId(researchId);
                 Session["rschsysid"] = rschsysid;
@@ -604,18 +607,27 @@ namespace SandBox.WebUi.Pages.Research
 
         protected void RegComp_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
         {
-            List<RegCompareTreeItem> children = null;
-            RegCompareTreeItem parent = e.NodeObject as RegCompareTreeItem;
-            if (parent == null)
+            int eltrootid=-1;
+            if (Session["eltrootid"] != null) int.TryParse(Session["eltrootid"].ToString(), out eltrootid);
+            if (eltrootid > -1)
             {
-                children = TreeViewBuilder.GetRegsCompTableView(RegCompTreeList.TotalNodeCount + 1, 0, (int)Session["rschsysid"], 0, (int)Session["rsch"], 0);
-                if (children.Count == 0) RegTreeList.ClearNodes();
+                int rschsysid = -1;
+                if (Session["rschsysid"] != null) int.TryParse(Session["rschsysid"].ToString(), out rschsysid);
+                int rsch = -1;
+                if (Session["rsch"] != null) int.TryParse(Session["rsch"].ToString(), out rsch);
+                List<RegCompareTreeItem> children = null;
+                RegCompareTreeItem parent = e.NodeObject as RegCompareTreeItem;
+                if (parent == null)
+                {
+                    children = TreeViewBuilder.GetRegsCompTableView(RegCompTreeList.TotalNodeCount + 1, 0, rschsysid, eltrootid, rsch, 0);
+                    if (children.Count == 0) RegTreeList.ClearNodes();
+                }
+                else
+                {
+                    children = TreeViewBuilder.GetRegsCompTableView(RegCompTreeList.TotalNodeCount + 1, parent.ID, rschsysid, parent.EtlID, rsch, parent.RegID);
+                }
+                e.Children = children;
             }
-            else
-            {
-                children = TreeViewBuilder.GetRegsCompTableView(RegCompTreeList.TotalNodeCount + 1, (int)parent.ID, (int)Session["rschsysid"], (int)parent.EtlID, (int)Session["rsch"], (int)parent.RegID);
-            }
-            e.Children = children;
         }
 
         protected void RegCompList_HtmlDataCellPrepared(object sender, TreeListHtmlDataCellEventArgs e)

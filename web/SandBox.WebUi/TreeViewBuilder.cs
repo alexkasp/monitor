@@ -74,7 +74,7 @@ namespace SandBox.WebUi
                     select r).ToList();
         }
 
-        public static List<RegCompareTreeItem> GetRegsCompTableView(Int32 id, Int32 parentid, Int32 systemId, Int32 etlparentId, Int32 rschId, Int32 rschparentId)
+        public static List<RegCompareTreeItem> GetRegsCompTableView(Int32 id, long parentid, Int32 systemId, long etlparentId, Int32 rschId, long rschparentId)
         {
             var db = new SandBoxDataContext();
             List<RegsEtl> etllst = (from r in db.RegsEtls
@@ -103,18 +103,28 @@ namespace SandBox.WebUi
             return complist;
         }
 
-        public static List<RegCompareTreeItem2> GetRegsCompTableView2(Int32 id, Int32 parentid, Int32 systemId, Int32 etlparentId, Int32 rschId, Int32 rschparentId, Int32 rschId2, Int32 rschparentId2)
+        public static List<RegCompareTreeItem2> GetRegsCompTableView2(Int32 id, long eltrootid, long rschrootid, long rschrootid2, Int32 systemId, long etlparentId, Int32 rschId, long rschparentId, Int32 rschId2, long rschparentId2)
         {
             var db = new SandBoxDataContext();
             List<RegsEtl> etllst = (from r in db.RegsEtls
                                     where r.SystemID == systemId && r.Parent == etlparentId
                                     select r).ToList();
-            List<Reg> reglst = (from r in db.Regs
-                                where r.RschID == rschId && r.Parent == rschparentId
-                                select r).ToList();
-            List<Reg> reglst2 = (from r in db.Regs
-                                where r.RschID == rschId2 && r.Parent == rschparentId2
-                                select r).ToList();
+            List<Reg> reglst = new List<Reg>();
+            if (rschrootid == etlparentId || rschparentId > -1)
+            {
+                if (rschparentId == -1) rschparentId = 0;
+                reglst = (from r in db.Regs
+                          where r.RschID == rschId && r.Parent == rschparentId
+                          select r).ToList();
+            }
+            List<Reg> reglst2 = new List<Reg>();
+            if (rschrootid2 == etlparentId || rschparentId2 > -1)
+            {
+                if (rschparentId2 == -1) rschparentId2 = 0;
+                reglst2 = (from r in db.Regs
+                           where r.RschID == rschId2 && r.Parent == rschparentId2
+                           select r).ToList();
+            }
             List<RegCompareTreeItem2> complist = new List<RegCompareTreeItem2>();
             foreach (RegsEtl item in etllst)
             {
@@ -122,21 +132,21 @@ namespace SandBox.WebUi
                 Reg ritem2 = reglst2.Find(p => p.KeyName == item.KeyName);
                 if (ritem != null && ritem2 != null)
                 {
-                    complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = parentid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = item.KeyIndex, EtlValue = item.keyvalue, RegID = ritem.KeyIndex, RegValue = ritem.keyvalue, RegID2 = ritem2.KeyIndex, RegValue2 = ritem2.keyvalue });
+                    complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = eltrootid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = item.KeyIndex, EtlValue = item.keyvalue, RegID = ritem.KeyIndex, RegValue = ritem.keyvalue, RegID2 = ritem2.KeyIndex, RegValue2 = ritem2.keyvalue });
                     reglst.Remove(ritem);
                     reglst2.Remove(ritem2);
                 }
                 else if (ritem != null)
                 {
-                    complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = parentid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = item.KeyIndex, EtlValue = item.keyvalue, RegID = ritem.KeyIndex, RegValue = ritem.keyvalue, RegID2 = -1, RegValue2 = "" });
+                    complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = eltrootid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = item.KeyIndex, EtlValue = item.keyvalue, RegID = ritem.KeyIndex, RegValue = ritem.keyvalue, RegID2 = -1, RegValue2 = "" });
                     reglst.Remove(ritem);
                 }
                 else if (ritem2 != null)
                 {
-                    complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = parentid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = item.KeyIndex, EtlValue = item.keyvalue, RegID = -1, RegValue = "", RegID2 = ritem2.KeyIndex, RegValue2 = ritem2.keyvalue });
+                    complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = eltrootid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = item.KeyIndex, EtlValue = item.keyvalue, RegID = -1, RegValue = "", RegID2 = ritem2.KeyIndex, RegValue2 = ritem2.keyvalue });
                     reglst2.Remove(ritem2);
                 }
-                else complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = parentid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = item.KeyIndex, EtlValue = item.keyvalue, RegID = -1, RegValue = "", RegID2 = -1, RegValue2 = "" });
+                else complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = eltrootid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = item.KeyIndex, EtlValue = item.keyvalue, RegID = -1, RegValue = "", RegID2 = -1, RegValue2 = "" });
                 id++;
             }
             foreach (Reg item in reglst)
@@ -144,10 +154,10 @@ namespace SandBox.WebUi
                 Reg ritem2 = reglst2.Find(p => p.KeyName == item.KeyName);
                 if (ritem2 != null)
                 {
-                    complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = parentid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = -1, EtlValue = "", RegID = item.KeyIndex, RegValue = item.keyvalue, RegID2 = ritem2.KeyIndex, RegValue2 = ritem2.keyvalue });
+                    complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = eltrootid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = -1, EtlValue = "", RegID = item.KeyIndex, RegValue = item.keyvalue, RegID2 = ritem2.KeyIndex, RegValue2 = ritem2.keyvalue });
                     reglst2.Remove(ritem2);
                 }
-                else complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = parentid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = -1, EtlValue = "", RegID = item.KeyIndex, RegValue = item.keyvalue, RegID2 = -1, RegValue2 = "" });
+                else complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = eltrootid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = -1, EtlValue = "", RegID = item.KeyIndex, RegValue = item.keyvalue, RegID2 = -1, RegValue2 = "" });
                 id++;
             }
             foreach (Reg item2 in reglst2)
@@ -155,10 +165,10 @@ namespace SandBox.WebUi
                 Reg ritem = reglst.Find(p => p.KeyName == item2.KeyName);
                 if (ritem != null)
                 {
-                    complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = parentid, Text = item2.KeyName, IsKey = item2.keytype == 1, EtlID = -1, EtlValue = "", RegID2 = item2.KeyIndex, RegValue2 = item2.keyvalue, RegID = ritem.KeyIndex, RegValue = ritem.keyvalue });
+                    complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = eltrootid, Text = item2.KeyName, IsKey = item2.keytype == 1, EtlID = -1, EtlValue = "", RegID2 = item2.KeyIndex, RegValue2 = item2.keyvalue, RegID = ritem.KeyIndex, RegValue = ritem.keyvalue });
                     reglst.Remove(ritem);
                 }
-                else complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = parentid, Text = item2.KeyName, IsKey = item2.keytype == 1, EtlID = -1, EtlValue = "", RegID2 = item2.KeyIndex, RegValue2 = item2.keyvalue, RegID = -1, RegValue = "" });
+                else complist.Add(new RegCompareTreeItem2 { ID = id, ParentID = eltrootid, Text = item2.KeyName, IsKey = item2.keytype == 1, EtlID = -1, EtlValue = "", RegID2 = item2.KeyIndex, RegValue2 = item2.keyvalue, RegID = -1, RegValue = "" });
                 id++;
             }
             return complist;
@@ -198,6 +208,22 @@ namespace SandBox.WebUi
                 }
                 else break;
             }
+            return parentId; 
+        }
+
+        public static List<long> GetRegsRootIDs(Int32 systemId, String rootstr)
+        {
+            List<long> parentId = new List<long>();
+            if (String.IsNullOrEmpty(rootstr)) return parentId;
+            var db = new SandBoxDataContext();
+            int level = 0;
+            foreach (string subPath in rootstr.Split('\\'))
+            {
+                parentId.Add(level == 0 ? db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath)).KeyIndex :
+                                        db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath) && (x.Parent == parentId[level-1])).KeyIndex);
+                level++;
+            }
+
             return parentId;
         }
 

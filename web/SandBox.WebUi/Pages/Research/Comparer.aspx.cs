@@ -120,7 +120,6 @@ namespace SandBox.WebUi.Pages.Research
             {
                 LStatus.Text = "Готово к запуску";
             }
-            LHeader.Text = String.Format("Исследование (№{0}): {1}", Rs.Id, Rs.ResearchName);
             Session["rsch"] = researchId;
 
             gridAddParams.DataSource = TaskManager.GetTasksViewForRsch(researchId);//dataX;
@@ -150,7 +149,6 @@ namespace SandBox.WebUi.Pages.Research
             {
                 LStatus2.Text = "Готово к запуску";
             }
-            LHeader2.Text = String.Format("Исследование (№{0}): {1}", Rs2.Id, Rs2.ResearchName);
             Session["rsch2"] = researchId2;
 
             gridAddParams2.DataSource = TaskManager.GetTasksViewForRsch(researchId2);//dataX;
@@ -158,16 +156,27 @@ namespace SandBox.WebUi.Pages.Research
 
              if (!IsPostBack)
              {
+                 LHeaderLink.Text = String.Format("Исследование (№{0}): {1}", Rs.Id, Rs.ResearchName);
+                 LHeaderLink.NavigateUrl = "~/Pages/Research/ReportList.aspx?researchId=" + researchId.ToString();
+                 LHeaderLink2.Text = String.Format("Исследование (№{0}): {1}", Rs2.Id, Rs2.ResearchName);
+                 LHeaderLink2.NavigateUrl = "~/Pages/Research/ReportList.aspx?researchId=" + researchId2.ToString();
                  int rschsysid = ResearchManager.GetRschOSId(researchId);
                  int rschsysid2 = ResearchManager.GetRschOSId(researchId2);
                  if (rschsysid == rschsysid2)
                  {
+                     RegTreeList.Columns[1].Caption = "Эталон " + LOS.Text;
+                     RegTreeList.Columns[2].Caption = "Исследование " + researchId.ToString();
+                     RegTreeList.Columns[3].Caption = "Исследование " + researchId2.ToString();
                      string RschRegRoot = TaskManager.GetRegRootForRsch(researchId);
                      string RschRegRoot2 = TaskManager.GetRegRootForRsch(researchId2);
                      Session["rschsysid"] = rschsysid;
                      //                 TreeViewBuilder.CompareRegTree(researchId, ResearchManager.GetRschOSId(researchId));
                      long eltrootid = TreeViewBuilder.GetRegsEtlRowIdByRootstr2(rschsysid, RschRegRoot, RschRegRoot2);
+                     List<long> rschparids = TreeViewBuilder.GetRegsRootIDs(rschsysid, RschRegRoot);
+                     List<long> rschparids2 = TreeViewBuilder.GetRegsRootIDs(rschsysid, RschRegRoot2);
                      Session["eltrootid"] = eltrootid;
+                     Session["rschparids"] = rschparids;
+                     Session["rschparids2"] = rschparids2;
                      lbNoComp.ClientVisible = false;
                      RegTreeList.ClientVisible = true;
                  }
@@ -401,16 +410,30 @@ namespace SandBox.WebUi.Pages.Research
                 if (Session["rsch"] != null) int.TryParse(Session["rsch"].ToString(), out rsch);
                 int rsch2 = -1;
                 if (Session["rsch2"] != null) int.TryParse(Session["rsch2"].ToString(), out rsch2);
+                List<long> rschparids = Session["rschparids"] != null ? (List<long>)Session["rschparids"] : null;
+                long rschparid = -1;
+                if (rschparids != null)
+                {
+                    if (rschparids.Count > 0) rschparid = rschparids[rschparids.Count - 1];
+                    else rschparid = 0;
+                }
+                List<long> rschparids2 = Session["rschparids2"] != null ? (List<long>)Session["rschparids2"] : null;
+                long rschparid2 = -1;
+                if (rschparids2 != null)
+                {
+                    if (rschparids2.Count > 0) rschparid2 = rschparids2[rschparids2.Count - 1];
+                    else rschparid2 = 0;
+                }
                 List<RegCompareTreeItem2> children = null;
                 RegCompareTreeItem2 parent = e.NodeObject as RegCompareTreeItem2;
                 if (parent == null)
                 {
-                    children = TreeViewBuilder.GetRegsCompTableView2(RegTreeList.TotalNodeCount + 1, 0, rschsysid, eltrootid, rsch, 0, rsch2, 0);
+                    children = TreeViewBuilder.GetRegsCompTableView2(RegTreeList.TotalNodeCount + 1, 0, rschparid, rschparid2, rschsysid, eltrootid, rsch, -1, rsch2, -1);
                     if (children.Count == 0) RegTreeList.ClearNodes();
                 }
                 else
                 {
-                    children = TreeViewBuilder.GetRegsCompTableView2(RegTreeList.TotalNodeCount + 1, (int)parent.ID, rschsysid, (int)parent.EtlID, rsch, (int)parent.RegID, rsch2, (int)parent.RegID2);
+                    children = TreeViewBuilder.GetRegsCompTableView2(RegTreeList.TotalNodeCount + 1, parent.ID, rschparid, rschparid2, rschsysid, parent.EtlID, rsch, parent.RegID, rsch2, parent.RegID2);
                 }
                 e.Children = children;
             }
@@ -467,31 +490,34 @@ namespace SandBox.WebUi.Pages.Research
 
         protected void RegTreeList_HtmlDataCellPrepared(object sender, TreeListHtmlDataCellEventArgs e)
         {
-            if (e.Column.Name == "Etl")
+            TreeListNode node = RegTreeList.FindNodeByKeyValue(e.NodeKey);
+            switch (e.Column.Name)
             {
-                TreeListNode node = RegTreeList.FindNodeByKeyValue(e.NodeKey);
-                if (Convert.ToInt32(node["EtlID"])>-1) e.Cell.BackColor = Color.DarkSeaGreen;
-                else e.Cell.BackColor = Color.DarkSalmon;
-            }
-            else if (e.Column.Name == "Reg")
-            {
-                TreeListNode node = RegTreeList.FindNodeByKeyValue(e.NodeKey);
-                if (Convert.ToInt32(node["RegID"]) > -1)
-                {
-                    if ((node["Reg"] == null && node["Etl"] == null)||(node["Reg"] != null && node["Etl"] != null && node["Reg"].ToString() == node["Etl"].ToString())) e.Cell.BackColor = Color.DarkSeaGreen;
-                    else e.Cell.BackColor = Color.Gold; 
-                }
-                else e.Cell.BackColor = Color.DarkSalmon;
-            }
-            else if (e.Column.Name == "Reg2")
-            {
-                TreeListNode node = RegTreeList.FindNodeByKeyValue(e.NodeKey);
-                if (Convert.ToInt32(node["RegID2"]) > -1)
-                {
-                    if ((node["Reg2"] == null && node["Etl"] == null) || (node["Reg2"] != null && node["Etl"] != null && node["Reg2"].ToString() == node["Etl"].ToString())) e.Cell.BackColor = Color.DarkSeaGreen;
-                    else e.Cell.BackColor = Color.Gold;
-                }
-                else e.Cell.BackColor = Color.DarkSalmon;
+                case "Text":
+                    List<long> rschparids = Session["rschparids"] != null ? (List<long>)Session["rschparids"] : null;
+                    List<long> rschparids2 = Session["rschparids2"] != null ? (List<long>)Session["rschparids2"] : null;
+                    if ((rschparids != null && rschparids.Contains(Convert.ToInt64(node["EtlID"]))) || (rschparids2 != null && rschparids2.Contains(Convert.ToInt64(node["EtlID"])))) e.Cell.BackColor = Color.LightBlue;
+                    break;
+                case "Etl":
+                    if (Convert.ToInt32(node["EtlID"])>-1) e.Cell.BackColor = Color.DarkSeaGreen;
+                    else e.Cell.BackColor = Color.DarkSalmon;
+                    break;
+                case "Reg":
+                    if (Convert.ToInt32(node["RegID"]) > -1)
+                    {
+                        if ((node["Reg"] == null && node["Etl"] == null)||(node["Reg"] != null && node["Etl"] != null && node["Reg"].ToString() == node["Etl"].ToString())) e.Cell.BackColor = Color.DarkSeaGreen;
+                        else e.Cell.BackColor = Color.Gold; 
+                    }
+                    else e.Cell.BackColor = Color.DarkSalmon;
+                    break;
+                case "Reg2":
+                    if (Convert.ToInt32(node["RegID2"]) > -1)
+                    {
+                        if ((node["Reg2"] == null && node["Etl"] == null) || (node["Reg2"] != null && node["Etl"] != null && node["Reg2"].ToString() == node["Etl"].ToString())) e.Cell.BackColor = Color.DarkSeaGreen;
+                        else e.Cell.BackColor = Color.Gold;
+                    }
+                    else e.Cell.BackColor = Color.DarkSalmon;
+                    break;
             }
         }
 

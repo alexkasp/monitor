@@ -564,6 +564,21 @@ td.nvtxtr {
 	margin-bottom: 10px;
 }
 
+.titlegr a, .titlegr a:visited {
+	background-color: #f3f3f3;
+	color:#020202;
+	font-size: 22px;
+	padding-top: 10px;
+	padding-right: 0px;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	text-decoration: none;
+}
+
+.titlegr a:hover {
+	text-decoration: underline ;
+}
+
 .backbtn {
 	padding-left: 20px;
 }

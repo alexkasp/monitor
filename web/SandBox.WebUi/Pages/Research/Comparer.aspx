@@ -61,8 +61,10 @@
     --%>
     <div id="content-main">
         <div class="titlegr">
-            <dx:ASPxLabel ID="LHeader" runat="server" EnableDefaultAppearance="False">
-            </dx:ASPxLabel>
+            <dx:ASPxHyperLink ID="LHeaderLink" runat="server" Text="Исследование 1"
+                                        NavigateUrl="~/Pages/Research/ReportList.aspx" Visible="true">
+                                    </dx:ASPxHyperLink>
+
         </div>
         <div style="float: left; width: 47%;">
             <div class="mainparams">
@@ -404,8 +406,9 @@
         <div style="clear: both">
         </div>
         <div class="titlegr">
-            <dx:ASPxLabel ID="LHeader2" runat="server" EnableDefaultAppearance="False">
-            </dx:ASPxLabel>
+            <dx:ASPxHyperLink ID="LHeaderLink2" runat="server" Text="Исследование 2"
+                                        NavigateUrl="~/Pages/Research/ReportList.aspx" Visible="true">
+                                    </dx:ASPxHyperLink>
         </div>
         <div style="float: left; width: 47%;">
             <div class="mainparams">
@@ -755,7 +758,7 @@
                             OnVirtualModeCreateChildren="RegTree_VirtualModeCreateChildren" OnVirtualModeNodeCreating="RegTree_VirtualModeNodeCreating"
                             Width="100%" OnHtmlDataCellPrepared="RegTreeList_HtmlDataCellPrepared" ClientVisible="False">
                             <Columns>
-                                <dx:TreeListDataColumn FieldName="Text" VisibleIndex="0" Caption="Раздел/ключ реестра"
+                                <dx:TreeListDataColumn FieldName="Text" Name="Text" VisibleIndex="0" Caption="Раздел/ключ реестра"
                                     SortIndex="0" SortOrder="Ascending">
                                     <DataCellTemplate>
                                         <table cellpadding="0" cellspacing="0">

@@ -22,6 +22,8 @@
                         <dx:ASPxTextBox ID="tbLir" runat="server" Width="200px">
                             <ValidationSettings ValidationGroup="CreateEtalonMachineValidationGroup" 
                                 ErrorText="Неверное имя ВЛИР!">
+                                <RegularExpression ErrorText="Имя может содержать только латинские буквы, цифры и знак _" 
+                                    ValidationExpression="[a-zA-Z0-9_]*" />
                                 <RequiredField ErrorText=" " IsRequired="true" />
                             </ValidationSettings>
                         </dx:ASPxTextBox>
@@ -48,7 +50,7 @@
                 <tr>
                     <td colspan="2">
                         <dx:ASPxButton ID="btnCreate" runat="server" Text="Создать" 
-                            OnClick="BtnCreateClick">
+                            OnClick="BtnCreateClick" ValidationGroup="CreateEtalonMachineValidationGroup" >
                         </dx:ASPxButton>
                     </td>
                 </tr>

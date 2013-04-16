@@ -22,13 +22,13 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
-        /// LHeader control.
+        /// LHeaderLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel LHeader;
+        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink LHeaderLink;
         
         /// <summary>
         /// ASPxLabel7 control.
@@ -184,13 +184,13 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::System.Web.UI.UpdateProgress SearchGridUpdateProgress;
         
         /// <summary>
-        /// LHeader2 control.
+        /// LHeaderLink2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxEditors.ASPxLabel LHeader2;
+        protected global::DevExpress.Web.ASPxEditors.ASPxHyperLink LHeaderLink2;
         
         /// <summary>
         /// ASPxLabel1 control.
