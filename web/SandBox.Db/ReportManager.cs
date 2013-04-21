@@ -141,6 +141,12 @@ namespace SandBox.Db
             return db.EventsModulesDescriptions.FirstOrDefault<EventsModulesDescriptions>(x => x.EventModuleID == moduleId).Description;
         }
 
+        public static string GetEventById(int eventId)
+        {
+            var db = new SandBoxDataContext();
+            return db.EventsEventDescriptions.FirstOrDefault<EventsEventDescriptions>(x => x.EventID == eventId).EventsEventDescription;
+        }
+
         //public static IQueryable<string> GetEventsDescrByModule(string moduleDesctiption)
         //{
         //    var db = new SandBoxDataContext();
@@ -241,22 +247,6 @@ namespace SandBox.Db
                         return String.Format("Вес события {0}", s);
                     }
             }
-        }
-
-
-        public static void InsertStopEvent(int rschId,int m, int evt, string d, string wh)
-        {
-            StopEvents se = new StopEvents()
-                {
-                    dest = d,
-                    module = m,
-                    @event = evt,
-                    who = wh,
-                    rschId = rschId
-                };
-            var db = new SandBoxDataContext();
-            db.StopEvents.InsertOnSubmit(se);
-            db.SubmitChanges();
         }
 
         public static void UpdateRowDirectoriesOfEvents(int dofId, int segn, int m, int evt, string d, string wh)

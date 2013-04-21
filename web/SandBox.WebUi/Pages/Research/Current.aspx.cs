@@ -35,16 +35,8 @@ namespace SandBox.WebUi.Pages.Research
                 gridViewResearches.Visible = false;
                 labelNoItems.Text = "";
                 _userId = UserId;
-                
-                UpdateTableView();
-//                gridViewResearches.DataBind();
             }
-            gridViewResearchesPager.Visible = gridViewResearches.Visible;
-            if (gridViewResearches.VisibleRowCount > 0) { gridViewResearchesPager.ItemCount = gridViewResearches.VisibleRowCount; }
-            else { gridViewResearchesPager.ItemCount = gridViewResearches.SettingsPager.PageSize; }
-            gridViewResearchesPager.ItemsPerPage = gridViewResearches.SettingsPager.PageSize;
-            if (gridViewResearches.PageIndex > 0) { gridViewResearchesPager.PageIndex = gridViewResearches.PageIndex; }
-            else gridViewResearchesPager.PageIndex = 0;
+            UpdateTableView();
         }
 
         private void UpdateTableView()
@@ -270,30 +262,30 @@ namespace SandBox.WebUi.Pages.Research
             Debug.Print("Get report: " + researchId);
         }
 
-        protected void GridViewResearchesHtmlRowCreated(object sender, DevExpress.Web.ASPxGridView.ASPxGridViewTableRowEventArgs e)
-        {
-            /*if (e.RowType != DevExpress.Web.ASPxGridView.GridViewRowType.Data) return;
+        //protected void GridViewResearchesHtmlRowCreated(object sender, DevExpress.Web.ASPxGridView.ASPxGridViewTableRowEventArgs e)
+        //{
+        //    /*if (e.RowType != DevExpress.Web.ASPxGridView.GridViewRowType.Data) return;
 
-            //e.Row.BackColor = 
-            //e.Row.ForeColor = Color.Red;
-            e.Row.BackColor = Color.DeepPink;
+        //    //e.Row.BackColor = 
+        //    //e.Row.ForeColor = Color.Red;
+        //    e.Row.BackColor = Color.DeepPink;
             
-            ASPxHyperLink link = gridViewResearches.FindRowCellTemplateControl(e.VisibleIndex, null, "linkA") as ASPxHyperLink;
-            if (link == null) return;
+        //    ASPxHyperLink link = gridViewResearches.FindRowCellTemplateControl(e.VisibleIndex, null, "linkA") as ASPxHyperLink;
+        //    if (link == null) return;
             
-            Int32 researchId = (Int32)e.KeyValue;
-            Db.Research research = ResearchManager.GetResearch(researchId);
+        //    Int32 researchId = (Int32)e.KeyValue;
+        //    Db.Research research = ResearchManager.GetResearch(researchId);
 
-            if (research.State == (Int32)ResearchState.COMPLETED)
-            {
-                link.NavigateUrl = RootPath + "/ReportList.aspx?research=" + e.KeyValue;
+        //    if (research.State == (Int32)ResearchState.COMPLETED)
+        //    {
+        //        link.NavigateUrl = RootPath + "/ReportList.aspx?research=" + e.KeyValue;
                 
-            }
-            else
-            {
-                link.Visible = false;
-            }*/
-        }
+        //    }
+        //    else
+        //    {
+        //        link.Visible = false;
+        //    }*/
+        //}
 
         protected void GridViewResearchesHtmlRowPrepared(object sender, DevExpress.Web.ASPxGridView.ASPxGridViewTableRowEventArgs e)
         {
@@ -462,11 +454,6 @@ namespace SandBox.WebUi.Pages.Research
             SendPacket(packet1.ToByteArray());
         }
 
-        protected void BStop_Click(object sender, EventArgs e)
-        {
-
-        }
-
         //protected void gridViewResearches_BeforePerformDataSelect(object sender, EventArgs e)
         //{
 
@@ -484,32 +471,32 @@ namespace SandBox.WebUi.Pages.Research
         //}
 
         // protected void detail_DataBinding(object sender, EventArgs e)
-        protected void gridViewResearches_DataSelect(object sender, EventArgs e)
-        {
-            Int32 count = IsUserInRole("Administrator") ? ResearchManager.GetResearches().Count() : ResearchManager.GetResearches(UserId).Count();
-            IQueryable rs = IsUserInRole("Administrator") ? ResearchManager.GetResearchesTableView() : ResearchManager.GetResearchesTableView(UserId);
+        //protected void gridViewResearches_DataSelect(object sender, EventArgs e)
+        //{
+        //    Int32 count = IsUserInRole("Administrator") ? ResearchManager.GetResearches().Count() : ResearchManager.GetResearches(UserId).Count();
+        //    IQueryable rs = IsUserInRole("Administrator") ? ResearchManager.GetResearchesTableView() : ResearchManager.GetResearchesTableView(UserId);
 
-            if (count > 0)
-            {
-                gridViewResearches.Visible = true;
-                labelNoItems.Text = "";
+        //    if (count > 0)
+        //    {
+        //        gridViewResearches.Visible = true;
+        //        labelNoItems.Text = "";
 
-                gridViewResearches.DataSource = rs;               
-            }
+        //        gridViewResearches.DataSource = rs;               
+        //    }
 
-            if (count == 0)
-            {
-                gridViewResearches.Visible = false;
-                labelNoItems.Text = "У вас нет доступных исследований";
-            }
-            gridViewResearchesPager.Visible = gridViewResearches.Visible;
-            if (gridViewResearches.VisibleRowCount > 0) { gridViewResearchesPager.ItemCount = gridViewResearches.VisibleRowCount; }
-            else { gridViewResearchesPager.ItemCount = gridViewResearches.SettingsPager.PageSize; }
-            gridViewResearchesPager.ItemsPerPage = gridViewResearches.SettingsPager.PageSize;
-            if (gridViewResearches.PageIndex > 0) { gridViewResearchesPager.PageIndex = gridViewResearches.PageIndex; }
-            else gridViewResearchesPager.PageIndex = 0;
+        //    if (count == 0)
+        //    {
+        //        gridViewResearches.Visible = false;
+        //        labelNoItems.Text = "У вас нет доступных исследований";
+        //    }
+        //    gridViewResearchesPager.Visible = gridViewResearches.Visible;
+        //    if (gridViewResearches.VisibleRowCount > 0) { gridViewResearchesPager.ItemCount = gridViewResearches.VisibleRowCount; }
+        //    else { gridViewResearchesPager.ItemCount = gridViewResearches.SettingsPager.PageSize; }
+        //    gridViewResearchesPager.ItemsPerPage = gridViewResearches.SettingsPager.PageSize;
+        //    if (gridViewResearches.PageIndex > 0) { gridViewResearchesPager.PageIndex = gridViewResearches.PageIndex; }
+        //    else gridViewResearchesPager.PageIndex = 0;
 
-        }
+        //}
         
 
         protected void Detail_DataSelect(object sender, EventArgs e)            
@@ -614,21 +601,16 @@ namespace SandBox.WebUi.Pages.Research
             Response.Redirect("~/Pages/Research/NewResearch.aspx");
         }
 
-        protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
-        {
-
-        }
-
         protected void gridViewResearchesPager_PageIndexChanged(object sender, EventArgs e)
         {
             gridViewResearches.PageIndex = gridViewResearchesPager.PageIndex;
-            gridViewResearches.DataBind();
+            UpdateTableView();
         }
 
         protected void gridViewResearchesPager_PageSizeChanged(object sender, EventArgs e)
         {
             gridViewResearches.SettingsPager.PageSize = gridViewResearchesPager.ItemsPerPage;
-            gridViewResearches.DataBind();
+            UpdateTableView();
         }
 
         protected void gridViewResearches_CustomJSProperties(object sender, ASPxGridViewClientJSPropertiesEventArgs e)

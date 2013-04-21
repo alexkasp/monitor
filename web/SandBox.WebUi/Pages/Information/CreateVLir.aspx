@@ -48,11 +48,41 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
-                        <dx:ASPxButton ID="btnCreate" runat="server" Text="Создать" 
-                            OnClick="BtnCreateClick" ValidationGroup="CreateEtalonMachineValidationGroup" >
-                        </dx:ASPxButton>
-                    </td>
+                  <td>
+                  </td>
+                  <td>
+                  <br />
+                     <div style="width:200px;">
+                     <div style="float:right;padding-left:10px;">
+                      <dx:ASPxButton ID="btnCancel" runat="server" Text="Отменить" 
+                             AutoPostBack = "False" CssClass="button" EnableDefaultAppearance="False" 
+                             EnableTheming="False" Width="90px">
+                          <ClientSideEvents Click="function(s, e) {
+	document.location.href = '/Pages/Information/Resources.aspx';
+}" />
+                                    <PressedStyle CssClass="buttonHover">
+                                    </PressedStyle>
+                                    <HoverStyle CssClass="buttonHover">
+                                    </HoverStyle>
+                                    <DisabledStyle CssClass="buttonDisable">
+                                    </DisabledStyle>
+                      </dx:ASPxButton>
+                      </div>
+                     <div style="float:right">
+                      <dx:ASPxButton ID="btnCreate" runat="server" Text="Создать" 
+                             ValidationGroup="CreateEtalonMachineValidationGroup" onclick="BtnCreateClick" 
+                             AutoPostBack = "false" CssClass="button" EnableDefaultAppearance="False" 
+                             EnableTheming="False" Width="90px">
+                                    <PressedStyle CssClass="buttonHover">
+                                    </PressedStyle>
+                                    <HoverStyle CssClass="buttonHover">
+                                    </HoverStyle>
+                                    <DisabledStyle CssClass="buttonDisable">
+                                    </DisabledStyle>
+                      </dx:ASPxButton>
+                      </div>
+                      </div>
+                  </td>
                 </tr>
             </tbody>
         </table>

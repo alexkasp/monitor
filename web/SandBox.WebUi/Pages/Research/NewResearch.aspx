@@ -5,6 +5,21 @@
 
     <script type="text/javascript">
     // <![CDATA[
+        function LoadFSListData(lb, hf) {
+            var LoadedItems = hf.Get("LoadDataList");
+            var itemCount = lb.GetItemCount();
+            if (LoadedItems != null) {
+                lb.BeginUpdate();
+                lb.ClearItems();
+                itemCount = LoadedItems.length;
+                for (var i = 0; i < itemCount; i++) {
+                    var itemArr = LoadedItems[i].split(";");
+                    lb.AddItem([(i + 1).toString(), itemArr[0], itemArr[1], "<div style=\"text-align: center;\"><img style=\"cursor:pointer;\" alt=\"Удалить\" src=\"../../Content/Images/Icons/delete.png\" onclick=\"DeleteLbItem(" + csGetClientInstanceName(lb) + ")\" title=\"Удалить\"></div>"], i)
+                }
+                lb.EndUpdate();
+            }
+            lb.SetHeight(50 + itemCount * 25);
+        }
         function csGetClientInstanceName(editorControl) {
             var clientInstanceName = null;
             if (typeof (editorControl) !== 'undefined') {
@@ -24,7 +39,7 @@
             if (!confirm('Вы уверены, что хотите удалить задание?')) { return; }
             var itemindex = ListBox.GetSelectedItems()[0].index;
             var count = ListBox.GetItemCount();
-            if (count > itemindex+1) {
+            if (count > itemindex + 1) {
                 var lbitems = new Array();
                 var j = 0;
                 for (var i = 0; i < count; i++) {
@@ -36,8 +51,6 @@
                         lb_items[2] = lb_items[2].slice(1);
                         lb_items[3] = "<img style=\"cursor:pointer;\" alt=\"Удалить\" src=\"../../Content/Images/Icons/delete.png\" onclick=\"DeleteLbItem(" + csGetClientInstanceName(ListBox) + ")\" title=\"Удалить\">";
                         lbitems[j] = lb_items;
-                        if (i < count - 1) ListBox.InsertItem(lb_items, i);
-                        else ListBox.AddItem(lb_items, i);
                         j++;
                     }
                 }
@@ -101,8 +114,8 @@
                                 <dx:ASPxButton ID="btnClose" runat="server" Text="Отмена" AutoPostBack="False"
                                     CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" Width="90px">
                                     <ClientSideEvents Click="function(s, e) {
-    popup_reg.Hide();
-}" />
+                                            popup_reg.Hide();
+                                        }" />
                                     <PressedStyle CssClass="buttonHover">
                                     </PressedStyle>
                                     <HoverStyle CssClass="buttonHover">
@@ -115,19 +128,19 @@
                                 <dx:ASPxButton ID="btnChoose" runat="server" Text="Выбрать" AutoPostBack="False"
                                     CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" Width="90px">
                                     <ClientSideEvents Click="function(s, e) {
-            var s = tbEtlRegRoot.GetText();
-            if (s.indexOf('\\') > 0)
-            {
-            cmbRegRoot.SetText(s.substring(0,s.indexOf('\\')));
-            tbRegRoot.SetText(s.substring(s.indexOf('\\')+1,s.length));
-            }
-            else
-            {
-            cmbRegRoot.SetText(s);
-            tbRegRoot.SetText('');
-            }
-            popup_reg.Hide();
-}" />
+                                                    var s = tbEtlRegRoot.GetText();
+                                                    if (s.indexOf('\\') > 0)
+                                                    {
+                                                    cmbRegRoot.SetText(s.substring(0,s.indexOf('\\')));
+                                                    tbRegRoot.SetText(s.substring(s.indexOf('\\')+1,s.length));
+                                                    }
+                                                    else
+                                                    {
+                                                    cmbRegRoot.SetText(s);
+                                                    tbRegRoot.SetText('');
+                                                    }
+                                                    popup_reg.Hide();
+                                        }" />
                                     <PressedStyle CssClass="buttonHover">
                                     </PressedStyle>
                                     <HoverStyle CssClass="buttonHover">
@@ -188,8 +201,8 @@
                                 <dx:ASPxButton ID="btnFileCancel" runat="server" Text="Отмена" AutoPostBack="False"
                                     CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" Width="90px">
                                     <ClientSideEvents Click="function(s, e) {
-    popup_file.Hide();
-}" />
+                                            popup_file.Hide();
+                                        }" />
                                     <PressedStyle CssClass="buttonHover">
                                     </PressedStyle>
                                     <HoverStyle CssClass="buttonHover">
@@ -202,9 +215,9 @@
                                 <dx:ASPxButton ID="btnFileChoose" runat="server" Text="Выбрать" AutoPostBack="False"
                                     CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" Width="90px">
                                     <ClientSideEvents Click="function(s, e) {
-            tbFileRoot.SetText('c:\\'+tbEtlFileRoot.GetText());
-            popup_file.Hide();
-}" />
+                                                    tbFileRoot.SetText('c:\\'+tbEtlFileRoot.GetText());
+                                                    popup_file.Hide();
+                                        }" />
                                     <PressedStyle CssClass="buttonHover">
                                     </PressedStyle>
                                     <HoverStyle CssClass="buttonHover">
@@ -419,8 +432,8 @@
                                 <dx:ASPxButton ID="btnReset" runat="server" Text="Очистить" AutoPostBack="False"
                                     CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" Width="90px">
                                     <ClientSideEvents Click="function(s, e) {
-	document.location.href = '/Pages/Research/NewResearch.aspx';
-}" />
+	                                        document.location.href = '/Pages/Research/NewResearch.aspx';
+                                        }" />
                                     <PressedStyle CssClass="buttonHover">
                                     </PressedStyle>
                                     <HoverStyle CssClass="buttonHover">
@@ -433,8 +446,8 @@
                                 <dx:ASPxButton ID="btnCancel" runat="server" Text="Отменить" AutoPostBack="False"
                                     CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" Width="90px">
                                     <ClientSideEvents Click="function(s, e) {
-	document.location.href = '/Pages/Research/Current.aspx';
-}" />
+	                                        document.location.href = '/Pages/Research/Current.aspx';
+                                        }" />
                                     <PressedStyle CssClass="buttonHover">
                                     </PressedStyle>
                                     <HoverStyle CssClass="buttonHover">
@@ -473,36 +486,22 @@
                             <div class="acchdr">Файловая система</div>
                         </Header>
                         <Content>
-                            <dx:ASPxListBox ID="lbFSParams" runat="server" Width="100%" 
-                                ClientInstanceName="lbFSParams" EncodeHtml="False" ItemStyle-Wrap="True" Height="50px" ValueField="ID" CssClass="lbpar">
+                            <dx:ASPxHiddenField ID="hfFS" ClientInstanceName="hfFS" runat="server" SyncWithServer="false" />
+                            <dx:ASPxListBox ID="lbFSParams" runat="server" Width="100%"  CssClass="lbpar"
+                                ClientInstanceName="lbFSParams" EncodeHtml="False" ItemStyle-Wrap="True" ValueField="ID" >
                                 <Columns>
                                     <dx:ListBoxColumn FieldName="ID" Caption="№" Width="10px" />
-                                    <dx:ListBoxColumn FieldName="Task" Caption="ЗАДАНИЕ" Width="200px" />
+                                    <dx:ListBoxColumn FieldName="Task" Caption="ЗАДАНИЕ" Width="270px" />
                                     <dx:ListBoxColumn FieldName="Param" Caption="ПАРАМЕТРЫ" Width="100%" />
                                     <dx:ListBoxColumn Caption="УДАЛИТЬ" Width="50px" />
                                 </Columns>
+
+<ItemStyle Wrap="True"></ItemStyle>
+                                <ClientSideEvents Init="function(s, e) {
+	LoadFSListData(s,hfFS);
+}" />
                             </dx:ASPxListBox>
-<%--                            <dx:ASPxGridView ID="ASPxGridView2" runat="server" Width="100%" Style="margin-bottom: 5px;
-                                margin-top: 5px;" AutoGenerateColumns="False" KeyFieldName="f2">
-                                <Columns>
-                                    <dx:GridViewDataTextColumn Caption="№" FieldName="f0" VisibleIndex="0" Width="300px">
-                                    </dx:GridViewDataTextColumn>
-                                    <dx:GridViewDataTextColumn Caption="Задание" FieldName="f1" VisibleIndex="1" Width="300px">
-                                    </dx:GridViewDataTextColumn>
-                                    <dx:GridViewDataTextColumn Caption="Параметр" FieldName="f2" VisibleIndex="2">
-                                    </dx:GridViewDataTextColumn>
-                                                <dx:GridViewCommandColumn VisibleIndex="3" ButtonType="Image" Width="50px" Caption="Удалить">
-                                                    <CustomButtons>
-                                                        <dx:GridViewCommandColumnCustomButton ID="cbDelete">
-                                                            <Image ToolTip="Удалить" Url="../../Content/Images/Icons/delete.png" />
-                                                        </dx:GridViewCommandColumnCustomButton>
-                                                    </CustomButtons>
-                                                    <CellStyle HorizontalAlign="Center">
-                                                    </CellStyle>
-                                                </dx:GridViewCommandColumn>
-                                </Columns>
-                            </dx:ASPxGridView>
---%>                            <table style="width: 100%;padding-top:5px;">
+                            <table style="width: 100%;padding-top:5px;">
                                 <tr>
                                     <td style="width: 35px">Задание</td>
                                     <td style="width: 210px">
@@ -629,39 +628,20 @@
                                 Реестр</div>
                         </Header>
                         <Content>
+                            <dx:ASPxHiddenField ID="hfReg" ClientInstanceName="hfReg" runat="server" SyncWithServer="false" />
                             <dx:ASPxListBox ID="lbRegParams" runat="server" Width="100%"  CssClass="lbpar"
-                                ClientInstanceName="lbRegParams" EncodeHtml="False" ItemStyle-Wrap="True" Height="50px" ValueField="ID">
+                                ClientInstanceName="lbRegParams" EncodeHtml="False" ItemStyle-Wrap="True" ValueField="ID">
                                 <Columns>
                                     <dx:ListBoxColumn FieldName="ID" Caption="№" Width="10px" />
-                                    <dx:ListBoxColumn FieldName="Task" Caption="ЗАДАНИЕ" Width="200px" />
+                                    <dx:ListBoxColumn FieldName="Task" Caption="ЗАДАНИЕ" Width="250px" />
                                     <dx:ListBoxColumn FieldName="Param" Caption="ПАРАМЕТРЫ" Width="100%" />
                                     <dx:ListBoxColumn Caption="УДАЛИТЬ" Width="50px" />
                                 </Columns>
+                                <ClientSideEvents Init="function(s, e) {
+	LoadFSListData(s,hfReg);
+}" />
                             </dx:ASPxListBox>
-<%--                            <dx:ASPxGridView ID="ASPxGridView3" runat="server" Width="100%" Style="margin-bottom: 5px;
-                                margin-top: 5px;" AutoGenerateColumns="False" KeyFieldName="f2">
-                                <Columns>
-                                    <dx:GridViewDataTextColumn Caption="Задание" FieldName="f1" VisibleIndex="0" Width="300px">
-                                        <PropertiesTextEdit>
-                                            <ValidationSettings ErrorText="Неверное значение">
-                                                <RegularExpression ErrorText="Ошибка проверки регулярного выражения" />
-                                            </ValidationSettings>
-                                        </PropertiesTextEdit>
-                                    </dx:GridViewDataTextColumn>
-                                    <dx:GridViewDataTextColumn Caption="Параметр" FieldName="f2" VisibleIndex="1">
-                                        <PropertiesTextEdit>
-                                            <ValidationSettings ErrorText="Неверное значение">
-                                                <RegularExpression ErrorText="Ошибка проверки регулярного выражения" />
-                                            </ValidationSettings>
-                                        </PropertiesTextEdit>
-                                    </dx:GridViewDataTextColumn>
-                                </Columns>
-                                <SettingsBehavior AllowFocusedRow="True" />
-                                <SettingsPager Visible="False">
-                                </SettingsPager>
-                                <SettingsLoadingPanel Text="Загрузка&amp;hellip;"></SettingsLoadingPanel>
-                            </dx:ASPxGridView>
---%>                            <table style="width: 100%;padding-top:5px;">
+                            <table style="width: 100%;padding-top:5px;">
                                 <tr>
                                     <td style="width: 35px">Задание</td>
                                     <td style="width: 210px">
@@ -720,27 +700,7 @@
                                     </td>
                             	</tr>
                                 </table>
-<%--                            <dx:ASPxLabel ID="ASPxLabel7" runat="server" Text="Ветка реестра">
-                            </dx:ASPxLabel>
-                            <dx:ASPxComboBox ID="ASPxComboBox3" runat="server" Width="50%" AutoPostBack="True"
-                                LoadingPanelText="Загрузка&amp;hellip;">
-                                <Items>
-                                    <dx:ListEditItem Text="весь реестр" Value="full" />
-                                    <dx:ListEditItem Text="HKEY_CLASSES_ROOT" Value="HKEY_CLASSES_ROOT" />
-                                    <dx:ListEditItem Text="HKEY_CURRENT_USER" Value="HKEY_CURRENT_USER" />
-                                    <dx:ListEditItem Text="HKEY_LOCAL_MACHINE" Value="HKEY_LOCAL_MACHINE" />
-                                    <dx:ListEditItem Text="HKEY_USERS" Value="HKEY_USERS" />
-                                    <dx:ListEditItem Text="HKEY_CURRENT_CONFIG" Value="HKEY_CURRENT_CONFIG" />
-                                </Items>
-                                <ValidationSettings ErrorText="Неверное значение">
-                                    <RegularExpression ErrorText="Ошибка проверки регулярного выражения"></RegularExpression>
-                                </ValidationSettings>
-                            </dx:ASPxComboBox>
-                            <dx:ASPxLabel ID="ASPxLabel8" runat="server" Text="Подветка реестра">
-                            </dx:ASPxLabel>
-                            <dx:ASPxTextBox ID="ASPxTextBox3" runat="server" Width="50%">
-                            </dx:ASPxTextBox>
---%>                        </Content>
+                        </Content>
                     </ajaxToolkit:AccordionPane>
                     <ajaxToolkit:AccordionPane ID="AccordionPane2" runat="server">
                         <Header>
@@ -750,39 +710,20 @@
                                 Процессы</div>
                         </Header>
                         <Content>
+                            <dx:ASPxHiddenField ID="hfProc" ClientInstanceName="hfProc" runat="server" SyncWithServer="false" />
                             <dx:ASPxListBox ID="lbProcParams" runat="server" Width="100%"  CssClass="lbpar"
-                                ClientInstanceName="lbProcParams"  EncodeHtml="False" ItemStyle-Wrap="True" Height="50px" ValueField="ID">
+                                ClientInstanceName="lbProcParams"  EncodeHtml="False" ItemStyle-Wrap="True" ValueField="ID">
                                 <Columns>
                                     <dx:ListBoxColumn FieldName="ID" Caption="№" Width="10px" />
-                                    <dx:ListBoxColumn FieldName="Task" Caption="ЗАДАНИЕ" Width="200px" />
+                                    <dx:ListBoxColumn FieldName="Task" Caption="ЗАДАНИЕ" Width="250px" />
                                     <dx:ListBoxColumn FieldName="Param" Caption="ПАРАМЕТРЫ" Width="100%" />
                                     <dx:ListBoxColumn Caption="УДАЛИТЬ" Width="50px" />
                                 </Columns>
+                                <ClientSideEvents Init="function(s, e) {
+	LoadFSListData(s,hfProc);
+}" />
                             </dx:ASPxListBox>
-<%--                            <dx:ASPxGridView ID="ASPxGridView4" runat="server" Width="100%" Style="margin-bottom: 5px;
-                                margin-top: 5px;" AutoGenerateColumns="False" KeyFieldName="f2">
-                                <Columns>
-                                    <dx:GridViewDataTextColumn Caption="Задание" FieldName="f1" VisibleIndex="0" Width="300px">
-                                        <PropertiesTextEdit>
-                                            <ValidationSettings ErrorText="Неверное значение">
-                                                <RegularExpression ErrorText="Ошибка проверки регулярного выражения" />
-                                            </ValidationSettings>
-                                        </PropertiesTextEdit>
-                                    </dx:GridViewDataTextColumn>
-                                    <dx:GridViewDataTextColumn Caption="Параметр" FieldName="f2" VisibleIndex="1">
-                                        <PropertiesTextEdit>
-                                            <ValidationSettings ErrorText="Неверное значение">
-                                                <RegularExpression ErrorText="Ошибка проверки регулярного выражения" />
-                                            </ValidationSettings>
-                                        </PropertiesTextEdit>
-                                    </dx:GridViewDataTextColumn>
-                                </Columns>
-                                <SettingsBehavior AllowFocusedRow="True" />
-                                <SettingsPager Visible="False">
-                                </SettingsPager>
-                                <SettingsLoadingPanel Text="Загрузка&amp;hellip;"></SettingsLoadingPanel>
-                            </dx:ASPxGridView>
---%>                            <table style="width: 100%;padding-top:5px;">
+                            <table style="width: 100%;padding-top:5px;">
                                 <tr>
                                     <td style="width: 35px">Задание</td>
                                     <td style="width: 210px">
@@ -802,28 +743,7 @@
                                     </td>
                                 </tr>
                             </table>
-<%--                            <table style="width: 100%;">
-                                <tr>
-                                    <td style="width: 210px">
-                                        <dx:ASPxComboBox ID="CBProcActiv" runat="server" ValueType="System.String" Width="200px">
-                                        </dx:ASPxComboBox>
-                                    </td>
-                                    <td style="width: 262px">
-                                        <dx:ASPxTextBox ID="TBProcTaskValue" runat="server" Width="250px" Style="left: 210px;"
-                                            Height="20px">
-                                        </dx:ASPxTextBox>
-                                    </td>
-                                    <td style="width: 80px">
-                                        <dx:ASPxButton ID="BAddProcTask" runat="server" Text="Вставить" OnClick="BAddProcTask_Click">
-                                        </dx:ASPxButton>
-                                    </td>
-                                    <td>
-                                        <dx:ASPxButton ID="BDelProcTask" runat="server" Text="Удалить" OnClick="BDelProcTask_Click">
-                                        </dx:ASPxButton>
-                                    </td>
-                                </tr>
-                            </table>
---%>                            <dx:ASPxCheckBox ID="cbProcMon" runat="server" Text="Включить монитор процессов">
+                            <dx:ASPxCheckBox ID="cbProcMon" runat="server" Text="Включить монитор процессов">
                             </dx:ASPxCheckBox>
                         </Content>
                     </ajaxToolkit:AccordionPane>
@@ -835,40 +755,20 @@
                                 Сетевая активность</div>
                         </Header>
                         <Content>
+                            <dx:ASPxHiddenField ID="hfNet" ClientInstanceName="hfNet" runat="server" SyncWithServer="false" />
                             <dx:ASPxListBox ID="lbNetParams" runat="server" Width="100%"  CssClass="lbpar"
-                                ClientInstanceName="lbNetParams" EncodeHtml="False" ItemStyle-Wrap="True" Height="50px" ValueField="ID">
+                                ClientInstanceName="lbNetParams" EncodeHtml="False" ItemStyle-Wrap="True" ValueField="ID">
                                 <Columns>
                                     <dx:ListBoxColumn FieldName="ID" Caption="№" Width="10px" />
-                                    <dx:ListBoxColumn FieldName="Task" Caption="ЗАДАНИЕ" Width="200px" />
+                                    <dx:ListBoxColumn FieldName="Task" Caption="ЗАДАНИЕ" Width="250px" />
                                     <dx:ListBoxColumn FieldName="Param" Caption="ПАРАМЕТРЫ" Width="100%" />
                                     <dx:ListBoxColumn Caption="УДАЛИТЬ" Width="50px" />
                                 </Columns>
+                                <ClientSideEvents Init="function(s, e) {
+	LoadFSListData(s,hfNet);
+}" />
                             </dx:ASPxListBox>
-<%--                            <dx:ASPxGridView ID="ASPxGridView1" runat="server" Width="100%" Style="margin-bottom: 5px;
-                                margin-top: 5px;" AutoGenerateColumns="False" OnRowDeleting="ASPxGridView1_RowDeleting"
-                                KeyFieldName="f2">
-                                <Columns>
-                                    <dx:GridViewDataTextColumn Caption="Задание" FieldName="f1" VisibleIndex="0" Width="300px">
-                                        <PropertiesTextEdit>
-                                            <ValidationSettings ErrorText="Неверное значение">
-                                                <RegularExpression ErrorText="Ошибка проверки регулярного выражения" />
-                                            </ValidationSettings>
-                                        </PropertiesTextEdit>
-                                    </dx:GridViewDataTextColumn>
-                                    <dx:GridViewDataTextColumn Caption="Параметр" FieldName="f2" VisibleIndex="1">
-                                        <PropertiesTextEdit>
-                                            <ValidationSettings ErrorText="Неверное значение">
-                                                <RegularExpression ErrorText="Ошибка проверки регулярного выражения" />
-                                            </ValidationSettings>
-                                        </PropertiesTextEdit>
-                                    </dx:GridViewDataTextColumn>
-                                </Columns>
-                                <SettingsBehavior AllowFocusedRow="True" />
-                                <SettingsPager Visible="False">
-                                </SettingsPager>
-                                <SettingsLoadingPanel Text="Загрузка&amp;hellip;"></SettingsLoadingPanel>
-                            </dx:ASPxGridView>
---%>                            <table style="width: 100%;padding-top:5px;">
+                            <table style="width: 100%;padding-top:5px;">
                                 <tr>
                                     <td style="width: 35px">Задание</td>
                                     <td style="width: 230px">
@@ -888,29 +788,7 @@
                                     </td>
                                 </tr>
                             </table>
-<%--                            <table style="width: 100%;">
-                                <tr>
-                                    <td style="width: 210px">
-                                        <dx:ASPxComboBox ID="CBNetActiv" runat="server" ValueType="System.String" Width="200px"
-                                            AutoPostBack="True" ViewStateMode="Enabled">
-                                        </dx:ASPxComboBox>
-                                    </td>
-                                    <td style="width: 262px">
-                                        <dx:ASPxTextBox ID="TBNetTaskValue" runat="server" Width="250px" Style="left: 210px;"
-                                            Height="20px">
-                                        </dx:ASPxTextBox>
-                                    </td>
-                                    <td style="width: 80px">
-                                        <dx:ASPxButton ID="BAddNetTask" runat="server" Text="Вставить" OnClick="BAddNetTask_Click">
-                                        </dx:ASPxButton>
-                                    </td>
-                                    <td>
-                                        <dx:ASPxButton ID="BDelNetTask" runat="server" Text="Удалить" OnClick="BDelNetTask_Click">
-                                        </dx:ASPxButton>
-                                    </td>
-                                </tr>
-                            </table>
---%>                        </Content>
+                        </Content>
                     </ajaxToolkit:AccordionPane>
                 </Panes>
             </ajaxToolkit:Accordion>

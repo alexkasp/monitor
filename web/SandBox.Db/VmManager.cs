@@ -54,7 +54,7 @@ namespace SandBox.Db
                             }
                             else
                             {
-                                res.Add(os, new List<int> { 1, t.danger??0 });
+                                res.Add(os, new List<int> { 1, t.danger ?? 0 });
                             }
                         }
                     }
@@ -89,7 +89,7 @@ namespace SandBox.Db
         {
             var db = new SandBoxDataContext();
             var res = db.stats.FirstOrDefault<stats>(x => true);
-            UInt64 parsedMem=0;
+            UInt64 parsedMem = 0;
             UInt64.TryParse(res.meminfo, out parsedMem);
             double rowMem = parsedMem / 1024;
             parsedMem = (ulong)Math.Round(rowMem);
@@ -214,16 +214,36 @@ namespace SandBox.Db
         //**********************************************************
         //* Получение количества Vm для отображения
         //**********************************************************
-        public static Int32 GetVmsTableViewCount()
+        public static Int32 GetVmsTableViewCount(bool ShowEtalon = false, bool ShowTemp = false)
         {
             var db = new SandBoxDataContext();
-
-            var items = from v in db.Vms
+            if (!ShowEtalon && !ShowTemp)
+            {
+                return (from v in db.Vms
+                        where v.Type == 2 || v.Type == 3
+                        where v.EnvType != 0 && v.State != (int)VmManager.State.DELETED
+                        select v).Count();
+            }
+            else if (ShowEtalon && !ShowTemp)
+            {
+                return (from v in db.Vms
+                        where v.EnvType != 0 && v.State != (int)VmManager.State.DELETED
+                        select v).Count();
+            }
+            else if (!ShowEtalon && ShowTemp)
+            {
+                return (from v in db.Vms
+                        where v.Type == 2 || v.Type == 3
                         where v.State != (int)VmManager.State.DELETED
-                        select v;
-            return items.Count();
+                        select v).Count();
+            }
+            else
+            {
+                return (from v in db.Vms
+                        where v.State != (int)VmManager.State.DELETED
+                        select v).Count();
+            }
         }
-
 
         //**********************************************************
         //* Получение количества Vm для отображения для пользователя c Id
@@ -241,58 +261,67 @@ namespace SandBox.Db
         //**********************************************************
         //* Получение Vm для отображения
         //**********************************************************
-        public static IQueryable GetVmsTableView(bool showEtalon = false)
+        public static IQueryable GetVmsTableView(bool ShowEtalon = false, bool ShowTemp = false)
         {
             var db = new SandBoxDataContext();
-            if (showEtalon)
+            if (!ShowEtalon && !ShowTemp)
             {
-                var items = from v in db.Vms
-                            join vs in db.VmStates
-                                on v.State equals vs.State
-                            join vt in db.VmTypes
-                                on v.Type equals vt.Type
-                            join vst in db.VmSystems
-                                on v.System equals vst.System
-                            where v.EnvType != 0 && v.State != (int)VmManager.State.DELETED
-                            select new { v.Id, v.Name, State = vs.Description, Type = vt.Description, System = vst.Description, v.EnvType, EnvState = v.EnvId == 0 ? "не готова" : "готова", EnvMac = v.EnvMac == "null" ? "не определен" : v.EnvMac, EnvIp = v.EnvIp == "null" ? "не определен" : v.EnvIp };
-                return items;
+                return from v in db.Vms
+                       join vs in db.VmStates
+                           on v.State equals vs.State
+                       join vt in db.VmTypes
+                           on v.Type equals vt.Type
+                       join vst in db.VmSystems
+                           on v.System equals vst.System
+                       where v.Type == 2 || v.Type == 3
+                       where v.EnvType != 0 && v.State != (int)VmManager.State.DELETED
+                       select new { v.Id, v.Name, State = vs.Description, Type = vt.Description, System = vst.Description, v.EnvType, EnvState = v.EnvId == 0 ? "не готова" : "готова", EnvMac = v.EnvMac == "null" ? "не определен" : v.EnvMac, EnvIp = v.EnvIp == "null" ? "не определен" : v.EnvIp };
+            }
+            else if (ShowEtalon && !ShowTemp)
+            {
+                return from v in db.Vms
+                       join vs in db.VmStates
+                           on v.State equals vs.State
+                       join vt in db.VmTypes
+                           on v.Type equals vt.Type
+                       join vst in db.VmSystems
+                           on v.System equals vst.System
+                       where v.EnvType != 0 && v.State != (int)VmManager.State.DELETED
+                       select new { v.Id, v.Name, State = vs.Description, Type = vt.Description, System = vst.Description, v.EnvType, EnvState = v.EnvId == 0 ? "не готова" : "готова", EnvMac = v.EnvMac == "null" ? "не определен" : v.EnvMac, EnvIp = v.EnvIp == "null" ? "не определен" : v.EnvIp };
+            }
+            else if (!ShowEtalon && ShowTemp)
+            {
+                return from v in db.Vms
+                       join vs in db.VmStates
+                           on v.State equals vs.State
+                       join vt in db.VmTypes
+                           on v.Type equals vt.Type
+                       join vst in db.VmSystems
+                           on v.System equals vst.System
+                       where v.Type == 2 || v.Type == 3
+                       where v.State != (int)VmManager.State.DELETED
+                       select new { v.Id, v.Name, State = vs.Description, Type = vt.Description, System = vst.Description, v.EnvType, EnvState = v.EnvId == 0 ? "не готова" : "готова", EnvMac = v.EnvMac == "null" ? "не определен" : v.EnvMac, EnvIp = v.EnvIp == "null" ? "не определен" : v.EnvIp };
             }
             else
             {
-                var items = from v in db.Vms
-                            join vs in db.VmStates
-                                on v.State equals vs.State
-                            join vt in db.VmTypes
-                                on v.Type equals vt.Type
-                            join vst in db.VmSystems
-                                on v.System equals vst.System
-                            where v.Type == 2 || v.Type == 3
-                            where v.EnvType != 0 && v.State != (int)VmManager.State.DELETED
-                            select new { v.Id, v.Name, State = vs.Description, Type = vt.Description, System = vst.Description, v.EnvType, EnvState = v.EnvId == 0 ? "не готова" : "готова", EnvMac = v.EnvMac == "null" ? "не определен" : v.EnvMac, EnvIp = v.EnvIp == "null" ? "не определен" : v.EnvIp };
-                return items;
- 
+                return from v in db.Vms
+                       join vs in db.VmStates
+                           on v.State equals vs.State
+                       join vt in db.VmTypes
+                           on v.Type equals vt.Type
+                       join vst in db.VmSystems
+                           on v.System equals vst.System
+                       where v.State != (int)VmManager.State.DELETED
+                       select new { v.Id, v.Name, State = vs.Description, Type = vt.Description, System = vst.Description, v.EnvType, EnvState = v.EnvId == 0 ? "не готова" : "готова", EnvMac = v.EnvMac == "null" ? "не определен" : v.EnvMac, EnvIp = v.EnvIp == "null" ? "не определен" : v.EnvIp };
             }
         }
 
         //**********************************************************
         //* Получение Vm для отображения для пользователя c Id
         //**********************************************************
-        public static IQueryable GetVmsTableView(Int32 userId, bool showEtalon = false)
+        public static IQueryable GetVmsTableView(Int32 userId)
         {
             var db = new SandBoxDataContext();
-            if (showEtalon)
-            {
-                var itemsEtalon = from v in db.Vms
-                                  join vs in db.VmStates
-                                      on v.State equals vs.State
-                                  join vt in db.VmTypes
-                                      on v.Type equals vt.Type
-                                  join vst in db.VmSystems
-                                      on v.System equals vst.System
-                                  where v.Type == 1 && v.State != (int)VmManager.State.DELETED
-                               
-                                  select new { v.Id, v.Name, State = vs.Description, Type = vt.Description, System = vst.Description, v.EnvType, EnvState = v.EnvId == 0 ? "не готова" : "готова", EnvMac = v.EnvMac == "null" ? "не определен" : v.EnvMac, EnvIp = v.EnvIp == "null" ? "не определен" : v.EnvIp };
-            }
             var itemsForUser = from v in db.Vms
                                join vs in db.VmStates
                                    on v.State equals vs.State
@@ -313,6 +342,18 @@ namespace SandBox.Db
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
                 var names = from v in db.Vms
+                            where v.State != (int)VmManager.State.DELETED
+                            orderby v.Name
+                            select v.Name;
+                return names.ToList();
+            }
+        }
+        public static List<String> GetLIRNameList()
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                var names = from v in db.Vms
+                            where v.Type == 3 && v.State != (int)VmManager.State.DELETED
                             orderby v.Name
                             select v.Name;
                 return names.ToList();
@@ -323,8 +364,9 @@ namespace SandBox.Db
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
                 var macs = from v in db.Vms
-                            orderby v.EnvMac
-                            select v.EnvMac;
+                           where v.State != (int)VmManager.State.DELETED
+                           orderby v.EnvMac
+                           select v.EnvMac;
                 return macs.ToList();
             }
         }
@@ -351,7 +393,7 @@ namespace SandBox.Db
                         orderby v.Name
                         where v.Type == 3
                         where v.State == Convert.ToInt32(VmManager.State.STARTED)
-                        select new { v.Id, v.Name, System = vst.Description};
+                        select new { v.Id, v.Name, System = vst.Description };
             return names;
         }
 
@@ -365,8 +407,8 @@ namespace SandBox.Db
                         where v.Type == 2
                         where v.EnvType != 0
                         where v.State != Convert.ToInt32(VmManager.State.RESEARCHING)
-                        where v.State!= Convert.ToInt32(VmManager.State.DELETED)
-                        where v.State!=Convert.ToInt32(VmManager.State.ERROR)
+                        where v.State != Convert.ToInt32(VmManager.State.DELETED)
+                        where v.State != Convert.ToInt32(VmManager.State.ERROR)
                         where v.State != Convert.ToInt32(VmManager.State.UNAVAILABLE)
                         select new { v.Id, v.Name, System = vst.Description };
             return names;
@@ -460,6 +502,18 @@ namespace SandBox.Db
             return from v in db.Vms
                    where v.Type == 1 && v.State != (int)VmManager.State.DELETED
                    select v;
+        }
+
+        //**********************************************************
+        //* Получение эталонной Vm по id системы
+        //**********************************************************
+        public static Vm GetVmsEtalonBySystem(Int32 system)
+        {
+            var db = new SandBoxDataContext();
+
+            return (from v in db.Vms
+                    where v.Type == 1
+                    select v).FirstOrDefault<Vm>(x => x.System == system);
         }
 
         //**********************************************************

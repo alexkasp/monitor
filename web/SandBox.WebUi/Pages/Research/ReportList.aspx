@@ -49,6 +49,16 @@
                 </tr>
                 <tr>
                     <td style="width: 200px">
+                        <dx:ASPxLabel ID="ASPxLabel8" runat="server" Text="Время создания:">
+                        </dx:ASPxLabel>
+                    </td>
+                    <td>
+                        <dx:ASPxLabel ID="LCreateTime" runat="server">
+                        </dx:ASPxLabel>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px">
                         <dx:ASPxLabel ID="ASPxLabel2" runat="server" Text="Время запуска:">
                         </dx:ASPxLabel>
                     </td>
@@ -59,11 +69,21 @@
                 </tr>
                 <tr>
                     <td style="width: 200px">
-                        <dx:ASPxLabel ID="ASPxLabel3" runat="server" Text="Длительность:">
+                        <dx:ASPxLabel ID="ASPxLabel7" runat="server" Text="Время завершения:">
                         </dx:ASPxLabel>
                     </td>
                     <td>
                         <dx:ASPxLabel ID="LStopTime" runat="server">
+                        </dx:ASPxLabel>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px">
+                        <dx:ASPxLabel ID="ASPxLabel3" runat="server" Text="Таймер:">
+                        </dx:ASPxLabel>
+                    </td>
+                    <td>
+                        <dx:ASPxLabel ID="LTimerStopTime" runat="server" Text="Не задан">
                         </dx:ASPxLabel>
                     </td>
                 </tr>
@@ -485,9 +505,7 @@
             <div style="float: left; width: 500px;">
                 <asp:UpdateProgress ID="ChartUpdateProgress" runat="server" AssociatedUpdatePanelID="ChartUpdatePanel">
                     <ProgressTemplate>
-                        <span style="padding-left: 100px">Обновление данных:&nbsp;&nbsp;<img alt="Обновление данных..."
-                            src="/content/images/progress.gif">
-                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span style="padding-left: 100px">Обновление данных:&nbsp;&nbsp;<img alt="Обновление данных..." src="/content/images/progress.gif"></span>
                     </ProgressTemplate>
                 </asp:UpdateProgress>
                 <dx:ASPxCallbackPanel ID="ASPxCallbackPanel1" runat="server" Width="200px">
@@ -993,7 +1011,7 @@
                         Width="100%" onhtmldatacellprepared="RegCompList_HtmlDataCellPrepared">
                         <Columns>
                             <dx:TreeListDataColumn FieldName="Text" VisibleIndex="0" Caption="Раздел реестра"
-                                SortIndex="0" SortOrder="Ascending" Width="40%">
+                                SortIndex="0" SortOrder="Ascending">
                                 <datacelltemplate>
                                     <table cellpadding="0" cellspacing="0">
                                                         <tr>

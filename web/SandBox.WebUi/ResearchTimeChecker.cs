@@ -9,10 +9,10 @@ using SandBox.WebUi.Pages.Information;
 
 namespace SandBox.WebUi
 {
-    public class ResearchTimeChecker: IDisposable
+    public class ResearchTimeChecker : IDisposable
     {
-        private Timer                       _threadingTimer;
-        private static ConnectionClientEx   _client;
+        private Timer _threadingTimer;
+        private static ConnectionClientEx _client;
 
         public ResearchTimeChecker(ConnectionClientEx client)
         {
@@ -31,7 +31,7 @@ namespace SandBox.WebUi
             _threadingTimer.Change(Timeout.Infinite, Timeout.Infinite);
             MLogger.LogTo(Level.TRACE, false, "Checker thread stopped.");
         }
-        
+
         public void Dispose()
         {
             StopCheck();
@@ -41,47 +41,41 @@ namespace SandBox.WebUi
 
         private static void Check(object obj)
         {
-            IQueryable<Research> researches = ResearchManager.GetResearches();
+            IQueryable<Research> researches = ResearchManager.GetStartedResearches();
 
             foreach (var research in researches)
             {
-                Int32 duration       = research.Duration;
-                DateTime startTime   = DateTime.Now;
-                DateTime stopTime    = DateTime.Now;
-                DateTime currentTime = DateTime.Now;
-
-                if (research.StartedDate.HasValue) //Сессия запущена
+                Int32 duration = research.Duration;
+                if (duration > 0)
                 {
+
+                    DateTime startTime = DateTime.Now;
+                    DateTime stopTime = DateTime.Now;
+                    DateTime currentTime = DateTime.Now;
+
                     startTime = research.StartedDate.Value;
 
-                    if (research.StoppedDate.HasValue) //Сессия остановлена
+                    Int32 secondsElapsed = (Int32)(currentTime - startTime).TotalSeconds; //Прошло секунд с начала сессии
+                    if (secondsElapsed > duration * 60)
                     {
-                        stopTime = research.StoppedDate.Value;
-                    }
-                    else //Сессия выполняется
-                    {
-                        Int32 secondsElapsed = (Int32) (currentTime - startTime).TotalSeconds; //Прошло секунд с начала сессии
-                        if (secondsElapsed > duration*60)
+                        //Время сессии вышло, завершаем её
+                        //**********************************
+                        ResearchManager.UpdateResearchState(research.Id, ResearchState.COMPLETING);
+
+                        //Останаливаем виртуалку
+                        String machineName = VmManager.GetVmName(research.VmId);
+                        if (machineName != null)
                         {
-                            //Время сессии вышло, завершаем её
-                            //**********************************
-                            ResearchManager.UpdateResearchState(research.Id, ResearchState.COMPLETING);
+                            Resources.StopVm(research.VmId);
 
-                            //Останаливаем виртуалку
-                            String machineName = VmManager.GetVmName(research.VmId);
-                            if(machineName!=null)
-                            {
-                                Resources.StopVm(research.VmId);
-                              
-                            }
-                           
-
-                            ResearchManager.UpdateResearchStopTime(research.Id);
-                            ResearchManager.UpdateResearchState(research.Id, ResearchState.COMPLETED);
-                            //**********************************
-                            //Обновление таблицы [dbo].[events]
-                            int res = ResearchManager.UpdateEvents(research.Id);
                         }
+
+
+                        ResearchManager.UpdateResearchStopTime(research.Id);
+                        ResearchManager.UpdateResearchState(research.Id, ResearchState.COMPLETED);
+                        //**********************************
+                        //Обновление таблицы [dbo].[events]
+                        int res = ResearchManager.UpdateEvents(research.Id);
                     }
                 }
             }

@@ -38,9 +38,10 @@ namespace SandBox.WebUi.Pages.Information
                 {
                         btnAddLIR.ClientVisible = false;
                         btnAddHardware.ClientVisible = false;
+                        cbShowEtalon.ClientVisible = false;
+                        cbShowTemp.ClientVisible = false;
                 }
             }
-
             UpdateTableView();
         }
 
@@ -52,8 +53,8 @@ namespace SandBox.WebUi.Pages.Information
 
         private void UpdateTableView()
         {
-            Int32 count = IsUserInRole("Administrator") ? VmManager.GetVmsTableViewCount() : VmManager.GetVmsTableViewCount(UserId);
-            IQueryable vms = IsUserInRole("Administrator") ? VmManager.GetVmsTableView() : VmManager.GetVmsTableView(UserId);
+            Int32 count = IsUserInRole("Administrator") ? VmManager.GetVmsTableViewCount(cbShowEtalon.Checked,cbShowTemp.Checked) : VmManager.GetVmsTableViewCount(UserId);
+            IQueryable vms = IsUserInRole("Administrator") ? VmManager.GetVmsTableView(cbShowEtalon.Checked, cbShowTemp.Checked) : VmManager.GetVmsTableView(UserId);
 
             if (count > 0)
             {
@@ -62,19 +63,20 @@ namespace SandBox.WebUi.Pages.Information
 
                 gridViewMachines.DataSource = vms;
                 gridViewMachines.DataBind();
-                gridResourceViewPager.Visible = gridViewMachines.Visible;
-                if (gridViewMachines.VisibleRowCount > 0) { gridResourceViewPager.ItemCount = gridViewMachines.VisibleRowCount; }
-                else { gridResourceViewPager.ItemCount = gridViewMachines.SettingsPager.PageSize; }
-                gridResourceViewPager.ItemsPerPage = gridViewMachines.SettingsPager.PageSize;
-                if (gridViewMachines.PageIndex > 0) { gridResourceViewPager.PageIndex = gridViewMachines.PageIndex; }
-                else gridResourceViewPager.PageIndex = 0;
+
             }
 
             if (count == 0)
             {
                 gridViewMachines.Visible = false;
-                labelNoItems.Text = "У вас нет ВЛИР, доступных для использования";
+                labelNoItems.Text = "У вас нет ВЛИР/ЛИР, доступных для использования";
             }
+            gridResourceViewPager.Visible = gridViewMachines.Visible;
+            if (gridViewMachines.VisibleRowCount > 0) { gridResourceViewPager.ItemCount = gridViewMachines.VisibleRowCount; }
+            else { gridResourceViewPager.ItemCount = gridViewMachines.SettingsPager.PageSize; }
+            gridResourceViewPager.ItemsPerPage = gridViewMachines.SettingsPager.PageSize;
+            if (gridViewMachines.PageIndex > 0) { gridResourceViewPager.PageIndex = gridViewMachines.PageIndex; }
+            else gridResourceViewPager.PageIndex = 0;
         }
 
         private void GetVmStatus(Int32 id)
@@ -212,44 +214,6 @@ namespace SandBox.WebUi.Pages.Information
             }
         }
 
-        protected void GridViewMachinesCustomButtonCallback(object sender, DevExpress.Web.ASPxGridView.ASPxGridViewCustomButtonCallbackEventArgs e)
-        {
-            Int32 id = Convert.ToInt32(gridViewMachines.GetRowValues(e.VisibleIndex, "Id"));
-            switch (e.ButtonID)
-            {
-                case "btnStatus":
-                    Vm vm = VmManager.GetVm(id);
-                    switch (vm.State)
-                    {
-                        case (Int32)VmManager.State.ERROR:
-                            {
-                                Debug.Print("run: " + id);
-                                StartVm(id);
-                                break;
-                            }
-                        case (Int32)VmManager.State.STARTED:
-                            {
-                                Debug.Print("stop: " + id);
-                                StopVm(id);
-                                break;
-                            }
-                        case (Int32)VmManager.State.STOPPED:
-                            {
-                                Debug.Print("run: " + id);
-                                StartVm(id);
-                                break;
-                            }
-                    }
-                    VmManager.UpdateVmState(id, (Int32)VmManager.State.UPDATING);
-                    break;
-                case "btnDelete":
-                    Debug.Print("delete: " + id);
-                    DeleteVm(id);
-                    break;
-            }
-
-        }
-
         protected void Timer2_Tick(object sender, EventArgs e)
         {
             UpdateTableView();
@@ -296,7 +260,7 @@ namespace SandBox.WebUi.Pages.Information
                                     Debug.Print("stop: " + id);
                                     StopVm(id);
                                     VmManager.UpdateVmState(id, (Int32)VmManager.State.STOPPED);
-                                    gridViewMachines.DataBind();
+                                    UpdateTableView();
                                 }
                                 break;
                             }
@@ -306,7 +270,7 @@ namespace SandBox.WebUi.Pages.Information
                                 Debug.Print("run: " + id);
                                 StartVm(id);
                                 VmManager.UpdateVmState(id, (Int32)VmManager.State.STARTING);
-                                gridViewMachines.DataBind();
+                                UpdateTableView();
                                 break;
                             }
                     }
@@ -337,13 +301,13 @@ namespace SandBox.WebUi.Pages.Information
         protected void gridResourceViewPager_PageIndexChanged(object sender, EventArgs e)
         {
             gridViewMachines.PageIndex = gridResourceViewPager.PageIndex;
-            gridViewMachines.DataBind();
+            UpdateTableView();
         }
 
         protected void gridResourceViewPager_PageSizeChanged(object sender, EventArgs e)
         {
             gridViewMachines.SettingsPager.PageSize = gridResourceViewPager.ItemsPerPage;
-            gridViewMachines.DataBind();
+            UpdateTableView();
         }
 
         protected void gridViewMachines_CustomButtonInitialize(object sender, DevExpress.Web.ASPxGridView.ASPxGridViewCustomButtonEventArgs e)
@@ -405,6 +369,16 @@ namespace SandBox.WebUi.Pages.Information
                         }
                 }
             }
+        }
+
+        protected void cbShowEtalon_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateTableView();
+        }
+
+        protected void cbShowTemp_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateTableView();
         }
     }//end class
 }//end namespace

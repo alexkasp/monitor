@@ -25,9 +25,6 @@
                     <dx:ASPxLabel ID="LValidation" runat="server" Visible="False">
                     </dx:ASPxLabel>
                 </td>
-                <td>
-                    &nbsp;
-                </td>
             </tr>
             <tr>
                 <td style="width: 115px">
@@ -40,9 +37,6 @@
                             <RequiredField ErrorText=" " IsRequired="true" />
                         </ValidationSettings>
                     </dx:ASPxComboBox>
-                </td>
-                <td>
-                    &nbsp;
                 </td>
             </tr>
             <tr>
@@ -64,15 +58,43 @@
                     <dx:ASPxLabel ID="LValidation2" runat="server" Visible="False">
                     </dx:ASPxLabel>
                 </td>
-                <td>
-                    &nbsp;
-                </td>
             </tr>
             <tr>
-                <td colspan="3">
-                    <dx:ASPxButton ID="BAdd" runat="server" OnClick="BAdd_Click" Text="Добавить ЛИР">
-                    </dx:ASPxButton>
-                </td>
+                  <td>
+                  </td>
+                  <td>
+                  <br />
+                     <div style="width:200px;">
+                     <div style="float:right;padding-left:10px;">
+                      <dx:ASPxButton ID="btnCancel" runat="server" Text="Отменить" 
+                             AutoPostBack = "False" CssClass="button" EnableDefaultAppearance="False" 
+                             EnableTheming="False" Width="90px">
+                          <ClientSideEvents Click="function(s, e) {
+	document.location.href = '/Pages/Information/Resources.aspx';
+}" />
+                                    <PressedStyle CssClass="buttonHover">
+                                    </PressedStyle>
+                                    <HoverStyle CssClass="buttonHover">
+                                    </HoverStyle>
+                                    <DisabledStyle CssClass="buttonDisable">
+                                    </DisabledStyle>
+                      </dx:ASPxButton>
+                      </div>
+                     <div style="float:right">
+                      <dx:ASPxButton ID="BAdd" runat="server" Text="Добавить" 
+                             ValidationGroup="CreateEtalonMachineValidationGroup" onclick="BAdd_Click" 
+                             AutoPostBack = "false" CssClass="button" EnableDefaultAppearance="False" 
+                             EnableTheming="False" Width="90px">
+                                    <PressedStyle CssClass="buttonHover">
+                                    </PressedStyle>
+                                    <HoverStyle CssClass="buttonHover">
+                                    </HoverStyle>
+                                    <DisabledStyle CssClass="buttonDisable">
+                                    </DisabledStyle>
+                      </dx:ASPxButton>
+                      </div>
+                      </div>
+                  </td>
             </tr>
         </table>
     </div>

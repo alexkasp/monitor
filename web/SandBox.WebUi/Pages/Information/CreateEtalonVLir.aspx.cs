@@ -33,7 +33,7 @@ namespace SandBox.WebUi.Pages.Information
              Int32 system = VmManager.GetSystem(value).System;
              String newName = (tbLir.Text).Replace(" ", "_");
 //             Int32 envType = Convert.ToInt32(cbEnvType.Value);
-             VmManager.AddVm(newName, 1, system, UserId, 12);
+             VmManager.AddVm(newName, 1, system, UserId, 12, VmManager.State.STOPPED);
 
             Response.Redirect("~/Pages/Information/Resources.aspx");
         }

@@ -21,7 +21,7 @@ namespace SandBox.WebUi.Account
         protected new void Page_Load(object sender, EventArgs e)
         {
             base.Page_Load(sender, e);
-            PageTitle = "Добавление класса ВПО";
+            PageTitle = "Редактирование класса ВПО";
             PageMenu = "~/App_Data/SideMenu/Settings/SettingsMenu.xml";
             Int32 itemid = Convert.ToInt32(Request.QueryString["itemid"]);
             MlwrClass mlwrclass = MlwrManager.GetClassByItemId(itemid);

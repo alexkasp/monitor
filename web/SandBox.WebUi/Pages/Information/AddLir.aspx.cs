@@ -59,7 +59,7 @@ namespace SandBox.WebUi.Pages.Information
 
         private bool IsNameInBase(string p)
         {
-            var vm = VmManager.GetVmNameList();
+            var vm = VmManager.GetLIRNameList();
             return vm.Contains(p);
         }
 

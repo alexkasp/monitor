@@ -67,6 +67,15 @@ namespace SandBox.WebUi.Pages.Information {
         protected global::DevExpress.Web.ASPxEditors.ASPxLabel LValidation2;
         
         /// <summary>
+        /// btnCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnCancel;
+        
+        /// <summary>
         /// BAdd control.
         /// </summary>
         /// <remarks>

@@ -600,6 +600,15 @@ namespace SandBox.Db
             if (vms == null) return 0;
             return vms.System;
         }
+
+        public static Vm GetRschVm(int id)
+        {
+            var db = new SandBoxDataContext();
+            var rsch = GetResearch(id);
+            if (rsch == null) return null;
+            return db.Vms.FirstOrDefault<Vm>(x => x.Id == rsch.VmId);
+        }
+
         public static string GetRschVmType(int id)
         {
             var db = new SandBoxDataContext();
@@ -666,6 +675,27 @@ namespace SandBox.Db
             return researches;
         }
 
+        public static void InsertStopEvent(int rschId, int m, int evt, string d, string wh)
+        {
+            StopEvents se = new StopEvents()
+            {
+                dest = d,
+                module = m,
+                @event = evt,
+                who = wh,
+                rschId = rschId
+            };
+            var db = new SandBoxDataContext();
+            db.StopEvents.InsertOnSubmit(se);
+            db.SubmitChanges();
+        }
+
+        public static StopEvents GetStopEvent(int rschId)
+        {
+            var db = new SandBoxDataContext();
+            return db.StopEvents.FirstOrDefault<StopEvents>(x => x.rschId == rschId);
+        }
+
         //**********************************************************
         //* Получение всех элементов Research
         //**********************************************************
@@ -676,6 +706,19 @@ namespace SandBox.Db
             var researches = from r in db.Researches
                       orderby r.Id
                       select r;
+            return researches;
+        }
+
+        //**********************************************************
+        //* Получение выполняющихся исследований
+        //**********************************************************
+        public static IQueryable<Research> GetStartedResearches()
+        {
+            var db = new SandBoxDataContext();
+
+            var researches = from r in db.Researches
+                             where r.StartedDate != null && r.StoppedDate == null
+                             select r;
             return researches;
         }
 

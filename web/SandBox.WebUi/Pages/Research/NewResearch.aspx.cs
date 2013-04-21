@@ -22,24 +22,9 @@ namespace SandBox.WebUi.Pages.Research
             base.Page_Load(sender, e);
             PageTitle = "Создание исследования";
             PageMenu = "~/App_Data/SideMenu/Research/ResearchMenu.xml";
-            //   List<string> vmList = IsUserInRole("Administrator") ? VmManager.GetVmReadyNameList() : VmManager.GetVmReadyNameList(UserId);
 
-            //ASPxComboBox2.Items.Clear();
-            //if (vlirList.Count() < 1)
-            //{
-            //    cbVLIR.Enabled = false;
-            //}
-            //else
-            //{
-            //    cbVLIR.Enabled = true;
-            //    cbVLIR.DataSource = vlirList;
-            //    cbVLIR.DataBind();
-            //}
             if (!IsPostBack)
             {
-                //ASPxComboBox3.DataSource = from item in new List<string> { "HKEY_CLASSES_ROOT", "HKEY_CURRENT_USER", "HKEY_LOCAL_MACHINE", "HKEY_USERS", "HKEY_CURRENT_CONFIG" }
-                //                           select new { hkey = item };
-                //ASPxComboBox3.DataBind();
                 IQueryable vlirList = IsUserInRole("Administrator") ? VmManager.GetVLIRReadyForResearch() : VmManager.GetVLIRReadyForResearch(UserId);
                 cbEtln.DataSource = VmManager.GetEtlnReadyForResearch();
                 cbEtln.DataBind();
@@ -47,11 +32,11 @@ namespace SandBox.WebUi.Pages.Research
                 cbVLIR.DataSource = vlirList;
                 cbVLIR.DataBind();
                 if (cbVLIR.Items.Count > 0) cbVLIR.SelectedIndex = 0;
-                else rbVLIR.Enabled = false;
+                else rbVLIR.ClientEnabled = false;
                 cbLIR.DataSource = VmManager.GetLIRReadyForResearch();
                 cbLIR.DataBind();
                 if (cbLIR.Items.Count > 0) cbLIR.SelectedIndex = 0;
-                else rbLIR.Enabled = false;
+                else rbLIR.ClientEnabled = false;
                 CBNetActiv.Items.AddRange(TaskManager.GetTasksDescrByClassification(1).ToList());
                 CBNetActiv.SelectedIndex = 0;
                 CBFileActiv.Items.AddRange(TaskManager.GetTasksDescrByClassification(2).ToList());
@@ -77,94 +62,227 @@ namespace SandBox.WebUi.Pages.Research
 
                 Session["tasks"] = new List<TaskStruct>();
                 rschName.Text = "Исследование_"+DateTime.Now.ToShortDateString();
-                lbFSParams.DataSource = dsFSParams;
-                lbFSParams.DataBind();
-                lbRegParams.DataSource = dsRegParams;
-                lbRegParams.DataBind();
-                lbProcParams.DataSource = dsProcParams;
-                lbProcParams.DataBind();
-                lbNetParams.DataSource = dsNetParams;
-                lbNetParams.DataBind();
+                int researchId = 0;
+                Int32.TryParse(Request.QueryString["copyfrom"], out researchId);
+//                researchId = Convert.ToInt32(Request.QueryString["copyfrom"]);
+                if (researchId > 0) Session["researchId"] = researchId;
+                if (researchId > 0)
+                {
+                    FillListBoxDB(hfFS, "Файловая система");
+                    FillListBoxDB(hfReg, "Реестр");
+                    FillListBoxDB(hfProc, "Процессы");
+                    FillListBoxDB(hfNet, "Сеть");
+                    Mlwr mlwrrec = ResearchManager.GetMlwrByRschId(researchId);
+                    if (mlwrrec != null) cbMalware.Text = mlwrrec.Name;
+                    Vm vmach = ResearchManager.GetRschVm(researchId);
+                    ListEditItem le;
+                    if (vmach != null)
+                    {
+                        switch (vmach.Type) {
+                            case 2:
+                                if (vmach.EnvType == 0 || cbVLIR.Items.Count==0) 
+                                {
+                                    Vm etlmach = VmManager.GetVmsEtalonBySystem(vmach.System);
+                                    if (etlmach != null)
+                                    {
+                                        le = cbEtln.Items.FindByValue(etlmach.Id);
+                                        if (le!=null) cbEtln.SelectedIndex = le.Index;
+                                    }
+                                }
+                                else 
+                                {
+                                    le = cbVLIR.Items.FindByText(vmach.Name);
+                                    if (le != null)
+                                    {
+                                        rbEtln.Checked = false;
+                                        rbVLIR.Checked = true;
+                                        cbEtln.ClientEnabled = false;
+                                        cbVLIR.ClientEnabled = true;
+                                        cbLIR.ClientEnabled = false;
+                                        cbVLIR.SelectedIndex = le.Index;
+                                    }
+                                    else
+                                    {
+                                        Vm etlmach = VmManager.GetVmsEtalonBySystem(vmach.System);
+                                        if (etlmach != null) 
+                                        {
+                                            le = cbEtln.Items.FindByValue(etlmach.Id);
+                                            if (le != null) cbEtln.SelectedIndex = le.Index;
+                                        }
+                                    }
+                                }
+                            
+                                break;
+                            case 3:
+                                if (cbLIR.Items.Count > 0)
+                                {
+                                    rbEtln.Checked = false;
+                                    rbLIR.Checked = true;
+                                    cbEtln.ClientEnabled = false;
+                                    cbVLIR.ClientEnabled = false;
+                                    cbLIR.ClientEnabled = true;
+                                    le = cbLIR.Items.FindByText(vmach.Name);
+                                    if (le != null) cbLIR.SelectedIndex = le.Index;
+                                }
+                                else 
+                                {
+                                    rbEtln.Checked = true;
+                                    Vm etlmach = VmManager.GetVmsEtalonBySystem(vmach.System);
+                                    if (etlmach != null) 
+                                    {
+                                        le = cbEtln.Items.FindByValue(etlmach.Id);
+                                        if (le != null) cbEtln.SelectedIndex = le.Index;
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                    Db.Research Rs = ResearchManager.GetResearch(researchId);           
+                    if (Rs != null)
+                    {
+                        if (Rs.Duration>0) spinTime.Value = Rs.Duration;
+                        else
+                        {
+                            cbTimeEnd.Checked = false;
+                            spinTime.ClientEnabled = false;
+                        }
+                    }
+                    StopEvents se = ResearchManager.GetStopEvent(researchId);
+                    if (se != null)
+                    {
+                        cbEventEnd.Checked = true;
+                        int moduleid = ReportManager.GetModuleIdByEventId(se.@event);
+                        string module = ReportManager.GetModuleById(moduleid);
+                        cbModule.ClientEnabled = true;
+                        cbEvent.ClientEnabled = true;
+                        tbWho.ClientEnabled = true;
+                        tbDest.ClientEnabled = true;
+                        cbModule.Value = module;
+                        cbEvent.DataSource = ReportManager.GetEventsDescrByModule(module);
+                        cbEvent.DataBind();
+                        cbEvent.Text = ReportManager.GetEventById(se.@event);
+                        tbWho.Text = se.who;
+                        tbDest.Text = se.dest;
+                    }
+                    Task ts;
+                    ts = TaskManager.GetFileTasksForRsch(researchId);
+                    if (ts != null)
+                    {
+                        cbFileRoot.Checked = true;
+                        tbFileRoot.ClientEnabled = true;
+                        btnSelFile.ClientEnabled = true;
+                        tbFileRoot.Text = ts.Value;
+                    }
+                    ts = TaskManager.GetFileSigTasksForRsch(researchId);
+                    if (ts != null)
+                    {
+                        cbSignature.Checked = true;
+                        tbSignature.ClientEnabled = true;
+                        tbSignature.Text = ts.Value;
+                    }
+                    ts = TaskManager.GetFileExtTasksForRsch(researchId);
+                    if (ts != null)
+                    {
+                        cbExtension.Checked = true;
+                        tbExtension.ClientEnabled = true;
+                        tbExtension.Text = ts.Value;
+                    }
 
+                    ts = TaskManager.GetRegTasksForRsch(researchId);
+                    if (ts != null)
+                    {
+                        cbRegRoot.Checked = true;
+                        tbRegRoot.ClientEnabled = true;
+                        cmbRegRoot.ClientEnabled = true;
+                        btnSelReg.ClientEnabled = true;
+                        switch (ts.Value[0])
+                        {
+                            case '0':
+                                cmbRegRoot.Text = "Весь реестр";
+                                break;
+                            case '1':
+                                cmbRegRoot.Text = "HKEY_CLASSES_ROOT";
+                                break;
+                            case '2':
+                                cmbRegRoot.Text = "HKEY_CURRENT_USER";
+                                break;
+                            case '3':
+                                cmbRegRoot.Text = "HKEY_LOCAL_MACHINE";
+                                break;
+                            case '4':
+                                cmbRegRoot.Text = "HKEY_USERS";
+                                break;
+                            case '5':
+                                cmbRegRoot.Text = "HKEY_CURRENT_CONFIG";
+                                break;
+                        }
+                        if (ts.Value.Length > 1) tbRegRoot.Text = ts.Value.Substring(1);
+                    }
+                    ts = TaskManager.GetFileProcMonTasksForRsch(researchId);
+                    if (ts != null) cbProcMon.Checked = true;
+                    Commands cm = TaskManager.GetEmulTasksForRsch(researchId);
+                    if (cm != null)
+                    {
+                        cbEnul.Checked = true;
+                        tbEmulCommand.ClientEnabled = true;
+                        tbEmulParams.ClientEnabled = true;
+                        spEmulTime.ClientEnabled = true;
+                        tbEmulCommand.Text = cm.Command;
+                        tbEmulParams.Text = cm.CommandParams;
+                        spEmulTime.Value = cm.CommandStartTime;
+                    }
+                }
             }
-
+            else
+            {
+                FillListBox(hfFS, lbFSParams);
+                FillListBox(hfReg, lbRegParams);
+                FillListBox(hfProc, lbProcParams);
+                FillListBox(hfNet, lbNetParams);
+            }
         }
 
-        protected DataTable dsFSParams
+        protected void FillListBoxDB(DevExpress.Web.ASPxHiddenField.ASPxHiddenField hf, string module)
         {
-            get
+            List<TaskList> moditems = TaskManager.GetTasksViewForRschByModule((int)Session["researchId"], module);
+            if (moditems.Count() > 0)
             {
-                if (Session["dsFSParams"] == null)
+                object[] itemCollection = new object[moditems.Count()];
+                int i = 0;
+                foreach (TaskList item in moditems)
                 {
-                    DataTable dt = new DataTable();
-                    dt.Columns.Add("ID");
-                    dt.Columns.Add("Task");
-                    dt.Columns.Add("Param");
-                    Session["dsFSParams"] = dt;
+                    itemCollection[i] = item.TypeX + ";" + item.ValueX;
+                    i++;
                 }
-                return Session["dsFSParams"] as DataTable;
+                hf["LoadDataList"] = itemCollection;
             }
         }
 
-        protected DataTable dsRegParams
+        protected void FillListBox(DevExpress.Web.ASPxHiddenField.ASPxHiddenField hf, ASPxListBox lb)
         {
-            get
+            if (lb.Items.Count > 0)
             {
-                if (Session["dsRegParams"] == null)
+                object[] itemCollection = new object[lb.Items.Count];
+                int i = 0;
+                foreach (ListEditItem item in lb.Items)
                 {
-                    DataTable dt = new DataTable();
-                    dt.Columns.Add("ID");
-                    dt.Columns.Add("Task");
-                    dt.Columns.Add("Param");
-                    Session["dsRegParams"] = dt;
+                    itemCollection[i] = item.GetValue("Task").ToString() + ";" + item.GetValue("Param").ToString();
+                    i++;
                 }
-                return Session["dsRegParams"] as DataTable;
-            }
-        }
-
-        protected DataTable dsProcParams
-        {
-            get
-            {
-                if (Session["dsProcParams"] == null)
-                {
-                    DataTable dt = new DataTable();
-                    dt.Columns.Add("ID");
-                    dt.Columns.Add("Task");
-                    dt.Columns.Add("Param");
-                    Session["dsProcParams"] = dt;
-                }
-                return Session["dsProcParams"] as DataTable;
-            }
-        }
-
-        protected DataTable dsNetParams
-        {
-            get
-            {
-                if (Session["dsNetParams"] == null)
-                {
-                    DataTable dt = new DataTable();
-                    dt.Columns.Add("ID");
-                    dt.Columns.Add("Task");
-                    dt.Columns.Add("Param");
-                    Session["dsNetParams"] = dt;
-                }
-                return Session["dsNetParams"] as DataTable;
+                hf["LoadDataList"] = itemCollection;
             }
         }
 
         protected void BtnCreateClick(object sender, EventArgs e)
         {
-
             Int32 vmid = -1;
             if (rbEtln.Checked) vmid = Convert.ToInt32(cbEtln.Value);
             else if (rbLIR.Checked) vmid = Convert.ToInt32(cbLIR.Value);
             else if (rbVLIR.Checked) vmid = Convert.ToInt32(cbVLIR.Value);
             Vm vm = VmManager.GetVm(vmid);
             Mlwr mlwr = MlwrManager.GetMlwrByName(cbMalware.Value.ToString());
-            Int32 timeLeft = Convert.ToInt32(spinTime.Value);
-
+            Int32 timeLeft = 0;
+            if (cbTimeEnd.Checked) timeLeft = Convert.ToInt32(spinTime.Value);
             String NewName="";
             Int32 researchVmData = 0;
             Int32 researchId = 0;
@@ -185,22 +303,15 @@ namespace SandBox.WebUi.Pages.Research
 
             AddTasks(researchId, vm.EnvId);
 
-            #region добавление события на остановку исследования
             if (cbEventEnd.Checked)
             {
-                //int sign = ASPxComboBox1.Text == "Критически важное" ? 0 : 1;
-//                int module = ResearchManager.GetModuleIdByDescr(cbModule.Text);
                 Int32 evt = Convert.ToInt32(cbEvent.Value);
                 int module = ReportManager.GetModuleIdByEventId(evt);
                 string dest = tbDest.Text;
                 string who = tbWho.Text;
-                //if (module != -1 && evt != -1 && dest != String.Empty && who != String.Empty)
-                //{
-                    ReportManager.InsertStopEvent(researchId, module, evt, dest, who);
+                    ResearchManager.InsertStopEvent(researchId, module, evt, dest, who);
 
-                //}
             }
-            #endregion
 
             MLogger.LogTo(Level.TRACE, false, "Create research '" + rschName.Text + "' by user '" + UserManager.GetUser(UserId).UserName + "'");
             MLogger.LogTo(Level.TRACE, false, "Create or start vm '" + vm.Name + "' with name '" + NewName + "'");
@@ -242,7 +353,6 @@ namespace SandBox.WebUi.Pages.Research
                 packet.AddParameter(Encoding.UTF8.GetBytes(VmName));
                 packet.AddParameter(Encoding.UTF8.GetBytes(newName));
                 SendPacket(packet.ToByteArray());
-                //Vm newVm = VmManager.GetVm(newName);
                 VmManager.UpdateVmState(newName, (int)VmManager.State.UNAVAILABLE);
                 return false;
             }
@@ -265,19 +375,8 @@ namespace SandBox.WebUi.Pages.Research
 
         private void AddTasks(Int32 researchId, int EnvId)
         {
-            //String hideFilePar = tbHideFile.Text;
-            //String lockFilePar = tbLockDelete.Text;
-            //String hideRegistryPar = tbHideRegistry.Text;
-            //String hideProcessPar = tbHideProcess.Text;
-            //String setBandwidthPar = tbSetBandwidth.Text;
-
-            //if (hideFilePar != String.Empty) TaskManager.AddTask(researchId, 1, hideFilePar);
-            //if (lockFilePar != String.Empty) TaskManager.AddTask(researchId, 2, lockFilePar);
-            //if (hideRegistryPar != String.Empty) TaskManager.AddTask(researchId, 3, hideRegistryPar);
-            //if (hideProcessPar != String.Empty) TaskManager.AddTask(researchId, 4, hideProcessPar);
             if (cbSignature.Checked) TaskManager.AddTask(researchId, 5, tbSignature.Text);
             if (cbExtension.Checked) TaskManager.AddTask(researchId, 6, tbExtension.Text);
-            //if (setBandwidthPar != String.Empty) TaskManager.AddTask(researchId, 7, setBandwidthPar);
             if (cbFileRoot.Checked) TaskManager.AddTask(researchId, 16, tbFileRoot.Text);
             if (cbRegRoot.Checked) TaskManager.AddTask(researchId, 17, String.Format("{0}{1}", cmbRegRoot.SelectedIndex, tbRegRoot.Text));
             if (cbProcMon.Checked) TaskManager.AddTask(researchId, 15, "ON");
@@ -286,15 +385,6 @@ namespace SandBox.WebUi.Pages.Research
             foreach (ListEditItem item in lbProcParams.Items) TaskManager.AddTask(researchId, TaskManager.GetTaskTypeByDescription(item.GetValue("Task").ToString()), item.GetValue("Param").ToString());
             foreach (ListEditItem item in lbNetParams.Items) TaskManager.AddTask(researchId, TaskManager.GetTaskTypeByDescription(item.GetValue("Task").ToString()), item.GetValue("Param").ToString());
             
-            //var session = Session["tasks"] as List<TaskStruct>;
-            //foreach (var task in session)
-            //{
-            //    if (task.Description != String.Empty && task.Value!=String.Empty/*ASPxTextBox1.Text != task.Value*/)
-            //        TaskManager.AddTask(researchId, TaskManager.GetTaskTypeByDescription(task.Description), task.Value);
-            //}
-            //if (ASPxComboBox2.SelectedItem!=null)
-            //if (ASPxComboBox2.SelectedItem.Text != String.Empty && ASPxTextBox1.Text != String.Empty)
-            //    TaskManager.AddTask(researchId, TaskManager.GetTaskTypeByDescription(ASPxComboBox2.SelectedItem.Text), ASPxTextBox1.Text);
             try
             {
                 MLogger.LogTo(Level.TRACE, false, "Add Command: " + tbEmulCommand.Text + tbEmulParams.Text);
@@ -324,37 +414,6 @@ namespace SandBox.WebUi.Pages.Research
             {
                 Session["tasks"] = new List<TaskStruct>();
                 session.Add(new TaskStruct { Description = CBNetActiv.SelectedItem.Text, Value = TBNetTaskValue.Text });
-            }
-            switch (TaskManager.GetClassTypeByTaskType(TaskManager.GetTaskTypeByDescription(description)))
-            {
-                //case 1:
-                //    {
-                //        FillGridView(ASPxGridView1, 1);
-                //        break;
-                //    }
-                //case 2:
-                //    {
-                //        FillGridView(ASPxGridView2, 2);
-                //        break;
-                //    }
-                //case 3:
-                //    {
-                //        FillGridView(ASPxGridView3, 3);
-                //        break;
-                //    }
-                //case 4:
-                //    {
-                //        FillGridView(ASPxGridView4, 4);
-                //        break;
-                //    }
-                default:
-                    {
-//                        FillGridView(ASPxGridView1, 1);
-//                        FillGridView(ASPxGridView2, 2);
-//                        FillGridView(ASPxGridView3, 3);
-//                        FillGridView(ASPxGridView4, 4);
-                        break;
-                    }
             }
             Page.DataBind();
         }
@@ -386,14 +445,6 @@ namespace SandBox.WebUi.Pages.Research
                 gv.DataBind();
             }
             catch { }
-        }
-
-        private void FillAllGridViews()
-        {
-//            FillGridView(ASPxGridView1, 1);
-//            FillGridView(ASPxGridView2, 2);
-//            FillGridView(ASPxGridView3, 3);
-//            FillGridView(ASPxGridView4, 4);
         }
 
         protected void ASPxGridView1_RowDeleting(object sender, DevExpress.Web.Data.ASPxDataDeletingEventArgs e)
@@ -477,9 +528,6 @@ namespace SandBox.WebUi.Pages.Research
         private TaskStruct GetTSFromGV(ASPxListBox lb)
         {
             TaskStruct res = new TaskStruct();
-            //res.Description = (string)gridView.GetRowValues(gridView.FocusedRowIndex, "f1");
-            //res.Value = (string)gridView.GetRowValues(gridView.FocusedRowIndex, "f2");
-            //Page.DataBind();
             return res;
         }
 
@@ -487,48 +535,6 @@ namespace SandBox.WebUi.Pages.Research
         {
             var session = Session["tasks"] as List<TaskStruct>;
             return session.RemoveAll(item => ((item.Description == task.Description)&&(item.Value==task.Value)));
-        }
-
-        protected void BDelNetTask_Click(object sender, EventArgs e)
-        {
-            TaskStruct task = GetSelectedTask(1);
-            if (DeleteTaskFromSession(task) > 0)
-            {
-                //FillGridView(ASPxGridView1, 1);
-                FillAllGridViews();
-            }
-            Page.DataBind();
-
-        }
-
-        protected void BDelFileTask_Click(object sender, EventArgs e)
-        {
-            TaskStruct task = GetSelectedTask(2);
-            if (DeleteTaskFromSession(task) > 0)
-            {
-                FillAllGridViews(); //FillGridView(ASPxGridView2, 2);
-            }
-            Page.DataBind();
-        }
-
-        protected void BDelRegTask_Click(object sender, EventArgs e)
-        {
-            TaskStruct task = GetSelectedTask(3);
-            if (DeleteTaskFromSession(task) > 0)
-            {
-                FillAllGridViews(); //FillGridView(ASPxGridView3, 3);
-            }
-            Page.DataBind();
-        }
-
-        protected void BDelProcTask_Click(object sender, EventArgs e)
-        {
-            TaskStruct task = GetSelectedTask(4);
-            if (DeleteTaskFromSession(task) > 0)
-            {
-                FillAllGridViews(); //FillGridView(ASPxGridView4, 4);
-            }
-            Page.DataBind();
         }
 
         protected void cbEvent_Callback(object sender, DevExpress.Web.ASPxClasses.CallbackEventArgsBase e)
@@ -565,14 +571,17 @@ namespace SandBox.WebUi.Pages.Research
 
         protected void RegTreeList_FocusedNodeChanged(object sender, EventArgs e)
         {
-            string nodePath = RegTreeList.FocusedNode["KeyName"].ToString();
-            var currentNode = RegTreeList.FocusedNode.ParentNode;
-            while (currentNode != null && currentNode.Level > 0)
+            if (RegTreeList.FocusedNode != null)
             {
-                nodePath = currentNode["KeyName"] +@"\" + nodePath;
-                currentNode = currentNode.ParentNode;
+                string nodePath = RegTreeList.FocusedNode["KeyName"].ToString();
+                var currentNode = RegTreeList.FocusedNode.ParentNode;
+                while (currentNode != null && currentNode.Level > 0)
+                {
+                    nodePath = currentNode["KeyName"] + @"\" + nodePath;
+                    currentNode = currentNode.ParentNode;
+                }
+                tbEtlRegRoot.Text = nodePath;
             }
-            tbEtlRegRoot.Text = nodePath;
         }
 
         protected void FileTree_VirtualModeNodeCreating(object sender, TreeListVirtualModeNodeCreatingEventArgs e)
@@ -601,14 +610,17 @@ namespace SandBox.WebUi.Pages.Research
 
         protected void FileTreeList_FocusedNodeChanged(object sender, EventArgs e)
         {
-            string nodePath = FileTreeList.FocusedNode["KeyName"].ToString();
-            var currentNode = FileTreeList.FocusedNode.ParentNode;
-            while (currentNode != null && currentNode.Level > 0)
+            if (FileTreeList.FocusedNode != null)
             {
-                nodePath = currentNode["KeyName"] + @"\" + nodePath;
-                currentNode = currentNode.ParentNode;
+                string nodePath = FileTreeList.FocusedNode["KeyName"].ToString();
+                var currentNode = FileTreeList.FocusedNode.ParentNode;
+                while (currentNode != null && currentNode.Level > 0)
+                {
+                    nodePath = currentNode["KeyName"] + @"\" + nodePath;
+                    currentNode = currentNode.ParentNode;
+                }
+                tbEtlFileRoot.Text = nodePath;
             }
-            tbEtlFileRoot.Text = nodePath;
         }
 
     }//end class

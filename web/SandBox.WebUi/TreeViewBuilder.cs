@@ -63,10 +63,13 @@ namespace SandBox.WebUi
             var db = new SandBoxDataContext();
             int level = 0;
             long parentId = 0;
+            RegsEtl re;
             foreach (string subPath in rootstr.Split('\\'))
             {
-                parentId = level == 0 ? db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath)).Parent:
-                                        db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath) && (x.Parent == parentId)).Parent;
+                if (level == 0) re = db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath));
+                else re = db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath) && (x.Parent == parentId));
+                if (re != null) parentId = re.KeyIndex;
+                else break;
                 level++;
             }
             return (from r in db.RegsEtls
@@ -180,10 +183,13 @@ namespace SandBox.WebUi
             var db = new SandBoxDataContext();
             int level = 0;
             long parentId = 0;
+            RegsEtl re;
             foreach (string subPath in rootstr.Split('\\'))
             {
-                parentId = level == 0 ? db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath)).KeyIndex :
-                                        db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath) && (x.Parent == parentId)).KeyIndex;
+                if (level == 0) re = db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath));
+                else re = db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath) && (x.Parent == parentId));
+                if (re != null) parentId = re.KeyIndex;
+                else break;
                 level++;
             }
             return parentId;
@@ -198,12 +204,15 @@ namespace SandBox.WebUi
             string[] root1 = rootstr.Split('\\');
             string[] root2 = rootstr2.Split('\\');
             int len = root1.Length > root2.Length ? root2.Length : root1.Length;
+            RegsEtl re;
             for (int i = 0; i < len; i++)
             {
                 if (root1[i] == root2[i])
                 {
-                    parentId = level == 0 ? db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == root1[i])).KeyIndex :
-                                            db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == root1[i]) && (x.Parent == parentId)).KeyIndex;
+                    if (level == 0) re = db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == root1[i]));
+                    else re = db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == root1[i]) && (x.Parent == parentId));
+                    if (re != null) parentId = re.KeyIndex;
+                    else break;
                     level++;
                 }
                 else break;
@@ -217,10 +226,13 @@ namespace SandBox.WebUi
             if (String.IsNullOrEmpty(rootstr)) return parentId;
             var db = new SandBoxDataContext();
             int level = 0;
+            RegsEtl re;
             foreach (string subPath in rootstr.Split('\\'))
             {
-                parentId.Add(level == 0 ? db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath)).KeyIndex :
-                                        db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath) && (x.Parent == parentId[level-1])).KeyIndex);
+                if (level == 0) re = db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath));
+                else re = db.RegsEtls.FirstOrDefault<RegsEtl>(x => (x.SystemID == systemId) && (x.KeyName == subPath) && (x.Parent == parentId[level - 1]));
+                if (re != null) parentId.Add(re.KeyIndex);
+                else break;
                 level++;
             }
 

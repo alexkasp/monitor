@@ -6,18 +6,28 @@ namespace SandBox.Db
 {
     public enum TaskState
     {
-        HIDE_FILE        = 1,
-        LOCK_FILE        = 2,
-        HIDE_REGISTRY    = 3,
-        HIDE_PROCESS     = 4,
-        SET_SIGNATURE    = 5,
-        SET_EXTENSION    = 6,
-        SET_BANDWIDTH    = 7,
-        GET_PROCESS      = 15,
-        GET_FILES        = 16,
-        GET_REGS         = 17
+        HIDE_FILE = 1,
+        LOCK_FILE = 2,
+        HIDE_REGISTRY = 3,
+        HIDE_PROCESS = 4,
+        SET_SIGNATURE = 5,
+        SET_EXTENSION = 6,
+        SET_BANDWIDTH = 7,
+        GET_PROCESS = 15,
+        GET_FILES = 16,
+        GET_REGS = 17
     }
 
+    public class TaskList
+    {
+        public string TypeX;
+        public string ValueX;
+        public TaskList(string TypeX, string ValueX)
+        {
+            this.TypeX = TypeX;
+            this.ValueX = ValueX;
+        }
+    }
     public class TaskManager : DbManager
     {
 
@@ -30,6 +40,16 @@ namespace SandBox.Db
                         select new { t.ModuleX, t.TypeX, t.ValueX };
             return tasks;
 
+        }
+
+        public static List<TaskList> GetTasksViewForRschByModule(Int32 researchId, String module)
+        {
+            var db = new SandBoxDataContext();
+            return (from t in db.Tasks
+                    join tc in db.TasksClassification on t.Type equals tc.TaskType
+                    join tt in db.TaskTypes on tc.TaskType equals tt.Type
+                    where t.ResearchId == researchId && tt.ModuleName == module
+                    select new { TypeX = tt.Description, ValueX = t.Value }).Select(x => new TaskList(x.TypeX, x.ValueX)).ToList<TaskList>();
         }
 
         public static string GetFileRootForRsch(Int32 researchId)
@@ -63,7 +83,7 @@ namespace SandBox.Db
                         res = @"HKEY_CURRENT_CONFIG";
                         break;
                 }
-                if (RegRoot.Value.Length > 1) res = res + RegRoot.Value.Substring(1);
+                if (RegRoot.Value.Length > 1) res = res + '\\' + RegRoot.Value.Substring(1);
                 return res;
             }
             else return String.Empty;
@@ -74,7 +94,33 @@ namespace SandBox.Db
             return GetTasks(researchId).FirstOrDefault(x => x.Type == 17);
         }
 
-        public static void AddCommand(int rschId, string command, string commandParams="", int startTime=60)
+        public static Task GetFileTasksForRsch(Int32 researchId)
+        {
+            return GetTasks(researchId).FirstOrDefault(x => x.Type == 16);
+        }
+
+        public static Task GetFileSigTasksForRsch(Int32 researchId)
+        {
+            return GetTasks(researchId).FirstOrDefault(x => x.Type == 5);
+        }
+
+        public static Task GetFileExtTasksForRsch(Int32 researchId)
+        {
+            return GetTasks(researchId).FirstOrDefault(x => x.Type == 6);
+        }
+
+        public static Task GetFileProcMonTasksForRsch(Int32 researchId)
+        {
+            return GetTasks(researchId).FirstOrDefault(x => x.Type == 15);
+        }
+
+        public static Commands GetEmulTasksForRsch(Int32 researchId)
+        {
+            var db = new SandBoxDataContext();
+            return db.Commands.FirstOrDefault<Commands>(x => x.RschId == researchId);
+        }
+
+        public static void AddCommand(int rschId, string command, string commandParams = "", int startTime = 60)
         {
             var db = new SandBoxDataContext();
             try
@@ -94,7 +140,7 @@ namespace SandBox.Db
             }
             catch (Exception e)
             {
-               //УБРАТЬ СЛЕПОЙ CATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //УБРАТЬ СЛЕПОЙ CATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             }
 
         }
@@ -177,8 +223,8 @@ namespace SandBox.Db
             var db = new SandBoxDataContext();
 
             var tasks = from t in db.Tasks
-                      orderby t.Id
-                      select t;
+                        orderby t.Id
+                        select t;
             return tasks;
         }
 
@@ -232,7 +278,7 @@ namespace SandBox.Db
         {
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
-                Task task = new Task {ResearchId = researchId, Type = taskType, Value = value};
+                Task task = new Task { ResearchId = researchId, Type = taskType, Value = value };
                 db.Tasks.InsertOnSubmit(task);
                 db.SubmitChanges();
             }

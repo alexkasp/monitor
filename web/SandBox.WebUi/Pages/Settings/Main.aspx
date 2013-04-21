@@ -90,9 +90,9 @@
                                                     </CellStyle>
                                                 </dx:GridViewCommandColumn>
                                             </Columns>
-                                            <SettingsBehavior AllowFocusedRow="True" EnableRowHotTrack="True" ColumnResizeMode="Control" />
+                                            <SettingsBehavior AllowFocusedRow="True" EnableRowHotTrack="True" ColumnResizeMode="NextColumn" />
                                             <SettingsLoadingPanel Mode="Disabled" />
-                                            <SettingsCookies CookiesID="UserGrid" Enabled="True" />
+                                            <SettingsCookies CookiesID="UserGrid" Enabled="True" StorePaging="False" />
                                             <Styles>
                                                 <Header Font-Bold="True">
                                                 </Header>
@@ -206,11 +206,11 @@
                                                 </dx:GridViewCommandColumn>
                                             </Columns>
                                             <SettingsBehavior AllowFocusedRow="True" AutoExpandAllGroups="True" EnableRowHotTrack="True"
-                                                ColumnResizeMode="Control" />
+                                                ColumnResizeMode="NextColumn" />
                                             <SettingsPager AlwaysShowPager="True" PageSize="100">
                                             </SettingsPager>
                                             <SettingsLoadingPanel Mode="Disabled" />
-                                            <SettingsCookies CookiesID="ClEvGrid" Enabled="True" StoreFiltering="True" StoreGroupingAndSorting="True" />
+                                            <SettingsCookies CookiesID="ClEvGrid" Enabled="True" StorePaging="False" />
                                             <Styles>
                                                 <Header Font-Bold="True">
                                                 </Header>
@@ -337,12 +337,11 @@
                                                 </dx:GridViewCommandColumn>
                                             </Columns>
                                             <SettingsBehavior AllowFocusedRow="True" AutoExpandAllGroups="True" EnableRowHotTrack="True"
-                                                ColumnResizeMode="Control" />
-                                            <SettingsBehavior AllowFocusedRow="True" AutoExpandAllGroups="True" ColumnResizeMode="Control"
-                                                EnableRowHotTrack="True" />
+                                                ColumnResizeMode="NextColumn" />
                                             <SettingsPager AlwaysShowPager="True" PageSize="100">
                                             </SettingsPager>
                                             <SettingsLoadingPanel Mode="Disabled" />
+                                            <SettingsCookies CookiesID="ClVPOGrid" Enabled="True" StorePaging="False" />
                                             <Styles>
                                                 <Header Font-Bold="True">
                                                 </Header>

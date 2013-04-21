@@ -337,6 +337,15 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::AjaxControlToolkit.Accordion Accordion1;
         
         /// <summary>
+        /// hfFS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxHiddenField.ASPxHiddenField hfFS;
+        
+        /// <summary>
         /// lbFSParams control.
         /// </summary>
         /// <remarks>
@@ -472,6 +481,15 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::AjaxControlToolkit.AccordionPane AccordionPane1;
         
         /// <summary>
+        /// hfReg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxHiddenField.ASPxHiddenField hfReg;
+        
+        /// <summary>
         /// lbRegParams control.
         /// </summary>
         /// <remarks>
@@ -544,6 +562,15 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::AjaxControlToolkit.AccordionPane AccordionPane2;
         
         /// <summary>
+        /// hfProc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxHiddenField.ASPxHiddenField hfProc;
+        
+        /// <summary>
         /// lbProcParams control.
         /// </summary>
         /// <remarks>
@@ -587,6 +614,15 @@ namespace SandBox.WebUi.Pages.Research {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.AccordionPane AccordionPane4;
+        
+        /// <summary>
+        /// hfNet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxHiddenField.ASPxHiddenField hfNet;
         
         /// <summary>
         /// lbNetParams control.

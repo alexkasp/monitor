@@ -50,8 +50,6 @@
                         lb_items[2] = lb_items[2].slice(1);
                         lb_items[3] = "<img style=\"cursor:pointer;\" alt=\"Удалить\" src=\"../../Content/Images/Icons/delete.png\" onclick=\"DeleteLbItem(" + csGetClientInstanceName(ListBox) + ")\" title=\"Удалить\">";
                         lbitems[j] = lb_items;
-                        if (i < count - 1) ListBox.InsertItem(lb_items, i);
-                        else ListBox.AddItem(lb_items, i);
                         j++;
                     }
                 }

@@ -82,20 +82,34 @@ namespace SandBox.WebUi.Pages.Research
             if (mlwrrec != null) Mlwr.Text = mlwrrec.Name + " (" + mlwrrec.Path + ")";
             LOS.Text = ResearchManager.GetRschOS(researchId);
             LIRType.Text = ResearchManager.GetRschVmType(researchId);
-            LStartTime.Text = Rs.CreatedDate.ToString("dd MMM yyyyг. HH:mm:ss");
-            LStopTime.Text = Rs.Duration.ToString()+" мин.";
+            LCreateTime.Text = Rs.CreatedDate.ToString("dd MMM yyyyг. HH:mm:ss");
+            if (Rs.StartedDate.HasValue) LStartTime.Text = ((DateTime)Rs.StartedDate).ToString("dd MMM yyyyг. HH:mm:ss");
+            if (Rs.StoppedDate.HasValue) LStopTime.Text = ((DateTime)Rs.StoppedDate).ToString("dd MMM yyyyг. HH:mm:ss");
+            if (Rs.Duration > 0) LTimerStopTime.Text = Rs.Duration.ToString() + " мин.";
             if (Rs.StartedDate.HasValue) //Сессия начата
             {
-                Int32 elapsedMins = (Int32)((DateTime.Now - Rs.StartedDate.Value).TotalMinutes);
-                Int32 leftMins = Rs.Duration - elapsedMins;
-                
-                if (leftMins <= 0)
+                Int32 elapsedMins;
+                if (Rs.StoppedDate.HasValue) //Сессия завершена
                 {
-                    LStatus.Text = "Завершено по таймеру";
+                    elapsedMins = (Int32)((Rs.StoppedDate.Value - Rs.StartedDate.Value).TotalMinutes);
+                    if (Rs.Duration > 0)
+                    {
+                        Int32 leftMins = Rs.Duration - elapsedMins;
+                        if (leftMins <= 0)
+                        {
+                            LStatus.Text = "Завершено по таймеру";
+                        }
+                        else
+                        {
+                            LStatus.Text = "Завершено принудительно (ост. " + leftMins + " мин.)";
+                        }
+                    }
+                    else LStatus.Text = "Завершено принудительно (через " + elapsedMins + " мин.)";
                 }
-                else
+                else 
                 {
-                    LStatus.Text = "Завершено принудительно (ост. "+ leftMins + " мин.)";
+                    elapsedMins = (Int32)((DateTime.Now - Rs.StartedDate.Value).TotalMinutes);
+                    LStatus.Text = "Выполняется (" + elapsedMins + " мин.)";
                 }
             }
             else

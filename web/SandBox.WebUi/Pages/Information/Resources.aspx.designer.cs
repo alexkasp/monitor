@@ -40,6 +40,15 @@ namespace SandBox.WebUi.Pages.Information {
         protected global::DevExpress.Web.ASPxEditors.ASPxButton btnAddLIR;
         
         /// <summary>
+        /// UpdatePagerPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePagerPanel;
+        
+        /// <summary>
         /// gridResourceViewPager control.
         /// </summary>
         /// <remarks>
@@ -58,13 +67,31 @@ namespace SandBox.WebUi.Pages.Information {
         protected global::DevExpress.Web.ASPxEditors.ASPxLabel labelNoItems;
         
         /// <summary>
-        /// UpdatePanel2 control.
+        /// UpdateMachinesPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+        protected global::System.Web.UI.UpdatePanel UpdateMachinesPanel;
+        
+        /// <summary>
+        /// cbShowEtalon control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBox cbShowEtalon;
+        
+        /// <summary>
+        /// cbShowTemp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxCheckBox cbShowTemp;
         
         /// <summary>
         /// Timer2 control.
