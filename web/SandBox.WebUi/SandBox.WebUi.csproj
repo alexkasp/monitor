@@ -175,6 +175,7 @@
     <Content Include="Content\Images\Icons\btn_deld.png" />
     <Content Include="Content\Images\Icons\btn_stop.png" />
     <Content Include="Content\Images\Icons\btn_stopd.png" />
+    <Content Include="Content\Images\Icons\copy.png" />
     <Content Include="Content\Images\Icons\delete.png" />
     <Content Include="Content\Images\Icons\edit.png" />
     <Content Include="Content\Images\Icons\edit2.png" />

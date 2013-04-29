@@ -13,6 +13,15 @@ namespace SandBox.WebUi.Pages.Settings {
     public partial class Main {
         
         /// <summary>
+        /// btnClearSettings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxEditors.ASPxButton btnClearSettings;
+        
+        /// <summary>
         /// popup_refrvpo control.
         /// </summary>
         /// <remarks>
@@ -191,6 +200,15 @@ namespace SandBox.WebUi.Pages.Settings {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView.ASPxGridView gridClVPOView;
+        
+        /// <summary>
+        /// cbClCopy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxGridView.GridViewCommandColumnCustomButton cbClCopy;
         
         /// <summary>
         /// cbClEdit control.

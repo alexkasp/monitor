@@ -147,159 +147,6 @@
                 <Border BorderStyle="None" />
                 <BorderBottom BorderColor="#D8D7D7" BorderStyle="Solid" BorderWidth="1px" />
             </dx:ASPxGridView>
-            <%--    <div class="addparamhd">Файловая система</div>
-                                        <dx:ASPxGridView ID="AddParamRegGrid"  runat="server" 
-                                        AutoGenerateColumns="False" 
-                                        Width="100%" 
-            onbeforeperformdataselect="AddParamRegGrid_BeforePerformDataSelect">     
-                                        <Columns>
-                                            <dx:GridViewDataTextColumn FieldName="ModuleX" VisibleIndex="0" 
-                                                Caption="Module X" Width="100px" Visible="False">
-                                                <CellStyle Font-Bold="True" Font-Underline="True">
-                                                </CellStyle>
-                                            </dx:GridViewDataTextColumn>
-                                            <dx:GridViewDataTextColumn FieldName="TypeX" VisibleIndex="2" Width="200px">
-                                                <EditCellStyle Font-Bold="True">
-                                                </EditCellStyle>
-                                            </dx:GridViewDataTextColumn>
-                                            <dx:GridViewDataTextColumn FieldName="ValueX" VisibleIndex="3">
-                                                <CellStyle Font-Bold="True">
-                                                </CellStyle>
-                                            </dx:GridViewDataTextColumn>
-                                        </Columns>
-                                        <SettingsPager Visible="False">
-                                        </SettingsPager>
-                                        <Settings GridLines="Horizontal" ShowColumnHeaders="False" 
-                                            ShowHeaderFilterBlankItems="False" />
-                                        <SettingsLoadingPanel Text="Загрузка&amp;hellip;" />                                
-                                        <Styles>
-                                            <Table BackColor="White">
-                                            </Table>
-                                            <Cell BackColor="White">
-                                                <BorderLeft BorderWidth="0px" />
-                                                <BorderTop BorderWidth="0px" />
-                                                <BorderRight BorderWidth="0px" />
-                                                <BorderBottom BorderWidth="0px" />
-                                            </Cell>
-                                        </Styles>
-                                        <Border BorderStyle="None" />
-                                    </dx:ASPxGridView>
-                                    <div class="addparamhr"></div>
-    <div class="addparamhd">Реестр</div>
-                                        <dx:ASPxGridView ID="ASPxGridView1"  runat="server" 
-                                        AutoGenerateColumns="False" 
-                                        Width="100%" 
-            onbeforeperformdataselect="AddParamRegGrid_BeforePerformDataSelect">     
-                                        <Columns>
-                                            <dx:GridViewDataTextColumn FieldName="ModuleX" VisibleIndex="0" 
-                                                Caption="Module X" Width="100px" Visible="False">
-                                                <CellStyle Font-Bold="True" Font-Underline="True">
-                                                </CellStyle>
-                                            </dx:GridViewDataTextColumn>
-                                            <dx:GridViewDataTextColumn FieldName="TypeX" VisibleIndex="2" Width="200px">
-                                                <EditCellStyle Font-Bold="True">
-                                                </EditCellStyle>
-                                            </dx:GridViewDataTextColumn>
-                                            <dx:GridViewDataTextColumn FieldName="ValueX" VisibleIndex="3">
-                                                <CellStyle Font-Bold="True">
-                                                </CellStyle>
-                                            </dx:GridViewDataTextColumn>
-                                        </Columns>
-                                        <SettingsPager Visible="False">
-                                        </SettingsPager>
-                                        <Settings GridLines="Horizontal" ShowColumnHeaders="False" 
-                                            ShowHeaderFilterBlankItems="False" />
-                                        <SettingsLoadingPanel Text="Загрузка&amp;hellip;" />                                
-                                        <Styles>
-                                            <Table BackColor="White">
-                                            </Table>
-                                            <Cell BackColor="White">
-                                                <BorderLeft BorderWidth="0px" />
-                                                <BorderTop BorderWidth="0px" />
-                                                <BorderRight BorderWidth="0px" />
-                                                <BorderBottom BorderWidth="0px" />
-                                            </Cell>
-                                        </Styles>
-                                        <Border BorderStyle="None" />
-                                    </dx:ASPxGridView>
-                                    <div class="addparamhr"></div>
-    <div class="addparamhd">Процессы</div>
-                                        <dx:ASPxGridView ID="ASPxGridView2"  runat="server" 
-                                        AutoGenerateColumns="False" 
-                                        Width="100%" 
-            onbeforeperformdataselect="AddParamRegGrid_BeforePerformDataSelect">     
-                                        <Columns>
-                                            <dx:GridViewDataTextColumn FieldName="ModuleX" VisibleIndex="0" 
-                                                Caption="Module X" Width="100px" Visible="False">
-                                                <CellStyle Font-Bold="True" Font-Underline="True">
-                                                </CellStyle>
-                                            </dx:GridViewDataTextColumn>
-                                            <dx:GridViewDataTextColumn FieldName="TypeX" VisibleIndex="2" Width="200px">
-                                                <EditCellStyle Font-Bold="True">
-                                                </EditCellStyle>
-                                            </dx:GridViewDataTextColumn>
-                                            <dx:GridViewDataTextColumn FieldName="ValueX" VisibleIndex="3">
-                                                <CellStyle Font-Bold="True">
-                                                </CellStyle>
-                                            </dx:GridViewDataTextColumn>
-                                        </Columns>
-                                        <SettingsPager Visible="False">
-                                        </SettingsPager>
-                                        <Settings GridLines="Horizontal" ShowColumnHeaders="False" 
-                                            ShowHeaderFilterBlankItems="False" />
-                                        <SettingsLoadingPanel Text="Загрузка&amp;hellip;" />                                
-                                        <Styles>
-                                            <Table BackColor="White">
-                                            </Table>
-                                            <Cell BackColor="White">
-                                                <BorderLeft BorderWidth="0px" />
-                                                <BorderTop BorderWidth="0px" />
-                                                <BorderRight BorderWidth="0px" />
-                                                <BorderBottom BorderWidth="0px" />
-                                            </Cell>
-                                        </Styles>
-                                        <Border BorderStyle="None" />
-                                    </dx:ASPxGridView>
-                                    <div class="addparamhr"></div>
-    <div class="addparamhd">Сетевая активность</div>
-                                        <dx:ASPxGridView ID="ASPxGridView3"  runat="server" 
-                                        AutoGenerateColumns="False" 
-                                        Width="100%" 
-            onbeforeperformdataselect="AddParamRegGrid_BeforePerformDataSelect">     
-                                        <Columns>
-                                            <dx:GridViewDataTextColumn FieldName="ModuleX" VisibleIndex="0" 
-                                                Caption="Module X" Width="100px" Visible="False">
-                                                <CellStyle Font-Bold="True" Font-Underline="True">
-                                                </CellStyle>
-                                            </dx:GridViewDataTextColumn>
-                                            <dx:GridViewDataTextColumn FieldName="TypeX" VisibleIndex="2" Width="200px">
-                                                <EditCellStyle Font-Bold="True">
-                                                </EditCellStyle>
-                                            </dx:GridViewDataTextColumn>
-                                            <dx:GridViewDataTextColumn FieldName="ValueX" VisibleIndex="3">
-                                                <CellStyle Font-Bold="True">
-                                                </CellStyle>
-                                            </dx:GridViewDataTextColumn>
-                                        </Columns>
-                                        <SettingsPager Visible="False">
-                                        </SettingsPager>
-                                        <Settings GridLines="Horizontal" ShowColumnHeaders="False" 
-                                            ShowHeaderFilterBlankItems="False" />
-                                        <SettingsLoadingPanel Text="Загрузка&amp;hellip;" />                                
-                                        <Styles>
-                                            <Table BackColor="White">
-                                            </Table>
-                                            <Cell BackColor="White">
-                                                <BorderLeft BorderWidth="0px" />
-                                                <BorderTop BorderWidth="0px" />
-                                                <BorderRight BorderWidth="0px" />
-                                                <BorderBottom BorderWidth="0px" />
-                                            </Cell>
-                                        </Styles>
-                                        <Border BorderStyle="None" />
-                                    </dx:ASPxGridView>
-                                    <div class="addparamhr"></div>
-            --%>
         </div>
         <div style="float: left; padding-left: 30px; width: 47%; display: inline-table;">
             <div class="detailrowevents">
@@ -438,7 +285,7 @@
                 <dx:Series Name="Ряд 1" ShowInLegend="False" SynchronizePointOptions="False">
                     <viewserializable>
                         <dx:SideBySideRangeBarSeriesView Color="74, 134, 153">
-                            <border visible="False" /><border visible="False" /><border visible="False" /><border visible="False" />
+                            <border visible="False" /><border visible="False" /><border visible="False" /><border visible="False" /><border visible="False" /><border visible="False" /><border visible="False" /><border visible="False" />
 <Border Visible="False"></Border>
 
                             <fillstyle fillmode="Solid">
@@ -945,12 +792,13 @@
                     <ContentCollection>
                         <dx:ContentControl ID="ContentControl1" runat="server">
                             <div style="padding-bottom: 10px;">
+                                        <div style="float: left; width: 40%;">
                                 <asp:UpdatePanel ID="RegTreeUpdatePanel" runat="server" UpdateMode="Conditional">
                                     <ContentTemplate>
-                                        <div style="float: left; width: 40%;">
                                             <dx:ASPxTreeList ID="RegTreeList" runat="server" AutoGenerateColumns="False" EnableCallbacks="False"
                                                 OnVirtualModeCreateChildren="RegTree_VirtualModeCreateChildren" OnVirtualModeNodeCreating="RegTree_VirtualModeNodeCreating"
-                                                Width="100%" OnFocusedNodeChanged="RegTreeList_FocusedNodeChanged">
+                                                Width="100%" OnFocusedNodeChanged="RegTreeList_FocusedNodeChanged" 
+                                                DataCacheMode="Enabled">
                                                 <Columns>
                                                     <dx:TreeListDataColumn FieldName="KeyName" VisibleIndex="0" Caption="Раздел реестра"
                                                         SortIndex="0" SortOrder="Ascending">
@@ -961,7 +809,8 @@
                                                         </CellStyle>
                                                     </dx:TreeListDataColumn>
                                                 </Columns>
-                                                <SettingsBehavior ExpandCollapseAction="NodeDblClick" AllowFocusedNode="True" ProcessFocusedNodeChangedOnServer="True" />
+                                                <SettingsBehavior ExpandCollapseAction="NodeDblClick" AllowFocusedNode="True" 
+                                                    ProcessFocusedNodeChangedOnServer="True" FocusNodeOnExpandButtonClick="False" />
                                                 <SettingsLoadingPanel Enabled="False" />
                                                 <Styles>
                                                     <FocusedNode BackColor="#0C627F">
@@ -974,8 +823,12 @@
                                                     Обновление данных:&nbsp;&nbsp;<img alt="Обновление данных..." src="/content/images/progress.gif">
                                                 </ProgressTemplate>
                                             </asp:UpdateProgress>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
                                         </div>
                                         <div style="float: left; width: 58%; margin-left: 10px;">
+                                <asp:UpdatePanel ID="RegKeysUpdatePanel" runat="server" UpdateMode="Conditional">
+                                    <ContentTemplate>
                                             <dx:ASPxGridView ID="gvRegKeys" runat="server" AutoGenerateColumns="False" KeyFieldName="Id"
                                                 Width="100%" EnableTheming="True" Theme="Default" EnableCallBacks="False">
                                                 <Columns>
@@ -992,10 +845,16 @@
                                                     AllowSelectSingleRowOnly="True" ColumnResizeMode="Control" />
                                                 <SettingsPager Mode="ShowAllRecords">
                                                 </SettingsPager>
+                                                <SettingsCookies CookiesID="RegKeysGrid" Enabled="True" StorePaging="False" />
                                             </dx:ASPxGridView>
-                                        </div>
+                                            <asp:UpdateProgress ID="RegKeysUpdateProgress" runat="server" AssociatedUpdatePanelID="RegKeysUpdatePanel">
+                                                <ProgressTemplate>
+                                                    Обновление данных:&nbsp;&nbsp;<img alt="Обновление данных..." src="/content/images/progress.gif">
+                                                </ProgressTemplate>
+                                            </asp:UpdateProgress>
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
+                                        </div>
                             </div>
                         </dx:ContentControl>
                     </ContentCollection>
@@ -1006,7 +865,8 @@
                             <div style="padding-bottom: 10px;">
             <asp:UpdatePanel ID="RegCompUpdatePanel" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <dx:ASPxTreeList ID="RegCompTreeList" runat="server" AutoGenerateColumns="False" EnableCallbacks="False"
+                    <dx:ASPxTreeList ID="RegCompTreeList" runat="server" 
+                        AutoGenerateColumns="False" EnableCallbacks="False"
                         OnVirtualModeCreateChildren="RegComp_VirtualModeCreateChildren" OnVirtualModeNodeCreating="RegComp_VirtualModeNodeCreating"
                         Width="100%" onhtmldatacellprepared="RegCompList_HtmlDataCellPrepared">
                         <Columns>
@@ -1030,7 +890,7 @@
                             </dx:TreeListDataColumn>
                             <dx:TreeListDataColumn FieldName="Etl" Name="Etl" VisibleIndex="1" Caption="Эталон" Width="30%">
                             </dx:TreeListDataColumn>
-                            <dx:TreeListDataColumn FieldName="Reg" Name="Reg" VisibleIndex="2" Caption="Исследование" Width="30%" >
+                            <dx:TreeListDataColumn FieldName="Reg" Name="Reg" VisibleIndex="2" Caption="Исследование" Width="30%">
                             </dx:TreeListDataColumn>
                         </Columns>
                         <Settings GridLines="Both" />
@@ -1213,6 +1073,7 @@
                                             <Settings ShowFilterRow="True" ShowGroupPanel="True" ShowFilterBar="Visible" ShowFilterRowMenu="True" />
                                             <SettingsText CustomizationWindowCaption="Скрытые колонки" />
                                             <SettingsLoadingPanel Text="Загрузка&amp;hellip;"></SettingsLoadingPanel>
+                                            <SettingsCookies CookiesID="PortsGrid" Enabled="True" StorePaging="False" />
                                         </dx:ASPxGridView>
                                     </ContentTemplate>
                                 </asp:UpdatePanel>

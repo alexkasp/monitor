@@ -82,7 +82,7 @@
                                             </Columns>
                                             <SettingsBehavior AllowFocusedRow="True" EnableRowHotTrack="True" ColumnResizeMode="Control" />
                                             <SettingsLoadingPanel Mode="Disabled" />
-                                            <SettingsCookies CookiesID="UserGrid" Enabled="True" StoreFiltering="False" StoreGroupingAndSorting="False" />
+                                            <SettingsCookies CookiesID="UserGrid2" Enabled="True" StoreFiltering="False" />
                                             <Styles>
                                                 <Header Font-Bold="True">
                                                 </Header>

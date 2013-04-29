@@ -16,6 +16,8 @@ namespace SandBox.WebUi.Account
 {
     public partial class AddClass : BaseMainPage
     {
+        public Int32 mlwrclassid;
+
         protected new void Page_Load(object sender, EventArgs e)
         {
             base.Page_Load(sender, e);
@@ -24,6 +26,23 @@ namespace SandBox.WebUi.Account
 
             if (!IsPostBack)
             {
+                int mlwrId = 0;
+                Int32.TryParse(Request.QueryString["copyfrom"], out mlwrId);
+                if (mlwrId>0)
+                {
+                    MlwrClass mlwrclass = MlwrManager.GetClassByItemId(mlwrId);
+                    if (mlwrclass == null)
+                    {
+                        Response.Redirect("~/Error");
+                    }
+                    mlwrclassid = mlwrclass.id;
+                    Session["mlwrclassid"] = mlwrclassid;
+                    FillListBoxDB(hfFS, "Файловая система");
+                    FillListBoxDB(hfReg, "Реестр");
+                    FillListBoxDB(hfProc, "Процессы");
+                    FillListBoxDB(hfNet, "Сеть");
+
+                }
                 CBNetActiv.Items.AddRange(ReportManager.GetEventsDescrByModuleList("Сеть"));
                 CBNetActiv.SelectedIndex = 0;
                 CBFileActiv.Items.AddRange(ReportManager.GetEventsDescrByModuleList("Файловая система"));
@@ -32,78 +51,45 @@ namespace SandBox.WebUi.Account
                 CBRegActiv.SelectedIndex = 0;
                 CBProcActiv.Items.AddRange(ReportManager.GetEventsDescrByModuleList("Процессы"));
                 CBProcActiv.SelectedIndex = 0;
-                lbFSParams.DataSource = dsFSParams;
-                lbFSParams.DataBind();
-                lbRegParams.DataSource = dsRegParams;
-                lbRegParams.DataBind();
-                lbProcParams.DataSource = dsProcParams;
-                lbProcParams.DataBind();
-                lbNetParams.DataSource = dsNetParams;
-                lbNetParams.DataBind();
+            }
+            else
+            {
+                FillListBox(hfFS, lbFSParams);
+                FillListBox(hfReg, lbRegParams);
+                FillListBox(hfProc, lbProcParams);
+                FillListBox(hfNet, lbNetParams);
             }
         }
 
-        protected DataTable dsFSParams
+
+        protected void FillListBoxDB(DevExpress.Web.ASPxHiddenField.ASPxHiddenField hf, string module)
         {
-            get
+            IQueryable<MlwrClassView> moditems = MlwrManager.GetClassModuleItems((int)Session["mlwrclassid"], module);
+            if (moditems.Count() > 0)
             {
-                if (Session["dsFSParams"] == null)
+                object[] itemCollection = new object[moditems.Count()];
+                int i = 0;
+                foreach (MlwrClassView item in moditems)
                 {
-                    DataTable dt = new DataTable();
-                    dt.Columns.Add("ID");
-                    dt.Columns.Add("Task");
-                    dt.Columns.Add("Param");
-                    Session["dsFSParams"] = dt;
+                    itemCollection[i] = item.Event + ";" + item.Param;
+                    i++;
                 }
-                return Session["dsFSParams"] as DataTable;
+                hf["LoadDataList"] = itemCollection;
             }
         }
 
-        protected DataTable dsRegParams
+        protected void FillListBox(DevExpress.Web.ASPxHiddenField.ASPxHiddenField hf, ASPxListBox lb)
         {
-            get
+            if (lb.Items.Count > 0)
             {
-                if (Session["dsRegParams"] == null)
+                object[] itemCollection = new object[lb.Items.Count];
+                int i = 0;
+                foreach (ListEditItem item in lb.Items)
                 {
-                    DataTable dt = new DataTable();
-                    dt.Columns.Add("ID");
-                    dt.Columns.Add("Task");
-                    dt.Columns.Add("Param");
-                    Session["dsRegParams"] = dt;
+                    itemCollection[i] = item.GetValue("Task").ToString() + ";" + item.GetValue("Param").ToString();
+                    i++;
                 }
-                return Session["dsRegParams"] as DataTable;
-            }
-        }
-
-        protected DataTable dsProcParams
-        {
-            get
-            {
-                if (Session["dsProcParams"] == null)
-                {
-                    DataTable dt = new DataTable();
-                    dt.Columns.Add("ID");
-                    dt.Columns.Add("Task");
-                    dt.Columns.Add("Param");
-                    Session["dsProcParams"] = dt;
-                }
-                return Session["dsProcParams"] as DataTable;
-            }
-        }
-
-        protected DataTable dsNetParams
-        {
-            get
-            {
-                if (Session["dsNetParams"] == null)
-                {
-                    DataTable dt = new DataTable();
-                    dt.Columns.Add("ID");
-                    dt.Columns.Add("Task");
-                    dt.Columns.Add("Param");
-                    Session["dsNetParams"] = dt;
-                }
-                return Session["dsNetParams"] as DataTable;
+                hf["LoadDataList"] = itemCollection;
             }
         }
 

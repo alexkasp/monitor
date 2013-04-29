@@ -519,6 +519,7 @@ namespace SandBox.WebUi.Pages.Research
         protected void RegTreeList_HtmlDataCellPrepared(object sender, TreeListHtmlDataCellEventArgs e)
         {
             TreeListNode node = RegTreeList.FindNodeByKeyValue(e.NodeKey);
+            if (node == null) return;
             switch (e.Column.Name)
             {
                 case "Text":

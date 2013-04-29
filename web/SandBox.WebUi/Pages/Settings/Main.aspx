@@ -7,12 +7,44 @@
         <div id="pagename">
             Настройки
         </div>
+        <div id="toolbuttons">
+            <table>
+                <tr>
+                    <td width="280">
+                        <dx:ASPxButton ID="btnClearSettings" AutoPostBack="False" runat="server" Text="Сбросить настройки всех таблиц"
+                            ClientInstanceName="btnCopy" CssClass="button" EnableDefaultAppearance="False"
+                            EnableTheming="False" Width="280px">
+                            <ClientSideEvents Click="function(s, e) {
+ 	 ASPxClientUtils.DeleteCookie('UserGrid');
+ 	 ASPxClientUtils.DeleteCookie('ClEvGrid');
+ 	 ASPxClientUtils.DeleteCookie('ClVPOGrid');
+ 	 ASPxClientUtils.DeleteCookie('ResearchGrid');
+ 	 ASPxClientUtils.DeleteCookie('MalwareGrid');
+ 	 ASPxClientUtils.DeleteCookie('MachinesGrid');
+ 	 ASPxClientUtils.DeleteCookie('VPOResearchesGrid');
+     ASPxClientUtils.DeleteCookie('RegKeysGrid');
+     ASPxClientUtils.DeleteCookie('PortsGrid');
+     alert('Настройки таблиц восстановлены по-умолчанию.');
+     window.location.reload();
+}" />
+                            <PressedStyle CssClass="buttonHover">
+                            </PressedStyle>
+                            <HoverStyle CssClass="buttonHover">
+                            </HoverStyle>
+                            <Border BorderWidth="0px" />
+                            <DisabledStyle CssClass="buttonDisable">
+                            </DisabledStyle>
+                        </dx:ASPxButton>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div id="content-main">
         <dx:ASPxPopupControl ID="popup_refrvpo" ClientInstanceName="popup_refrvpo" runat="server"
-            ShowCloseButton="False" PopupHorizontalAlign="WindowCenter" ShowHeader="False" 
-            ShowLoadingPanelImage="False" PopupVerticalAlign="WindowCenter" 
-            Modal="True" ShowLoadingPanel="False" Width="300px">
+            ShowCloseButton="False" PopupHorizontalAlign="WindowCenter" ShowHeader="False"
+            ShowLoadingPanelImage="False" PopupVerticalAlign="WindowCenter" Modal="True"
+            ShowLoadingPanel="False" Width="300px">
             <ContentCollection>
                 <dx:PopupControlContentControl ID="PopupControlContentControl1" runat="server">
                     Запущено обновление классификации ВПО.<br />
@@ -56,22 +88,22 @@
 	                                            document.location.href = '/Account/EditUser.aspx?userId=' + s.GetRowKey(e.visibleIndex);
                                             }" />
                                             <Columns>
-                                                <dx:GridViewDataTextColumn Caption="id" FieldName="UserId" VisibleIndex="1" Visible="False">
+                                                <dx:GridViewDataTextColumn Caption="ID" FieldName="UserId" VisibleIndex="1" Visible="False">
                                                 </dx:GridViewDataTextColumn>
-                                                <dx:GridViewDataTextColumn Caption="имя пользователя" FieldName="UserName" VisibleIndex="0">
+                                                <dx:GridViewDataTextColumn Caption="Имя пользователя" FieldName="UserName" VisibleIndex="0">
                                                 </dx:GridViewDataTextColumn>
-                                                <dx:GridViewDataTextColumn FieldName="Login" ShowInCustomizationForm="True" Caption="логин"
+                                                <dx:GridViewDataTextColumn FieldName="Login" ShowInCustomizationForm="True" Caption="Логин"
                                                     VisibleIndex="1">
                                                 </dx:GridViewDataTextColumn>
-                                                <dx:GridViewDataTextColumn Caption="дата создания" FieldName="CreatedDate" VisibleIndex="2"
+                                                <dx:GridViewDataTextColumn Caption="Дата создания" FieldName="CreatedDate" VisibleIndex="2"
                                                     Width="130px">
                                                 </dx:GridViewDataTextColumn>
-                                                <dx:GridViewDataTextColumn Caption="дата последнего входа" FieldName="LastLoginDate"
+                                                <dx:GridViewDataTextColumn Caption="Дата последнего входа" FieldName="LastLoginDate"
                                                     VisibleIndex="3" Width="180px">
                                                 </dx:GridViewDataTextColumn>
                                                 <dx:GridViewDataTextColumn Caption="Роль" FieldName="Name" VisibleIndex="4" Width="100px">
                                                 </dx:GridViewDataTextColumn>
-                                                <dx:GridViewCommandColumn VisibleIndex="5" ButtonType="Image" Width="50px" Caption="Редактировать">
+                                                <dx:GridViewCommandColumn VisibleIndex="5" ButtonType="Image" Width="110px" Caption="Редактировать">
                                                     <CustomButtons>
                                                         <dx:GridViewCommandColumnCustomButton ID="cbEdit">
                                                             <Image ToolTip="Редактировать" Url="../../Content/Images/Icons/edit2.png" />
@@ -80,7 +112,7 @@
                                                     <CellStyle HorizontalAlign="Center">
                                                     </CellStyle>
                                                 </dx:GridViewCommandColumn>
-                                                <dx:GridViewCommandColumn VisibleIndex="6" ButtonType="Image" Width="50px" Caption="Удалить">
+                                                <dx:GridViewCommandColumn VisibleIndex="6" ButtonType="Image" Width="70px" Caption="Удалить">
                                                     <CustomButtons>
                                                         <dx:GridViewCommandColumnCustomButton ID="cbDelete">
                                                             <Image ToolTip="Удалить" Url="../../Content/Images/Icons/delete.png" />
@@ -167,7 +199,8 @@
                                                         </ValidationSettings>
                                                     </PropertiesTextEdit>
                                                 </dx:GridViewDataTextColumn>
-                                                <dx:GridViewDataTextColumn Caption="Id" FieldName="Id" Name="Id" VisibleIndex="0" Visible="False">
+                                                <dx:GridViewDataTextColumn Caption="Id" FieldName="Id" Name="Id" VisibleIndex="0"
+                                                    Visible="False">
                                                     <PropertiesTextEdit>
                                                         <ValidationSettings ErrorText="Неверное значение">
                                                             <RegularExpression ErrorText="Ошибка проверки регулярного выражения" />
@@ -182,7 +215,7 @@
                                                         </ValidationSettings>
                                                     </PropertiesTextEdit>
                                                 </dx:GridViewDataTextColumn>
-                                                <dx:GridViewCommandColumn VisibleIndex="6" ButtonType="Image" Width="50px" Caption="Редактировать">
+                                                <dx:GridViewCommandColumn VisibleIndex="6" ButtonType="Image" Width="100px" Caption="Редактировать">
                                                     <CustomButtons>
                                                         <dx:GridViewCommandColumnCustomButton ID="cbEvEdit">
                                                             <Image ToolTip="Редактировать" Url="../../Content/Images/Icons/edit2.png" />
@@ -193,7 +226,7 @@
                                                     <CellStyle HorizontalAlign="Center">
                                                     </CellStyle>
                                                 </dx:GridViewCommandColumn>
-                                                <dx:GridViewCommandColumn VisibleIndex="7" ButtonType="Image" Width="50px" Caption="Удалить">
+                                                <dx:GridViewCommandColumn VisibleIndex="7" ButtonType="Image" Width="70px" Caption="Удалить">
                                                     <CustomButtons>
                                                         <dx:GridViewCommandColumnCustomButton ID="cbEvDelete">
                                                             <Image ToolTip="Удалить" Url="../../Content/Images/Icons/delete.png" />
@@ -239,24 +272,24 @@
                                     </dx:ASPxButton>
                                 </div>
                                 <div style="float: left; padding-left: 10px;">
-                                                <dx:ASPxButton ID="btnRefreshVPO" AutoPostBack="False" runat="server" Text="Обновить классификацию ВПО"
-                                                    CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" 
-                                                    Width="250px" OnClick="btnRefreshVPO_Click" >
-                                                    <ClientSideEvents Click="function(s, e) {
+                                    <dx:ASPxButton ID="btnRefreshVPO" AutoPostBack="False" runat="server" Text="Обновить классификацию ВПО"
+                                        CssClass="button" EnableDefaultAppearance="False" EnableTheming="False" Width="250px"
+                                        OnClick="btnRefreshVPO_Click">
+                                        <ClientSideEvents Click="function(s, e) {
 	popup_refrvpo.Show();
 }" Init="function(s, e) {
 	popup_refrvpo.Hide();
 }" />
-                                                    <PressedStyle CssClass="buttonHover">
-                                                    </PressedStyle>
-                                                    <HoverStyle CssClass="buttonHover">
-                                                    </HoverStyle>
-                                                    <DisabledStyle CssClass="buttonDisable">
-                                                    </DisabledStyle>
-                                                </dx:ASPxButton>
+                                        <PressedStyle CssClass="buttonHover">
+                                        </PressedStyle>
+                                        <HoverStyle CssClass="buttonHover">
+                                        </HoverStyle>
+                                        <DisabledStyle CssClass="buttonDisable">
+                                        </DisabledStyle>
+                                    </dx:ASPxButton>
                                 </div>
                             </div>
-                            <div style="clear:both; padding-top:10px;">
+                            <div style="clear: both; padding-top: 10px;">
                                 <asp:UpdatePanel ID="ClassesUpdatePanel" runat="server" UpdateMode="Conditional">
                                     <ContentTemplate>
                                         <dx:ASPxGridView ID="gridClVPOView" runat="server" AutoGenerateColumns="False" Width="100%"
@@ -266,6 +299,9 @@
 	                                        if (e.buttonID == 'cbClDelete') {
                                                 if (!confirm('Вы уверены, что хотите удалить событие?')) { return;}
                                                 gridClVPOView.PerformCallback(e.buttonID+','+ s.GetRowKey(e.visibleIndex));
+                                                }
+	                                        if (e.buttonID == 'cbClCopy') {
+                                                document.location.href = '/Pages/Settings/AddClass.aspx?copyfrom=' + s.GetRowKey(e.visibleIndex);
                                                 }
 	                                        if (e.buttonID == 'cbClEdit') {
                                                 document.location.href = '/Pages/Settings/EditClass.aspx?itemid=' + s.GetRowKey(e.visibleIndex);
@@ -313,7 +349,18 @@
                                                         </ValidationSettings>
                                                     </PropertiesTextEdit>
                                                 </dx:GridViewDataTextColumn>
-                                                <dx:GridViewCommandColumn VisibleIndex="6" ButtonType="Image" Width="50px" Caption="Редактировать">
+                                                <dx:GridViewCommandColumn VisibleIndex="5" ButtonType="Image" Width="90px" Caption="Копировать">
+                                                    <CustomButtons>
+                                                        <dx:GridViewCommandColumnCustomButton ID="cbClCopy">
+                                                            <Image ToolTip="Копировать" Url="../../Content/Images/Icons/copy.png" />
+                                                            <Image ToolTip="Копировать" Url="../../Content/Images/Icons/copy.png">
+                                                            </Image>
+                                                        </dx:GridViewCommandColumnCustomButton>
+                                                    </CustomButtons>
+                                                    <CellStyle HorizontalAlign="Center">
+                                                    </CellStyle>
+                                                </dx:GridViewCommandColumn>
+                                                <dx:GridViewCommandColumn VisibleIndex="6" ButtonType="Image" Width="100px" Caption="Редактировать">
                                                     <CustomButtons>
                                                         <dx:GridViewCommandColumnCustomButton ID="cbClEdit">
                                                             <Image ToolTip="Редактировать" Url="../../Content/Images/Icons/edit2.png" />
@@ -324,7 +371,7 @@
                                                     <CellStyle HorizontalAlign="Center">
                                                     </CellStyle>
                                                 </dx:GridViewCommandColumn>
-                                                <dx:GridViewCommandColumn VisibleIndex="7" ButtonType="Image" Width="50px" Caption="Удалить">
+                                                <dx:GridViewCommandColumn VisibleIndex="7" ButtonType="Image" Width="70px" Caption="Удалить">
                                                     <CustomButtons>
                                                         <dx:GridViewCommandColumnCustomButton ID="cbClDelete">
                                                             <Image ToolTip="Удалить" Url="../../Content/Images/Icons/delete.png" />

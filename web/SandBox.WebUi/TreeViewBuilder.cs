@@ -103,6 +103,8 @@ namespace SandBox.WebUi
                 complist.Add(new RegCompareTreeItem { ID = id, ParentID = parentid, Text = item.KeyName, IsKey = item.keytype == 1, EtlID = -1, EtlValue = "", RegID = item.KeyIndex, RegValue = item.keyvalue });
                 id++;
             }
+//            complist.Sort((x, y) => (x.IsKey ? -1 : 1));
+//            return complist.OrderBy(x=>x.IsKey).ThenBy(y=>y.Text).ToList();
             return complist;
         }
 
@@ -366,7 +368,7 @@ namespace SandBox.WebUi
         {
             var db = new SandBoxDataContext();
             return (from r in db.Regs
-                   where r.RschID == researchId && r.Parent == parentId
+                   where r.RschID == researchId && r.Parent == parentId && r.KeyIndex != 0
                    select r).ToList();
         }
 

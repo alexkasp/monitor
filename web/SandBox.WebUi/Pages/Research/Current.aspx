@@ -399,7 +399,7 @@
                     <Settings GridLines="Horizontal" EnableFilterControlPopupMenuScrolling="True" />
                     <SettingsLoadingPanel Text="Загрузка&amp;hellip;" Mode="Disabled" />
                     <SettingsDetail ShowDetailRow="True" AllowOnlyOneMasterRowExpanded="True" ShowDetailButtons="False" />
-                    <SettingsCookies Enabled="True" StorePaging="False" />
+                    <SettingsCookies CookiesID="ResearchGrid" Enabled="True" StorePaging="False" />
                     <Styles>
                         <Header Font-Bold="True">
                         </Header>

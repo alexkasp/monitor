@@ -31,6 +31,15 @@ namespace SandBox.WebUi.Account {
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox tbClass;
         
         /// <summary>
+        /// hfFS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxHiddenField.ASPxHiddenField hfFS;
+        
+        /// <summary>
         /// lbFSParams control.
         /// </summary>
         /// <remarks>
@@ -56,6 +65,15 @@ namespace SandBox.WebUi.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox TBNFileTaskValue;
+        
+        /// <summary>
+        /// hfReg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxHiddenField.ASPxHiddenField hfReg;
         
         /// <summary>
         /// lbRegParams control.
@@ -85,6 +103,15 @@ namespace SandBox.WebUi.Account {
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox TBNRegTaskValue;
         
         /// <summary>
+        /// hfProc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxHiddenField.ASPxHiddenField hfProc;
+        
+        /// <summary>
         /// lbProcParams control.
         /// </summary>
         /// <remarks>
@@ -110,6 +137,15 @@ namespace SandBox.WebUi.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxEditors.ASPxTextBox TBProcTaskValue;
+        
+        /// <summary>
+        /// hfNet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxHiddenField.ASPxHiddenField hfNet;
         
         /// <summary>
         /// lbNetParams control.

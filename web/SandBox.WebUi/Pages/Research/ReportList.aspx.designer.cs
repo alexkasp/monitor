@@ -436,6 +436,15 @@ namespace SandBox.WebUi.Pages.Research {
         protected global::System.Web.UI.UpdateProgress RegTreeUpdateProgress;
         
         /// <summary>
+        /// RegKeysUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel RegKeysUpdatePanel;
+        
+        /// <summary>
         /// gvRegKeys control.
         /// </summary>
         /// <remarks>
@@ -443,6 +452,15 @@ namespace SandBox.WebUi.Pages.Research {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView.ASPxGridView gvRegKeys;
+        
+        /// <summary>
+        /// RegKeysUpdateProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress RegKeysUpdateProgress;
         
         /// <summary>
         /// ContentControl2 control.

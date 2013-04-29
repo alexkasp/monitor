@@ -18,21 +18,20 @@
 <body runat="server" id="Body">
     <div class="wrapper_full">
         <form id="form1" runat="server">
-        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="True">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
         </asp:ScriptManager>
-
-<%--        <ajaxToolkit:ToolkitScriptManager ID="ScriptManager" runat="server" 
+        <%--        <ajaxToolkit:ToolkitScriptManager ID="ScriptManager" runat="server" 
             CombineScripts="True">
         </ajaxToolkit:ToolkitScriptManager>--%>
-<script type="text/javascript">
-    var prm = Sys.WebForms.PageRequestManager.getInstance();
+        <script type="text/javascript">
+            var prm = Sys.WebForms.PageRequestManager.getInstance();
 
-    prm.add_beginRequest(beginRequest);
+            prm.add_beginRequest(beginRequest);
 
-    function beginRequest() {
-        prm._scrollPosition = null;
-    }
-</script>
+            function beginRequest() {
+                prm._scrollPosition = null;
+            }
+        </script>
         <div id="header">
             <div id="header-sh">
                 <div id="header-top">
@@ -154,151 +153,154 @@
                                         </tr>
                                     </table>
                                 </ContentTemplate>
+                                <Triggers>
+                                    <asp:AsyncPostBackTrigger ControlID="VSTimer" EventName="Tick" />
+                                </Triggers>
                             </asp:UpdatePanel>
                         </div>
                     </div>
                     <div id="vresearchbox" class="vpanelbox">
                         <div id="vresearch" class="vpanel">
-                            <a href="/Pages/Information/СonsolidatedReport.aspx" style="color:#FBF9F9; text-decoration: none;">
-                            <table width="407" border="0" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <td class="vname">
-                                        Исследования
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center">
-                                        <div class="ResearchChart">
-                                            <table border="0" cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td width="155">
-                                                        Частота использования
-                                                    </td>
-                                                    <td width="60">
-                                                        <span style="font-size: 18px">ОС</span>
-                                                    </td>
-                                                    <td width="172">
-                                                        Кол-во вредоносных воздействий
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div id="chartOSuse">
-                                                        </div>
-                                                    </td>
-                                                    <td id="OStable">
-                                                        <table border="0" align="center" cellpadding="1" cellspacing="1">
-                                                            <tr>
-                                                                <td>
-                                                                    <%=GetOs(0)%>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <%=GetOs(1)%>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <%=GetOs(2)%>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <%=GetOs(3)%>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <%=GetOs(4)%>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                    <td id="rightChart">
-                                                        <div id="chartCountEv">
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                        <%--<img src="/Content/images/vresearch.png" width="378" height="88" />--%>
-                                    </td>
-                                </tr>
-                            </table>
+                            <a href="/Pages/Information/СonsolidatedReport.aspx" style="color: #FBF9F9; text-decoration: none;">
+                                <table width="407" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="vname">
+                                            Исследования
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <div class="ResearchChart">
+                                                <table border="0" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td width="155">
+                                                            Частота использования
+                                                        </td>
+                                                        <td width="60">
+                                                            <span style="font-size: 18px">ОС</span>
+                                                        </td>
+                                                        <td width="172">
+                                                            Кол-во вредоносных воздействий
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div id="chartOSuse">
+                                                            </div>
+                                                        </td>
+                                                        <td id="OStable">
+                                                            <table border="0" align="center" cellpadding="1" cellspacing="1">
+                                                                <tr>
+                                                                    <td>
+                                                                        <%=GetOs(0)%>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <%=GetOs(1)%>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <%=GetOs(2)%>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <%=GetOs(3)%>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <%=GetOs(4)%>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td id="rightChart">
+                                                            <div id="chartCountEv">
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <%--<img src="/Content/images/vresearch.png" width="378" height="88" />--%>
+                                        </td>
+                                    </tr>
+                                </table>
                             </a>
                         </div>
                     </div>
                     <div id="vtopdangerbox" class="vpanelbox">
                         <div id="vtopdanger" class="vpanel">
-                            <a href="/Pages/Information/СonsolidatedReport.aspx" style="color:#FBF9F9; text-decoration: none;">
-                            <table width="194" border="0" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <td class="vname">
-                                        ВПО топ-5
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center">
-                                        <div class="ResearchChart">
-                                            <table width="174" border="0" cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td height="22px">
-                                                        Сравненние степени опасности
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div id="chartDanger">
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
+                            <a href="/Pages/Information/СonsolidatedReport.aspx" style="color: #FBF9F9; text-decoration: none;">
+                                <table width="194" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="vname">
+                                            ВПО топ-5
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <div class="ResearchChart">
+                                                <table width="174" border="0" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td height="22px">
+                                                            Сравненние степени опасности
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div id="chartDanger">
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </a>
                         </div>
                     </div>
                     <div id="vimpactdirbox" class="vpanelbox">
                         <div id="vimpactdir" class="vpanel">
-                            <a href="/Pages/Information/СonsolidatedReport.aspx" style="color:#FBF9F9; text-decoration: none;">
-                            <table width="336" border="0" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <td colspan="4" class="vname" height="40px">
-                                        Направления воздействия
-                                    </td>
-                                </tr>
-                                <tr valign="middle">
-                                    <td width="100" class="nvtxtl">
-                                        Файловая система
-                                    </td>
-                                    <td class="nvperc" id="vnvtl">
-                                        <% =SandBox.Db.ReportManager.GetFsSatas() %>
-                                    </td>
-                                    <td class="nvperc" id="vnvtr">
-                                        <% =SandBox.Db.ReportManager.GetRegStats() %>
-                                    </td>
-                                    <td width="100" class="nvtxtr">
-                                        Реестр
-                                    </td>
-                                </tr>
-                                <tr valign="middle">
-                                    <td class="nvtxtl">
-                                        Сеть
-                                    </td>
-                                    <td id="vnvbl" class="nvperc">
-                                        <% =SandBox.Db.ReportManager.GetNetStats() %>
-                                    </td>
-                                    <td id="vnvbr" class="nvperc">
-                                        <% =SandBox.Db.ReportManager.GetProcsStats() %>
-                                    </td>
-                                    <td class="nvtxtr">
-                                        Процессы
-                                    </td>
-                                </tr>
-                            </table>
+                            <a href="/Pages/Information/СonsolidatedReport.aspx" style="color: #FBF9F9; text-decoration: none;">
+                                <table width="336" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td colspan="4" class="vname" height="40px">
+                                            Направления воздействия
+                                        </td>
+                                    </tr>
+                                    <tr valign="middle">
+                                        <td width="100" class="nvtxtl">
+                                            Файловая система
+                                        </td>
+                                        <td class="nvperc" id="vnvtl">
+                                            <% =SandBox.Db.ReportManager.GetFsSatas() %>
+                                        </td>
+                                        <td class="nvperc" id="vnvtr">
+                                            <% =SandBox.Db.ReportManager.GetRegStats() %>
+                                        </td>
+                                        <td width="100" class="nvtxtr">
+                                            Реестр
+                                        </td>
+                                    </tr>
+                                    <tr valign="middle">
+                                        <td class="nvtxtl">
+                                            Сеть
+                                        </td>
+                                        <td id="vnvbl" class="nvperc">
+                                            <% =SandBox.Db.ReportManager.GetNetStats() %>
+                                        </td>
+                                        <td id="vnvbr" class="nvperc">
+                                            <% =SandBox.Db.ReportManager.GetProcsStats() %>
+                                        </td>
+                                        <td class="nvtxtr">
+                                            Процессы
+                                        </td>
+                                    </tr>
+                                </table>
                             </a>
                         </div>
                     </div>

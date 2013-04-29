@@ -495,6 +495,9 @@ namespace SandBox.WebUi.Pages.Research
         protected void wcEventsSign_CustomCallback(object sender, DevExpress.XtraCharts.Web.CustomCallbackEventArgs e)
         {
             UpdateEventChart(0, researchId);
+//            RegTreeList.VirtualModeCreateChildren += new TreeListVirtualModeCreateChildrenEventHandler(RegTree_VirtualModeCreateChildren);
+//            RegTreeList.VirtualModeNodeCreating += new TreeListVirtualModeNodeCreatingEventHandler(RegTree_VirtualModeNodeCreating);
+//            RegTreeList.RefreshVirtualTree();
         }
 
         protected void gridViewReports_CustomCallback(object sender, ASPxGridViewCustomCallbackEventArgs e)
@@ -562,6 +565,7 @@ namespace SandBox.WebUi.Pages.Research
 
         protected void FileTree_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
         {
+            if (IsPostBack && FileTreeList.UniqueID != Page.Request.Params.Get("__EVENTTARGET")) return;
             List<Files> children = null;
             Files parent = e.NodeObject as Files;
             if (parent == null)
@@ -591,6 +595,12 @@ namespace SandBox.WebUi.Pages.Research
 
         protected void RegTree_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
         {
+            //ScriptManager sm = (ScriptManager)Master.Master.FindControl("ScriptManager1");
+            //int i;
+            //if (sm.IsInAsyncPostBack) i = 1;
+            //string ctrlName = Page.Request.Params.Get("__EVENTTARGET");
+            //if (RegTreeList.UniqueID == ctrlName) i = 2;
+            if (IsPostBack && RegTreeList.UniqueID != Page.Request.Params.Get("__EVENTTARGET")) return;
             List<Reg> children = null;
             Reg parent = e.NodeObject as Reg;
             if (parent == null)
@@ -615,13 +625,14 @@ namespace SandBox.WebUi.Pages.Research
             e.SetNodeValue("RegID", rowView.RegID);
             if (rowView.EtlID > -1) e.SetNodeValue("Etl", rowView.EtlValue);
             if (rowView.RegID > -1) e.SetNodeValue("Reg", rowView.RegValue);
+            e.IsLeaf = rowView.IsKey;
             if (rowView.IsKey) e.SetNodeValue("IconName", "reg_file");
             else e.SetNodeValue("IconName", "reg_dir");
         }
 
         protected void RegComp_VirtualModeCreateChildren(object sender, TreeListVirtualModeCreateChildrenEventArgs e)
         {
-            int eltrootid=-1;
+            int eltrootid = -1;
             if (Session["eltrootid"] != null) int.TryParse(Session["eltrootid"].ToString(), out eltrootid);
             if (eltrootid > -1)
             {
@@ -703,14 +714,14 @@ namespace SandBox.WebUi.Pages.Research
             {
                 switch (pl.status)
                 {
-                    case "LISTENING":
+                    case "Ожидает входящих соединений.":
                         {
-                            e.Row.BackColor = Color.Salmon;
+                            e.Row.BackColor = Color.PeachPuff;
                             break;
                         }
-                    case "ESTABLISHED":
+                    case "Соединение установлено.":
                         {
-                            e.Row.BackColor = Color.SandyBrown;
+                            e.Row.BackColor = Color.Pink;
                             break;
                         }
                     default:
@@ -725,6 +736,7 @@ namespace SandBox.WebUi.Pages.Research
         {
             gvRegKeys.DataSource = TreeViewBuilder.GetKeyValues(Convert.ToInt32(RegTreeList.FocusedNode.Key));
             gvRegKeys.DataBind();
+            RegKeysUpdatePanel.Update();
         }
         
         //    protected void UpdatePanel_Unload(object sender, EventArgs e)

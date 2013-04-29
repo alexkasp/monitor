@@ -63,7 +63,9 @@ namespace SandBox.Db
         public static PortList GetPortList(long id)
         {
             var db = new SandBoxDataContext();
-            return db.PortList.FirstOrDefault<PortList>(x => x.Id == id);
+            PortList pl = db.PortList.FirstOrDefault<PortList>(x => x.Id == id);
+            pl.status = GetPortsStatus(pl.status);
+            return pl;
         }
 
 
@@ -87,6 +89,49 @@ namespace SandBox.Db
             return null; 
         }
 
+        private static string GetPortsStatus(string status)
+        {
+            string st = "";
+            switch (status)
+            {
+                case "CLOSED":
+                    st = "Закрыт. Сокет не используется.";
+                    break;
+                case "LISTEN":
+                case "LISTENING":
+                    st = "Ожидает входящих соединений.";
+                    break;
+                case "SYN_SENT":
+                    st = "Активно пытается установить соединение.";
+                    break;
+                case "SYN_RECEIVED":
+                    st = "Идет начальная синхронизация соединения.";
+                    break;
+                case "ESTABLISHED":
+                    st = "Соединение установлено.";
+                    break;
+                case "CLOSE_WAIT":
+                    st = "Удаленная сторона отключилась; ожидание закрытия сокета.";
+                    break;
+                case "FIN_WAIT_1":
+                    st = "Сокет закрыт; отключение соединения.";
+                    break;
+                case "CLOSING":
+                    st = "Сокет закрыт, затем удаленная сторона отключилась; ожидание подтверждения.";
+                    break;
+                case "LAST_ACK":
+                    st = "Удаленная сторона отключилась, затем сокет закрыт; ожидание подтверждения.";
+                    break;
+                case "FIN_WAIT_2":
+                    st = "Сокет закрыт; ожидание отключения удаленной стороны.";
+                    break;
+                case "TIME_WAIT":
+                    st = "Сокет закрыт, но ожидает пакеты, ещё находящиеся в сети для обработки.";
+                    break;
+            }
+            return st;
+        }
+
         private static IQueryable GetPortsViewWitoutLogic(int p)
         {
             var db = new SandBoxDataContext();
@@ -96,8 +141,8 @@ namespace SandBox.Db
                    select new 
                    { 
                        Id = port.Id, 
-                       destination = port.destination, 
-                       status = port.status, 
+                       destination = port.destination,
+                       status = GetPortsStatus(port.status), 
                        type = port.type, 
                        port = port.port 
                    };

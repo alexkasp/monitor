@@ -241,7 +241,7 @@
                         </SettingsPager>
                         <SettingsText EmptyDataRow="У Вас нет ресурсов, доступных для использования" />
                         <SettingsLoadingPanel Mode="Disabled" />
-                        <SettingsCookies Enabled="True" StorePaging="False" />
+                        <SettingsCookies CookiesID="MachinesGrid" Enabled="True" StorePaging="False" />
                         <Styles>
                             <Header Font-Bold="True">
                             </Header>

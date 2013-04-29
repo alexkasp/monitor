@@ -65,9 +65,9 @@ namespace SandBox.WebUi.Pages.Research
                 int researchId = 0;
                 Int32.TryParse(Request.QueryString["copyfrom"], out researchId);
 //                researchId = Convert.ToInt32(Request.QueryString["copyfrom"]);
-                if (researchId > 0) Session["researchId"] = researchId;
                 if (researchId > 0)
                 {
+                    Session["researchId"] = researchId;
                     FillListBoxDB(hfFS, "Файловая система");
                     FillListBoxDB(hfReg, "Реестр");
                     FillListBoxDB(hfProc, "Процессы");

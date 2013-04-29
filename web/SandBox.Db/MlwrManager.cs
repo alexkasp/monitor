@@ -397,7 +397,18 @@ namespace SandBox.Db
         {
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
-                return db.Mlwrs.FirstOrDefault(x => x.Path == path);
+                return db.Mlwrs.FirstOrDefault(x => x.Path == path && x.IsDeleted != 1);
+            }
+        }
+
+        //**********************************************************
+        //* Получение Mlwr по hash
+        //**********************************************************
+        public static Mlwr GetMlwr(string md5, string sha1, string sha256)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                return db.Mlwrs.FirstOrDefault(x => x.md5 == md5 && x.sha1 == sha1 && x.sha256 == sha256 && x.IsDeleted != 1);
             }
         }
 
@@ -408,7 +419,7 @@ namespace SandBox.Db
         {
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
-                return db.Mlwrs.FirstOrDefault(x => x.Id == id);
+                return db.Mlwrs.FirstOrDefault(x => x.Id == id && x.IsDeleted != 1);
             }
         }
 
@@ -416,7 +427,7 @@ namespace SandBox.Db
         {
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
-                return db.Mlwrs.FirstOrDefault(x => x.Id == id);
+                return db.Mlwrs.FirstOrDefault(x => x.Id == id && x.IsDeleted != 1);
             }
         }
 
@@ -424,7 +435,7 @@ namespace SandBox.Db
         {
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
-                return db.Mlwrs.FirstOrDefault(x => x.Name == name);
+                return db.Mlwrs.FirstOrDefault(x => x.Name == name && x.IsDeleted != 1);
             }
         }
 
@@ -438,6 +449,17 @@ namespace SandBox.Db
                 mlwr.Class = mlwrcl;
                 mlwr.Comment = comment;
                 db.SubmitChanges();
+            }
+        }
+
+        //**********************************************************
+        //* Проверка существования имени файла ВПО
+        //**********************************************************
+        public static bool IsVPOFileExist(string filename)
+        {
+            using (SandBoxDataContext db = new SandBoxDataContext())
+            {
+                return db.Mlwrs.FirstOrDefault(x => x.Path == filename && x.IsDeleted != 1) != null;
             }
         }
 
@@ -506,7 +528,7 @@ namespace SandBox.Db
         {
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
-                Mlwr mlwr = db.Mlwrs.FirstOrDefault(x => x.Id == id);
+                Mlwr mlwr = db.Mlwrs.FirstOrDefault(x => x.Id == id && x.IsDeleted != 1);
                 return mlwr == null ? null : mlwr.Path;
             }
         }
@@ -574,7 +596,7 @@ namespace SandBox.Db
         //**********************************************************
         //* Добавление нового Mlwr
         //**********************************************************
-        public static void AddMlwr(String name, String path, Int32 loadedBy)
+        public static void AddMlwr(String name, String path, Int32 loadedBy, String md5, String sha1, String sha256)
         {
             using (SandBoxDataContext db = new SandBoxDataContext())
             {
@@ -586,6 +608,9 @@ namespace SandBox.Db
                                   Class = null,
                                   LoadedDate = DateTime.Now,
                                   LoadedBy = loadedBy,
+                                  md5 = md5,
+                                  sha1 = sha1,
+                                  sha256 = sha256,
                                   IsDeleted = 0
                 };
                 db.Mlwrs.InsertOnSubmit(mlwr);
